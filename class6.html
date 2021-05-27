@@ -1,0 +1,239 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>Working with Lists and Tuples</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reset.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/theme/simple.css" id="theme">
+		<link rel="stylesheet" href="https://cs61a.org/assets/css/mono-blue.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
+		<style>
+			.reveal {
+				font-family: "Work Sans", sans-serif;
+			}
+
+			.reveal .slides section {
+				text-align: left;
+				font-size: smaller;
+			}
+
+			.reveal pre {
+				background-color: #f5f5f5;
+				width: 100%;
+				border: 1px solid #ccc;
+				border-radius: 4px;
+				box-shadow: none;
+			}
+
+			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+				font-family: "Roboto", sans-serif;
+				color: #0072c1;
+			}
+
+			.reveal section.heading-only {
+				text-align:center;
+				padding-top:20%;
+			}
+
+            .column .no-code-badge .code-badge {
+                display: none;
+            }
+
+            .code-badge-language {
+                display: none;
+            }
+
+			.python-tutor-link {
+				font-size: smaller;
+			}
+
+			.python-tutor-link:before {
+				content: "";
+				display: block;
+				background: url("http://pythontutor.com/favicon.ico") no-repeat;
+				width: 48px;
+				height: 48px;
+				float: left;
+				margin: 0 6px 0 0;
+			}
+
+			.reveal h3 {
+				margin-bottom: 40px;
+			}
+
+            .smaller {
+                font-size: smaller;
+            }
+
+            code {
+                padding: 2px 4px;
+                font-size: 90%;
+                color: #0072c1;
+                background-color: #f9f2f4;
+                border-radius: 4px;
+            }
+
+            p.padded {
+                margin-top: 32px;
+            }
+
+            section .row {
+                display: flex;
+            }
+
+            section .column {
+                flex: 48%;
+                margin: 10px;
+            }
+
+			@media print
+			{
+				.no-print, .no-print *
+				{
+					display: none !important;
+				}
+			}
+
+
+            .regex-input {
+                border:1px solid rgb(204, 204, 204);
+                background: rgb(245, 245, 245);
+                padding: 8px;
+            }
+
+            .regex-input input {
+                font-size: inherit;
+            }
+
+            .regex-input input[type=text]:invalid {
+                background-color: pink;
+            }
+
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+				<section class="heading-only" style="padding-top:5%">
+                    <h1>Lists and Tuples</h1>
+
+					<div class="no-print" style="text-align: left; margin-top: 100px; font-size: 70%;">
+						Tips for navigating the slides:
+						<ul>
+							<li>Press O or Escape for overview mode.</li>
+							<li>Visit <a href="?print-pdf" target="_blank">this link</a> for a nice printable version</li>
+							<li>Press the copy icon on the upper right of code blocks to copy the code</li>
+						</ul>
+					</div>
+				</section>
+
+
+
+
+                <section>
+                    <h3>Today's learning goals:</h3>
+
+                    <ul style="font-size:1.0em;">
+                        <li>What's a list?
+                        <li>What's a tuple?
+                        <li>Using lists and tuples in your programs
+                        <li>Accessing items in lists and tuples
+                        <li>Using list methods: <code>append()</code>, <code>insert()</code>, <code>remove()</code>, <code>index()</code>, <code>pop()</code>
+                        <li>Passing lists to <code>count()</code>, <code>reverse()</code>, <code>sort()</code>, <code>min()</code>, <code>max()</code>, <code>choice()</code>, <code>shuffle()</code>.
+                    </ul>
+
+                </section>
+
+                <section>
+                    <h3>Lists</h3>
+
+                    <p>A list is a container that holds a sequence of related pieces of information.</p>
+                    <br>
+                    <p>The shortest list is an empty list, just 2 square brackets:</p>
+                    <pre style="font-size:0.7em"><code data-trim data-noescape class="python">
+                    members = []
+                    </code></pre>
+                    <p>Lists can hold any Python values, separated by commas:</p>
+                    <pre style="font-size:0.7em"><code data-trim data-noescape class="python">
+                    members = ["Pamela", "Tinu", "Brenda", "Kaya"]
+
+                    ages_of_kids = [1, 2, 7]
+
+                    prices = [79.99, 49.99, 89.99]
+
+                    remixed = ["Pamela", 7, 79.99]
+                    </code></pre>
+
+                </section>
+
+
+                <section>
+                    <h3>Accessing items: Bracket notation</h3>
+
+                    <p>Each list item has an index, starting from 0.</p>
+
+
+                    <pre style="font-size:0.7em"><code data-trim data-noescape class="python">
+                    temps = [48.0, 30.5, 20.2, 99.0, 42.0]
+                    # Index:   0     1     2     3     4
+                    </code></pre>
+
+                    <br>
+                    <p>The shortest list is an empty list, just 2 square brackets:</p>
+                    <pre style="font-size:0.7em"><code data-trim data-noescape class="python">
+                    members = []
+                    </code></pre>
+                    <p>Lists can hold any Python values, separated by commas:</p>
+                    <pre style="font-size:0.7em"><code data-trim data-noescape class="python">
+                    members = ["Pamela", "Tinu", "Brenda", "Kaya"]
+
+                    ages_of_kids = [1, 2, 7]
+
+                    prices = [79.99, 49.99, 89.99]
+
+                    remixed = ["Pamela", 7, 79.99]
+                    </code></pre>
+
+                </section>
+
+
+			</div>
+		</div>
+
+		<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/plugin/highlight/highlight.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.15.5/js/jsplumb.min.js"></script>
+		<script>
+			const srcUrlPrefix = "https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/";
+			Reveal.initialize({
+				hash: true,
+				center: false,
+				slideNumber: true,
+				showNotes: false,
+				margin: 0.1,
+				preloadIframes: true,
+				plugins: [ RevealHighlight ],
+				pdfSeparateFragments: true
+			});
+
+            // add HighlightJS-badge (options are optional)
+            var options = {
+                copyIconContent: "📄",
+                checkIconContent: "✅"
+            };
+            window.highlightJsBadge(options);
+
+            if (window.location.search == "?print-pdf") {
+                var uncounted = document.querySelectorAll("[data-visibility='uncounted']");
+                uncounted.forEach(node => {
+                    node.parentNode.classList.add("no-print")
+                })
+            }
+		</script>
+	</body>
+</html>
+
