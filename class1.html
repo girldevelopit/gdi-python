@@ -1,0 +1,755 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>Welcome to Python</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reset.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/theme/simple.css" id="theme">
+		<link rel="stylesheet" href="https://cs61a.org/assets/css/mono-blue.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
+		<style>
+			.reveal {
+				font-family: "Work Sans", sans-serif;
+			}
+
+			.reveal .slides section {
+				text-align: left;
+				font-size: smaller;
+			}
+
+			.reveal pre {
+				background-color: #f5f5f5;
+				width: 100%;
+				border: 1px solid #ccc;
+				border-radius: 4px;
+				box-shadow: none;
+			}
+
+			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+				font-family: "Roboto", sans-serif;
+				color: #0072c1;
+			}
+
+			.reveal section.heading-only {
+				text-align:center;
+				padding-top:20%;
+			}
+
+            .column .no-code-badge .code-badge {
+                display: none;
+            }
+
+            .code-badge-language {
+                display: none;
+            }
+
+			.python-tutor-link {
+				font-size: smaller;
+			}
+
+			.python-tutor-link:before {
+				content: "";
+				display: block;
+				background: url("http://pythontutor.com/favicon.ico") no-repeat;
+				width: 48px;
+				height: 48px;
+				float: left;
+				margin: 0 6px 0 0;
+			}
+
+			.reveal h3 {
+				margin-bottom: 40px;
+			}
+
+            .smaller {
+                font-size: smaller;
+            }
+
+            code {
+                padding: 2px 4px;
+                font-size: 90%;
+                color: #0072c1;
+                background-color: #f9f2f4;
+                border-radius: 4px;
+            }
+
+            p.padded {
+                margin-top: 32px;
+            }
+
+            section .row {
+                display: flex;
+            }
+
+            section .column {
+                flex: 48%;
+                margin: 10px;
+            }
+
+			@media print
+			{
+				.no-print, .no-print *
+				{
+					display: none !important;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+				<section class="heading-only" style="padding-top:5%">
+                    <h1>Welcome to Python</h1>
+
+					<div class="no-print" style="text-align: left; margin-top: 100px; font-size: 70%;">
+						Tips for navigating the slides:
+						<ul>
+							<li>Press O or Escape for overview mode.</li>
+							<li>Visit <a href="?print-pdf" target="_blank">this link</a> for a nice printable version</li>
+							<li>Press the copy icon on the upper right of code blocks to copy the code</li>
+						</ul>
+                    </div>
+
+                    <aside class="speaker-notes">
+                    Lesson Plan:
+                    12:05 - Welcome and introductions
+                    12:15 - What/Why Python
+                    12:30 - Exercise: Python setup
+                    12:45 - Expressions
+                    1:00 - Exercise: Expressions
+                    1:20 - Values
+                    1:25 - Names
+                    1:40 - Exercise: Text Processing
+                    </aside>
+				</section>
+
+                <section>
+                    <h3>Welcome!</h3>
+                    <p>Girl Develop It is here to provide affordable and accessible programs to learn software through mentorship and hands-on instruction.</p>
+
+                    <p>Classroom "rules":</p>
+                    <ul>
+                        <li>I am here for you!</li>
+                        <li>Every question is important</li>
+                        <li>Help each other</li>
+                        <li>Have fun</li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h3>Introductions</h3>
+                    <p>Tell us about yourself:</p>
+                    <ul>
+                        <li>Name
+                        <li>Pronouns
+                        <li>Location
+                        <li>Programming experience (if any, not required!)
+                        <li>What interests you about Python?
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Class Outline</h3>
+
+                    <p>This may change if we end up needing more or less time for certain topics.</p>
+                    <ul>
+                        <li>Class 1: Intro to Python
+                        <li>Class 2: Functions
+                        <li>Class 3: Conditionals
+                        <li>Class 4: Looping
+                        <li>Class 5: Debugging
+                        <li>Class 6: Lists
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Today's topics</h3>
+
+                    <ul>
+                        <li>What is Python?
+                        <li>Why Python?
+                        <li>Python setup
+                        <li>Expressions
+                        <li>Values
+                        <li>Names
+                    </ul>
+                </section>
+
+                <section class="heading-only">
+                    <h2>What is Python?</h2>
+                </section>
+
+                <section>
+                    <h3>The Python language</h3>
+
+                    <ul>
+                        <li>An interpreted general purpose programming language.
+                        <li>Can run on many systems: Unix, Windows, Mac.
+                        <li>An easy-to-read syntax where whitespace is significant.
+                        <li>Open source!
+                    </ul>
+                    <br>
+                    <p class="smaller">Example (that you don't need to understand yet!):</p>
+                    <pre style="font-size:0.8em"><code data-trim data-noescape class="python">
+                    def add_numbers_between(start, end):
+                        sum = 0
+                        for n in range(start, end):
+                            sum += n
+                        return n
+
+                    add_numbers_between(5, 10)
+                    </code></pre>
+
+                </section>
+
+                <section>
+                    <h3>Python versions</h3>
+
+                    <p>Python 3 is the current major version of the language.<br>Python 2 is <strong>deprecated</strong>!</p>
+
+                    <img src="https://upload.wikimedia.org/wikipedia/en/timeline/5fd37e8c8b51ef2cb6ca4796d68d9ae3.png" alt="Python versions history graph" height=500>
+
+                </section>
+
+                <section class="heading-only">
+                    <h2>Why Python?</h2>
+                </section>
+
+                <section>
+                    <h3>Benefits</h3>
+
+                    <p>For learning:</p>
+                    <ul>
+                        <li>Python's syntax is considered easier to read and use than most languages.
+                        <li>The language includes features of many different types of languages,
+                            so you can learn concepts that translate to other languages
+                            (functional programming, object-oriented programming, etc).
+                    </ul>
+
+                    <p>For development:</p>
+                    <ul>
+                        <li>Python can be used for a wide range of applications (web, data science, graphics, games, language, etc)
+                            thanks to the huge number of libraries and tutorials.
+                    </ul>
+
+                    <p class="fragment">💬  What's one thing you'd LOVE to make with Python?</p>
+
+                    <aside class="speaker-notes">Also useful for hiring!</aside>
+
+                </section>
+
+                <section>
+                    <h3>Console applications</h3>
+
+                    <p>You can make entirely text-based console (command-line) applications.</p>
+
+                    <img src="images/console_application.png" alt="Screenshot of a console application">
+
+                </section>
+
+                <section>
+                    <h3>Desktop applications</h3>
+
+                    <p>
+                        Applications for non-technical users typically include a GUI (graphical user interface).</p>
+
+                    <img src="images/desktop_application.png" alt="Screenshot of a desktop GUI application" height="450">
+
+                </section>
+
+                <section>
+                    <h3>Web applications</h3>
+
+                    <p>Web apps are increasingly more popular than downloaded apps.
+                        HTML/CSS/JS would be used for the frontend, but Python can be used for the backend
+                        of a web application.</p>
+
+                    <img src="images/web_application.png" alt="Screenshot of a desktop GUI application" >
+
+                </section>
+
+                <section>
+                    <h3>Data analysis notebook</h3>
+
+                    <p>Data analysts and data scientists often use notebooks for an easy log
+                        of their calculations and outputs.</p>
+
+                    <img src="images/notebook.png" alt="Screenshot of a Jupyter notebook with Python code">
+
+                </section>
+
+                <section class="heading-only">
+                    <h2>Python setup</h2>
+                </section>
+
+                <section>
+                    <h3>Coding Python locally</h3>
+
+                    <p>It is possible to code locally on your computer, using:
+                    </p>
+                    <ul>
+                        <li><a href="https://sp21.cs61a.org/lab/lab00/#install-python-3" target="_blank">locally installed Python</a>
+                        <li><a href="https://sp21.cs61a.org/lab/lab00/#install-a-terminal" target="_blank">the command line</a>
+                        <li><a href="https://inst.eecs.berkeley.edu/~cs61a/sp21/lab/lab00/#install-a-text-editor" target="_blank">a text editor</a>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Coding Python on Repl.it</h3>
+
+                    <p>We'll use the Python editor on Repl.it, an online IDE that supports many languages.</p>
+
+                    <p><a href="https://repl.it/languages/python3" target="_blank">
+                        https://repl.it/languages/python3
+                        </a>
+                    </p>
+                </section>
+
+                <section>
+                    <h3>Repl.it setup</h3>
+
+                    <p>We'll also use Repl.it teams for virtual assignments/help.</p>
+
+                    <ul style="font-size:1.0em;">
+                        <li>Create a Repl.it account
+                        <li>Join the team following the invite link
+                        <li>Add your name to the team REPL!
+                    </ul>
+                </section>
+
+                <section class="heading-only">
+                    <h2>Expressions</h2>
+                </section>
+
+                <section>
+                    <h3>Expressions <span class="smaller">(with operators)</span></h3>
+
+                    <p class="smaller">An expression describes a computation and evaluates to a value.</p>
+
+                    <p class="smaller">Some expressions use operators:</p>
+
+                    <pre style="font-size:0.9em"><code data-trim data-noescape class="python">
+                    18 + 69
+                    </code></pre>
+
+                    <pre style="font-size:0.9em"><code data-trim data-noescape class="python">
+                    6/23
+                    </code></pre>
+
+                    <pre style="font-size:0.9em"><code data-trim data-noescape class="python">
+                    2 * 100
+                    </code></pre>
+
+                    <pre style="font-size:0.9em"><code data-trim data-noescape class="python">
+                    2 ** 100
+                    </code></pre>
+
+                    <p>Try in a Python REPL (console).<br>
+                    <a href="https://replit.com/new/python3" target="_blank">https://replit.com/new/python3</a>
+                    </p>
+                </section>
+
+                <section>
+                    <h3>Expressions <span class="smaller">(with function calls)</span></h3>
+
+                    <p class="smaller">Many expressions use function calls:</p>
+
+                    <pre style="font-size:0.9em"><code data-trim data-noescape class="python">
+                    pow(2, 100)
+                    </code></pre>
+
+                    <pre style="font-size:0.9em"><code data-trim data-noescape class="python">
+                    max(50, 300)
+                    </code></pre>
+
+                    <pre style="font-size:0.9em"><code data-trim data-noescape class="python">
+                    min(-1, -300)
+                    </code></pre>
+
+                </section>
+
+                <section>
+                    <h3>Expressions (both ways)</h3>
+
+                    <p>Expressions with operators can also be expressed with function call notation:</p>
+
+                    <pre style="font-size:0.9em"><code data-trim data-noescape class="python">
+                    2 ** 100
+                    pow(2, 100)
+                    </code></pre>
+
+                    <div class="fragment">
+                    <pre style="font-size:0.9em"><code data-trim data-noescape class="python">
+                    from operator import add
+
+                    18 + 69
+                    add(18, 69)
+                    </code></pre>
+
+                    <p class="smaller">
+                        The <code>pow()</code> function is a <strong>built-in</strong>; it's provided in every
+                        Python environment.
+                     Other functions (<code>add()</code>, <code>div()</code>, etc)
+                        must be imported from the
+                        <a target="_blank" href="https://docs.python.org/3/library/operator.html"><code>operator</code></a> module in the Python standard library.</p>
+                    </p>
+                </div>
+
+                </section>
+
+                <section>
+                    <h3>Anatomy of a Call Expression</h3>
+
+                    <style type="text/css">
+                    table.anatomy_of_call {
+                        border: 2px dotted #0072c1;
+                        border-radius: 8px;
+                        border-collapse: separate;
+                        padding: 10px;
+                    }
+
+                    table.anatomy_of_call tr:first-child td {
+                        font-family:monospace;
+                    }
+
+                    table.anatomy_of_call td {
+                        text-align:center;
+                    }
+
+                    table.anatomy_of_call tr:first-child td {
+                        border-bottom: none;
+                    }
+
+                    table.anatomy_of_call td.anatomy_of_call_operator {
+                        border-top: 1px solid purple;
+                    }
+
+                    table.anatomy_of_call td.anatomy_of_call_operand {
+                        border-top: 1px solid green;
+                    }
+
+                    .anatomy_of_call_operator {
+                        color: purple;
+                    }
+
+                    .anatomy_of_call_operand {
+                        color: green;
+                    }
+                    </style>
+
+                    <table class="anatomy_of_call">
+                        <tr>
+                            <td>add
+                            <td>(
+                            <td>18
+                            <td>,
+                            <td>69
+                            <td>)
+                        <tr>
+                            <td class="anatomy_of_call_operator"><span class="fragment" data-fragment-index="1">Operator</span>
+                            <td>
+                            <td class="anatomy_of_call_operand"><span class="fragment" data-fragment-index="2">Operand</span>
+                            <td>
+                            <td class="anatomy_of_call_operand"><span class="fragment" data-fragment-index="2">Operand</span>
+                            <td>
+                    </table>
+
+                    <p>How Python evaluates a call expression:</p>
+
+                    <ol>
+                        <li class="fragment" data-fragment-index="1">Evaluate the <span class="anatomy_of_call_operator">operator</span>
+                        <li class="fragment" data-fragment-index="2">Evaluate the <span class="anatomy_of_call_operand">operands</span>
+                        <li class="fragment" data-fragment-index="3">Apply the <span class="anatomy_of_call_operator">operator (a function)</span> to the evaluated <span class="anatomy_of_call_operand">operands (arguments)</span>
+                    </ol>
+
+                    <p class="fragment">Operators and operands are also expressions, so they must be evaluated to discover their values.</p>
+
+                </section>
+
+                <section>
+                    <h3>Nested call expressions</h3>
+
+                    <table class="anatomy_of_call">
+                        <tr>
+                            <td>add
+                            <td>(
+                            <td>add(6, mul(4, 6))
+                            <td>,
+                            <td>mul(3, 5)
+                            <td>)
+                        <tr>
+                            <td class="anatomy_of_call_operator">Operator
+                            <td>
+                            <td class="anatomy_of_call_operand">Operand
+                            <td>
+                            <td class="anatomy_of_call_operand">Operand
+                            <td>
+                    </table>
+
+                    <p>Humans evaluate inside out:</p>
+                    <pre style="font-size:0.9em"><code data-trim data-noescape class="python">
+                    add(add(6, <strong>mul(4, 6)</strong>), mul(3, 5))
+                    <span class="fragment">add(add(6,    <strong>24</strong>    ), mul(3, 5))</span>
+                    <span class="fragment">add(<strong>add(6,    24    )</strong>, mul(3, 5))</span>
+                    <span class="fragment">add(        <strong>30</strong>       , mul(3, 5))</span>
+                    <span class="fragment">add(        30       , <strong>mul(3, 5)</strong>)</span>
+                    <span class="fragment">add(        30       ,    <strong>15</strong>    )</span>
+                    <span class="fragment"><strong>add(        30       ,    15    )</strong></span>
+                    <span class="fragment">45</span>
+                    </code></pre>
+
+                </section>
+
+                <section>
+                    <h3>Nested expression trees</h3>
+
+                    <p>Python evaluates nested expressions with a similar process.</p>
+
+                    <img src="images/nested_expression_tree.png" alt="screenshot of expression tree">
+                </section>
+
+                <section>
+                    <h3>Exercise: Expressions</h3>
+
+                    <p><a href="https://replit.com/@gdi01/OperatorExpressions" target="_blank">Expressions</a></p>
+                </section>
+
+                <section class="heading-only">
+                    <h2>Values</h2>
+                </section>
+
+                <section>
+                    <h3>Values</h3>
+
+                    <p>Programs manipulate <strong>values</strong>.</p>
+                    <p>Each value has a certain <strong>data type</strong>.</p>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Data type
+                                <th>Example values
+                        <tbody>
+                            <tr>
+                                <td>Integers
+                                <td><code>2</code> <code>44</code> <code>-3</code>
+                            <tr>
+                                <td>Floats
+                                <td><code>3.14</code> <code>4.5</code> <code>-2.0</code>
+                            <tr>
+                                <td>Booleans
+                                <td><code>True</code> <code>False</code>
+                            <tr>
+                                <td>Strings
+                                <td><code>'¡hola!'</code> <code>'its python time!'</code>
+                    </table>
+                </section>
+
+                <section>
+                    <h3>Expressions → values</h3>
+
+                    <p>Python evaluates expressions into values in one or more steps.</p>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Expression
+                                <th>Value
+                        <tbody>
+                            <tr>
+                                <td><code>'ahoy'</code>
+                                <td><code>'ahoy'</code>
+                            <tr>
+                                <td><code>'a' + 'hoy'</code>
+                                <td><code>'ahoy'</code>
+                            <tr>
+                                <td><code>7 / 2</code>
+                                <td><code>3.5</code>
+                            <tr>
+                                <td><code>add(1, max(2, 3))</code>
+                                <td><code>4</code>
+                    </table>
+                </section>
+
+                <section class="heading-only">
+                    <h2>Names</h2>
+                </section>
+
+                <section>
+                    <img src="images/name_value.png" alt="Name bound to value" width="200" style="float:right;">
+                    <h3>Names</h3>
+
+
+                    <p>A <strong>name</strong> can be bound to a value.
+                    </p>
+                    <br>
+                    <p>One way to bind a name is with an <strong>assignment statement</strong>:</p>
+
+                    <table class="anatomy_of_call">
+                        <tr>
+                            <td>x
+                            <td>=
+                            <td>7
+                        <tr>
+                            <td class="anatomy_of_call_operator">Name
+                            <td>
+                            <td class="anatomy_of_call_operand">Value
+                    </table>
+
+                    <div class="fragment">
+                    <p>The value can be any expression:</p>
+
+                    <table class="anatomy_of_call">
+                        <tr>
+                            <td>x
+                            <td>=
+                            <td>1 + 2 * 3 - 4 // 5
+                        <tr>
+                            <td class="anatomy_of_call_operator">Name
+                            <td>
+                            <td class="anatomy_of_call_operand">Expression
+                    </table>
+                    </div>
+
+                </section>
+
+                <section>
+                    <h3>Using names</h3>
+
+                    <p>A name can be referenced multiple times:</p>
+
+                    <pre style="font-size:0.9em"><code data-trim data-noescape class="python">
+                    x = 10
+                    y = 3
+
+                    result1 = x * y
+                    result2 = x + y
+                    </code></pre>
+
+                    <div class="fragment">
+                    <p>A name that's bound to a data value is also known as a <strong>variable</strong>.</p>
+
+                    <p>💬 How many variables are in that code snippet? <br>
+                        <span class="fragment">4 variables: <code>x</code>, <code>y</code>, <code>result1</code>, <code>result2</code></span>
+                    </p>
+                    </div>
+
+                </section>
+
+                <section>
+                    <h3>Name rebinding</h3>
+
+                    <p>A name can only be bound to a single value.</p>
+
+                    <pre style="font-size:0.9em"><code data-trim data-noescape class="python">
+                    my_name = 'Pamela'
+
+                    my_name = my_name + 'ela'
+                    </code></pre>
+
+                    <p>💬  Will that code error? If not, what will <code>my_name</code> store? <br>
+                        <span class="fragment">It will not error (similar code in other languages might, however).
+                        The name <code>my_name</code> is now bound to the value 'Pamelaela'.
+                    </p>
+                </section>
+
+                <section>
+                    <h3>Group exercise</h3>
+
+                    <p><a href="https://replit.com/@gdi01/TextProcessing-Group" target="_blank">Open this repl</a>. Let's figure out what the functions do!</p>
+
+                    <style type="text/css">
+                    .text_processing_table {
+                        width: 100%;
+                    }
+                    .text_processing_table td[contenteditable] {
+                        font-size: 0.5em;
+                    }
+                    </style>
+
+                    <table class="text_processing_table">
+                        <thead>
+                            <tr>
+                                <th>Function
+                                <th>Example I/O
+                                <th>Description
+                        <tbody>
+                            <tr>
+                                <td>uppercase()
+                                <td contenteditable>
+                                <td contenteditable>
+                            <tr>
+                                <td>clapify()
+                                <td contenteditable>
+                                <td contenteditable>
+                            <tr>
+                                <td>emojify()
+                                <td contenteditable>
+                                <td contenteditable>
+                            <tr>
+                                <td>exclamify()
+                                <td contenteditable>
+                                <td contenteditable>
+                            <tr>
+                                <td>binarize()
+                                <td contenteditable>
+                                <td contenteditable>
+                            <tr>
+                                <td>mystery()
+                                <td contenteditable>
+                                <td contenteditable>
+                    </table>
+
+                </section>
+
+                <section>
+                    <h3>Exercise</h3>
+
+                    <p><a href="https://replit.com/@gdi01/TextProcessing#main.py">Open this repl.</a>
+                    We'll do the first question together. Then work through the other questions,
+                    using Zoom or Repl chat when you have questions.
+                    </p>
+
+                </section>
+
+			</div>
+		</div>
+
+		<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/plugin/highlight/highlight.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.15.5/js/jsplumb.min.js"></script>
+		<script>
+			const srcUrlPrefix = "https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/";
+			Reveal.initialize({
+				hash: true,
+				center: false,
+				slideNumber: true,
+				showNotes: false,
+				margin: 0.1,
+				preloadIframes: true,
+				plugins: [ RevealHighlight ],
+				pdfSeparateFragments: true
+			});
+
+            // add HighlightJS-badge (options are optional)
+            var options = {
+                copyIconContent: "📄",
+                checkIconContent: "✅"
+            };
+            window.highlightJsBadge(options);
+
+            if (window.location.search == "?print-pdf") {
+                var uncounted = document.querySelectorAll("[data-visibility='uncounted']");
+                uncounted.forEach(node => {
+                    node.parentNode.classList.add("no-print")
+                })
+            }
+		</script>
+	</body>
+</html>
+

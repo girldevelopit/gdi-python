@@ -1,0 +1,630 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>Working with Lists and Tuples</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reset.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/theme/simple.css" id="theme">
+		<link rel="stylesheet" href="https://cs61a.org/assets/css/mono-blue.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
+		<style>
+			.reveal {
+				font-family: "Work Sans", sans-serif;
+			}
+
+			.reveal .slides section {
+				text-align: left;
+				font-size: smaller;
+			}
+
+			.reveal pre {
+				background-color: #f5f5f5;
+				width: 100%;
+				border: 1px solid #ccc;
+				border-radius: 4px;
+				box-shadow: none;
+			}
+
+			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+				font-family: "Roboto", sans-serif;
+				color: #0072c1;
+			}
+
+			.reveal section.heading-only {
+				text-align:center;
+				padding-top:20%;
+			}
+
+            .column .no-code-badge .code-badge {
+                display: none;
+            }
+
+            .code-badge-language {
+                display: none;
+            }
+
+			.python-tutor-link {
+				font-size: smaller;
+			}
+
+			.python-tutor-link:before {
+				content: "";
+				display: block;
+				background: url("http://pythontutor.com/favicon.ico") no-repeat;
+				width: 48px;
+				height: 48px;
+				float: left;
+				margin: 0 6px 0 0;
+			}
+
+			.reveal h3 {
+				margin-bottom: 40px;
+			}
+
+            .smaller {
+                font-size: smaller;
+            }
+
+            code {
+                padding: 2px 4px;
+                font-size: 90%;
+                color: #0072c1;
+                background-color: #f9f2f4;
+                border-radius: 4px;
+            }
+
+            p.padded {
+                margin-top: 32px;
+            }
+
+            section .row {
+                display: flex;
+            }
+
+            section .column {
+                flex: 48%;
+                margin: 10px;
+            }
+
+			@media print
+			{
+				.no-print, .no-print *
+				{
+					display: none !important;
+				}
+			}
+
+
+            .regex-input {
+                border:1px solid rgb(204, 204, 204);
+                background: rgb(245, 245, 245);
+                padding: 8px;
+            }
+
+            .regex-input input {
+                font-size: inherit;
+            }
+
+            .regex-input input[type=text]:invalid {
+                background-color: pink;
+            }
+
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+				<section class="heading-only" style="padding-top:5%">
+                    <h1>Lists and Tuples</h1>
+
+					<div class="no-print" style="text-align: left; margin-top: 100px; font-size: 70%;">
+						Tips for navigating the slides:
+						<ul>
+							<li>Press O or Escape for overview mode.</li>
+							<li>Visit <a href="?print-pdf" target="_blank">this link</a> for a nice printable version</li>
+							<li>Press the copy icon on the upper right of code blocks to copy the code</li>
+						</ul>
+					</div>
+				</section>
+
+
+
+
+                <section>
+                    <h3>Today's learning goals:</h3>
+
+                    <ul style="font-size:1.0em;">
+                        <li>What's a list?
+                        <li>What's a tuple?
+                        <li>Using lists and tuples in your programs
+                        <li>Accessing items in lists and tuples
+                        <li>Using list methods: <code>append()</code>, <code>insert()</code>, <code>remove()</code>, <code>index()</code>, <code>pop()</code>
+                        <li>Passing lists to <code>count()</code>, <code>reverse()</code>, <code>sort()</code>, <code>min()</code>, <code>max()</code>, <code>choice()</code>, <code>shuffle()</code>.
+                    </ul>
+
+                </section>
+
+                <section class="heading-only">
+                    <h2>Lists</h2>
+                </section>
+
+                <section>
+                    <h3>Lists</h3>
+
+                    <p>A list is a container that holds a sequence of related pieces of information.</p>
+                    <br>
+                    <p>The shortest list is an empty list, just 2 square brackets:</p>
+                    <pre style="font-size:0.7em"><code data-trim data-noescape class="python">
+                    members = []
+                    </code></pre>
+                    <p>Lists can hold any Python values, separated by commas:</p>
+                    <pre style="font-size:0.7em"><code data-trim data-noescape class="python">
+                    members = ["Pamela", "Tinu", "Brenda", "Kaya"]
+
+                    ages_of_kids = [1, 2, 7]
+
+                    prices = [79.99, 49.99, 89.99]
+
+                    remixed = ["Pamela", 7, 79.99]
+                    </code></pre>
+
+                </section>
+
+
+                <section>
+                    <h3>Accessing items (Bracket notation)</h3>
+
+                    <p>Each list item has an index, starting from 0.</p>
+
+                    <pre style="font-size:0.7em"><code data-trim data-noescape class="python">
+                    temps = [48.0, 30.5, 20.2, 99.0, 52.0]
+                    # Index:   0     1     2     3     4
+                    </code></pre>
+
+                    <p>Access each item by putting the index in brackets:</p>
+                    <pre style="font-size:0.7em"><code data-trim data-noescape class="python">
+                    temps[0]  <span class="fragment" data-fragment-index="1"># 48.0</span>
+                    temps[1]  <span class="fragment" data-fragment-index="1"># 30.5</span>
+                    temps[2]  <span class="fragment" data-fragment-index="1"># 20.2</span>
+                    temps[3]  <span class="fragment" data-fragment-index="1"># 99.0</span>
+                    temps[4]  <span class="fragment" data-fragment-index="1"># 52.0</span>
+                    temps[5]  <span class="fragment" data-fragment-index="2"># 🚫 Error!</span>
+                    </code></pre>
+
+                    <div class="fragment">
+                    <p>Negative indices are also possible:</p>
+                    <pre style="font-size:0.7em"><code data-trim data-noescape class="python">
+                    temps[-1]  <span class="fragment" data-fragment-index="4"># 52.0</span>
+                    temps[-2]  <span class="fragment" data-fragment-index="4"># 99.0</span>
+                    temps[-6]  <span class="fragment" data-fragment-index="4"># 🚫 Error!</span>
+                    </code></pre>
+                    </div>
+
+                    <aside class="notes">
+                        Show as an in-class example?
+                        Getting items from the inventory list
+                        Item = inventory[1]
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>List length</h3>
+
+                    <p>Use the global <code>len()</code> function
+                        to find the length of a list.</p>
+
+                    <pre style="font-size:0.9em"><code data-trim data-noescape class="python">
+                    attendees = ["Tammy", "Shonda", "Tina"]
+
+                    print(len(attendees))   <span class="fragment">#  3</span>
+
+                    num_of_attendees = len(attendees)
+                    print(num_of_attendees)
+                    </code></pre>
+
+                    <p>🤔 What could go wrong with storing the length?</p>
+
+                </section>
+
+                <section>
+                    <h3>Modifying list items</h3>
+
+                    <p>Python lists are <strong>mutable</strong>, which means
+                        you can change the values stored in them.</p>
+                    <br>
+                    <p>Use bracket notation to modify single items in the list:</p>
+                    <pre style="font-size:0.9em"><code data-trim data-noescape class="python">
+                    temps = [48.0, 30.5, 20.2, 99.0, 52.0]
+                    temps[2] = 22.22
+                    temps[-1] = 55.55
+                    </code></pre>
+
+                    <p class="python-tutor-link">
+                        <a target="_blank" href="http://pythontutor.com/visualize.html#code=temps%20%3D%20%5B48.0,%2030.5,%2020.2,%2099.0,%2052.0%5D%0A%0Atemps%5B2%5D%20%3D%2022.22%0A%0Atemps%5B-1%5D%20%3D%2055.55&cumulative=false&curInstr=0&heapPrimitives=nevernest&mode=display&origin=opt-frontend.js&py=3&rawInputLstJSON=%5B%5D&textReferences=false">Try in PythonTutor</a>
+                    </p>
+                    <br>
+                    <div class="fragment">
+                    <p class="smaller">What if we change the value of an item beyond the list length?</p>
+                    <pre style="font-size:0.9em"><code data-trim data-noescape class="python">
+                    temps[5] = 111.11 <span class="fragment"># 🚫 Error!</span>
+                    </code></pre>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Modifying lists with methods</h3>
+
+                    <table style="font-size:0.75em;">
+                        <thead>
+                            <tr>
+                                <th>Method
+                                <th>Description
+                        <tbody>
+                            <tr>
+                                <td><code>append(item)</code>
+                                <td>Adds <code>item</code> to the end of the list. This increases list length by one.
+                            <tr>
+                                <td><code>insert(index, item)</code>
+                                <td>Inserts <code>item</code> at the specified <code>index</code>. This increases the list length by one and
+                                    shifts all items after the specified index forward by one index.</p>
+                            <tr>
+                                <td><code>remove(item)</code>
+                                <td>Remove the first item from the list whose value is equal to <code>item</code>.
+                                    It raises a <code>ValueError</code> if there is no such item.
+                            <tr>
+                                <td><code>index(item)</code>
+                                <td>Returns the index of the first occurrence of an item whose value is equal to <code>item</code>.
+                                It raises a <code>ValueError</code> if there is no such item.
+                            <tr>
+                                <td><code>pop([index])</code>
+                                <td>If no <code>index</code> is specified, it removes the last item from the list and returns it.
+                                    Otherwise, it removes the item at the specified <code>index</code> and returns it.
+                    </table>
+
+                    <p class="smaller">See more in <a target="_blank" href="https://docs.python.org/3/tutorial/datastructures.html">Python.org documentation</a></p>
+
+                </section>
+
+                <section>
+                    <h3>Examples of list modifying methods</h3>
+
+                    <pre style="font-size:0.9em"><code data-trim data-noescape class="python">
+                    groceries = ["apples", "bananas"]
+
+                    groceries.append("peanut butter")
+                    groceries.insert(0, "applesauce")
+                    groceries.insert(3, "cheerios")
+                    groceries.remove("bananas")
+
+                    bought_food = groceries.pop()
+                    bought_food2 = groceries.pop(1)
+                    i = groceries.index("cheerios")
+                    bought_food3 = groceries.pop(i)
+                    </code></pre>
+
+                    <p class="python-tutor-link"><a target="_blank" href="http://pythontutor.com/visualize.html#code=groceries%20%3D%20%5B%22apples%22,%20%22bananas%22%5D%0A%0Agroceries.append%28%22peanut%20butter%22%29%0Agroceries.insert%280,%20%22applesauce%22%29%0Agroceries.insert%283,%20%22cheerios%22%29%0A%0Agroceries.remove%28%22bananas%22%29&cumulative=false&curInstr=0&heapPrimitives=nevernest&mode=display&origin=opt-frontend.js&py=3&rawInputLstJSON=%5B%5D&textReferences=false">See in PythonTutor</a></p>
+                </section>
+
+                <section>
+                    <h3>Checking if value is in a list</h3>
+
+                    <p>The <code>in</code> keyword checks if
+                        a value is in a list (or any sequence).</p>
+
+                    <pre style="font-size:0.9em"><code data-trim data-noescape class="python">
+                    if "bananas" in groceries:
+                        print("⚠️ Watch your step!")
+
+                    if "bleach" in groceries:
+                        print("☣️ Watch what you eat!")
+                    </code></pre>
+
+                    <p>When used inside if conditions, <code>in</code> expressions return a Boolean (<code>True</code>/<code>False</code>).</p>
+                </section>
+
+                <section>
+                    <h3>Looping through a list</h3>
+
+                    <p>You can use a standard <code>while</code> loop:</p>
+                    <pre style="font-size:0.9em"><code data-trim data-noescape class="python">
+                    scores = [80, 95, 78, 92]
+                    total = 0
+                    i = 0
+                    while i < len(scores):
+                        score = scores[i]
+                        total += score
+                        i += 1
+                    </code></pre>
+                    <div class="fragment">
+                    <p>😍 Python allows provides a <code>for-in</code> loop for lists: </p>
+                    <pre style="font-size:0.9em"><code data-trim data-noescape class="python">
+                    for score in scores:
+                        total += score
+                    </code></pre>
+                    </div>
+
+                </section>
+
+
+                <section class="heading-only">
+                    <h2>Nested Lists</h2>
+                </section>
+
+                <section>
+                    <h3>Nested Lists</h3>
+
+                    <p>Since Python lists can contain any values, an item can itself be a list.</p>
+
+                    <pre style="font-size:0.9em"><code data-trim data-noescape class="python">
+                    gymnasts = [
+                                 ["Brittany", 9.15, 9.4, 9.3, 9.2],
+                                 ["Lea", 9, 8.8, 9.1, 9.5],
+                                 ["Maya", 9.2, 8.7, 9.2, 8.8]
+                               ]
+                    </code></pre>
+
+                    <ul>
+                     <li>What's the length of <code>gymnasts</code>? <span class="fragment">3</span>
+                     <li>What's the length of <code>gymnasts[0]</code>? <span class="fragment">5</span>
+                    </ul>
+
+                    <aside class="notes">
+                        Can also think of it in terms of rows and columns.
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>Dynamic creation of nested lists</h3>
+
+                    <p>If we start with...</p>
+                    <pre style="font-size:0.7em"><code data-trim data-noescape class="python">
+                    gymnasts = [
+                                    ["Brittany", 9.15, 9.4, 9.3, 9.2],
+                                    ["Lea", 9, 8.8, 9.1, 9.5]
+                               ]
+                    </code></pre>
+
+                    <p>We can append another list a few ways:</p>
+                    <pre style="font-size:0.7em"><code data-trim data-noescape class="python">
+                    gymnasts.append(["Maya", 9.2, 8.7, 9.2, 8.8])
+                    </code></pre>
+                    <pre style="font-size:0.7em"><code data-trim data-noescape class="python">
+                    gymnasts += ["Maya", 9.2, 8.7, 9.2, 8.8]
+                    </code></pre>
+                    <pre style="font-size:0.7em"><code data-trim data-noescape class="python">
+                    gymnast = []
+                    gymnast.append("Maya")
+                    gymnast.append(9.2)
+                    gymnast.append(8.7)
+                    gymnast.append(9.2)
+                    gymnast.append(8.8)
+                    gymnasts.append(gymnast)
+                    </code></pre>
+
+                </section>
+
+                <section>
+                    <h3>Accessing nested list items</h3>
+
+                    <pre style="font-size:0.9em"><code data-trim data-noescape class="python">
+                    gymnasts = [
+                                    ["Brittany", 9.15, 9.4, 9.3, 9.2],
+                                    ["Lea", 9, 8.8, 9.1, 9.5],
+                                    ["Maya", 9.2, 8.7, 9.2, 8.8]
+                                ]
+                    </code></pre>
+
+                    <p>Access using bracket notation, with more brackets as needed:</p>
+                    <pre style="font-size:0.9em"><code data-trim data-noescape class="python">
+                    gymnasts[0]    <span class="fragment"># ["Brittany", 9.15, 9.4, 9.3, 9.2]</span>
+                    gymnasts[0][0] <span class="fragment"># "Brittany"</span>
+                    gymnasts[1][0] <span class="fragment"># "Lea"</span>
+                    gymnasts[1][4] <span class="fragment"># 9.5</span>
+                    gymnasts[1][5] <span class="fragment"># 🚫 IndexError!</span>
+                    gymnasts[3][0] <span class="fragment"># 🚫 IndexError!</span>
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Modifying nested lists</h3>
+
+                    <pre style="font-size:0.9em"><code data-trim data-noescape class="python">
+                    gymnasts = [
+                                    ["Brittany", 9.15, 9.4, 9.3, 9.2],
+                                    ["Lea", 9, 8.8, 9.1, 9.5],
+                                    ["Maya", 9.2, 8.7, 9.2, 8.8]
+                                ]
+                    </code></pre>
+
+                    <p>Modify using bracket notation as well, just like before:</p>
+                    <pre style="font-size:0.9em"><code data-trim data-noescape class="python">
+                    gymnasts[0] = ["Olivia", 8.75, 9.1, 9.6, 9.8]</span>
+                    gymnasts[1][0] = "Leah"
+                    gymnasts[2][4] = 9.8
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Looping through nested lists</h3>
+
+                    <pre style="font-size:0.9em"><code data-trim data-noescape class="python">
+                    gymnasts = [
+                                    ["Brittany", 9.15, 9.4, 9.3, 9.2],
+                                    ["Lea", 9, 8.8, 9.1, 9.5],
+                                    ["Maya", 9.2, 8.7, 9.2, 8.8]
+                                ]
+                    </code></pre>
+
+                    <p>Use a nested <code>for-in</code> loop:</p>
+                    <pre style="font-size:0.9em"><code data-trim data-noescape class="python">
+                    for gymnast in gymnasts:
+                        for data in gymnast:
+                            print(data, end="|")
+                    </code></pre>
+
+                    <p>Remember what type of data is being stored in the loop variable!</p>
+                </section>
+
+                <section>
+                    <h3>Exercise Time</h3>
+
+                    Days of the week
+                    Append the rest of the days int he week, printing your progress as you go,
+                    printing the length
+                </section>
+
+                <section>
+                    <h2>More list functionality</h2>
+                </section>
+
+                <section>
+                    <h3>Helpful list methods</h3>
+
+                    <table style="font-size:0.75em;">
+                        <thead>
+                            <tr>
+                                <th>Method
+                                <th>Description
+                        <tbody>
+                            <tr>
+                                <td><code>count(item)</code>
+                                <td>Returns the number of occurrences of <code>item</code> in the list. If <code>item</code> is not found, returns 0.
+                            <tr>
+                                <td><code>reverse()</code>
+                                <td>Reverses the elements of the list <strong>in place</strong>.
+                            <tr>
+                                <td><code>sort([key=function])</code>
+                                <td>Sorts the items of the list <strong>in place</strong>. The optional <code>key</code> argument specifies
+                                    a function to compute a comparison key for each item in the list. Otherwise, items are compared based on their values.
+                    </table>
+
+                    <p class="smaller">See more in <a target="_blank" href="https://docs.python.org/3/tutorial/datastructures.html">Python.org documentation</a></p>
+                </section>
+
+                <section>
+                    <h3>Examples with reverse</h3>
+
+                    <p>If we start with...</p>
+                    <pre style="font-size:0.9em"><code data-trim data-noescape class="python">
+                    nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                    spelling = ["B", "U", "M", "B", "L", "E"]
+                    </code></pre>
+
+                    <p>Then call the <code>reverse</code> method...</p>
+                    <pre style="font-size:0.9em"><code data-trim data-noescape class="python">
+                    nums.reverse()     <span class="fragment"># [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]</span>
+                    spelling.reverse() <span class="fragment"># ["E", "L", "B", "M", "U", "B"]
+                    </code></pre>
+
+                    <div class="fragment" style="margin-top:40px;">
+                    <p class="smaller">What do you think of this?</p>
+
+                    <pre style="font-size:0.7em"><code data-trim data-noescape class="python">
+                    nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                    reversed_nums = nums.reverse()
+                    </code></pre>
+
+                    <p class="fragment smaller">It's a bit strange, since <code>reverse()</code>
+                        does an in-place reversal, so now the program has the same list in two variables!</p>
+                    </div>
+                </section>
+
+
+                <section>
+                    <h3>Examples with sort</h3>
+
+                    <pre style="font-size:0.9em"><code data-trim data-noescape class="python">
+                    foods = ["orange", "apple", "Pear", "banana"]
+                    </code></pre>
+
+                    <p>The simplest sort:</p>
+                    <pre style="font-size:0.9em"><code data-trim data-noescape class="python">
+                    foods.sort()
+                    <span class="fragment"># ["Pear", "apple", "banana", "orange"]</span>
+                    </code></pre>
+
+                    <p>Specifying a key argument of an existing function:</p>
+                    <pre style="font-size:0.9em"><code data-trim data-noescape class="python">
+                    foods.sort(key=str.lower)
+                    <span class="fragment"># ["apple", "banana", "orange", "Pear"]</span>
+                    </code></pre>
+
+                    <p>Specifying a key argument of a custom lambda function:</p>
+                    <pre style="font-size:0.9em"><code data-trim data-noescape class="python">
+                    foods.sort(key=lambda food: food[1])
+                    <span class="fragment"># ['banana', 'Pear', 'apple', 'orange']</span>
+                    </code></pre>
+
+                    <p class="smaller">A non-destructive option is the global <a target="_blank" href="https://docs.python.org/3/library/functions.html#sorted"><code>sorted()</code></a> function.</p>
+                </section>
+
+                <section>
+                    <h3>Useful functions for lists</h3>
+
+                    <p class="smaller">These are functions, <em>not</em> methods.</p>
+                    <table style="font-size:0.75em;">
+                        <thead>
+                            <tr>
+                                <th>Module
+                                <th>Function
+                                <th>Description
+                        <tbody>
+                            <tr>
+                                <td>Global
+                                <td><a target="_blank" href="https://docs.python.org/3/library/functions.html#min"><code>min(list, [key=function])</code></a>
+                                <td>Returns the minimum value in <code>list</code>. The optional <code>key</code> argument specifies a custom comparator function.
+                            <tr>
+                                <td>Global
+                                <td><a target="_blank" href="https://docs.python.org/3/library/functions.html#max"><code>max(list, [key=function])</code></a>
+                                <td>Returns the maximum value in <code>list</code>. he optional <code>key</code> argument specifies a custom comparator function.
+                            <tr>
+                                <td><code>random</code>
+                                <td><a target="_blank" href="https://docs.python.org/3/library/random.html#random.choice"><code>choice(list)</code></a>
+                                <td>Returns a randomly selected item from <code>list</code>.
+                            <tr>
+                                <td><code>random</code>
+                                <td><a target="_blank" href="https://docs.python.org/3/library/random.html#random.shuffle"><code>shuffle(list)</code></a>
+                                <td>Shuffles the elements of the list <strong>in place</strong>.
+                    </table>
+
+                </section>
+			</div>
+		</div>
+
+		<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/plugin/highlight/highlight.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.15.5/js/jsplumb.min.js"></script>
+		<script>
+			const srcUrlPrefix = "https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/";
+			Reveal.initialize({
+				hash: true,
+				center: false,
+				slideNumber: true,
+				showNotes: false,
+				margin: 0.1,
+				preloadIframes: true,
+				plugins: [ RevealHighlight ],
+				pdfSeparateFragments: true
+			});
+
+            // add HighlightJS-badge (options are optional)
+            var options = {
+                copyIconContent: "📄",
+                checkIconContent: "✅"
+            };
+            window.highlightJsBadge(options);
+
+            if (window.location.search == "?print-pdf") {
+                var uncounted = document.querySelectorAll("[data-visibility='uncounted']");
+                uncounted.forEach(node => {
+                    node.parentNode.classList.add("no-print")
+                })
+            }
+		</script>
+	</body>
+</html>
+
