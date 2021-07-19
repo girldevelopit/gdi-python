@@ -1,0 +1,590 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>Loops</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reset.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/theme/simple.css" id="theme">
+		<link rel="stylesheet" href="https://cs61a.org/assets/css/mono-blue.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
+		<style>
+			.reveal {
+				font-family: "Work Sans", sans-serif;
+			}
+
+			.reveal .slides section {
+				text-align: left;
+				font-size: smaller;
+			}
+
+			.reveal pre {
+				background-color: #f5f5f5;
+				width: 100%;
+				border: 1px solid #ccc;
+				border-radius: 4px;
+				box-shadow: none;
+			}
+
+			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+				font-family: "Roboto", sans-serif;
+				color: #0072c1;
+			}
+
+			.reveal section.heading-only {
+				text-align:center;
+				padding-top:20%;
+			}
+
+            .no-code-badge .code-badge {
+                display: none;
+            }
+
+            .code-badge-language {
+                display: none;
+            }
+
+			.python-tutor-link {
+				font-size: smaller;
+			}
+
+			.python-tutor-link:before {
+				content: "";
+				display: block;
+				background: url("http://pythontutor.com/favicon.ico") no-repeat;
+				width: 48px;
+				height: 48px;
+				float: left;
+				margin: 0 6px 0 0;
+			}
+
+			.reveal h3 {
+				margin-bottom: 40px;
+			}
+
+            .smaller {
+                font-size: smaller;
+            }
+
+            code {
+                padding: 2px 4px;
+                font-size: 90%;
+                color: #0072c1;
+                background-color: #f9f2f4;
+                border-radius: 4px;
+            }
+
+            p.padded {
+                margin-top: 32px;
+            }
+
+            section .row {
+                display: flex;
+            }
+
+            section .column {
+                flex: 48%;
+                margin: 10px;
+            }
+
+			@media print
+			{
+				.no-print, .no-print *
+				{
+					display: none !important;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+				<section class="heading-only" style="padding-top:5%">
+                    <h1>Loops</h1>
+
+					<div class="no-print" style="text-align: left; margin-top: 100px; font-size: 70%;">
+						Tips for navigating the slides:
+						<ul>
+							<li>Press O or Escape for overview mode.</li>
+							<li>Visit <a href="?print-pdf" target="_blank">this link</a> for a nice printable version</li>
+							<li>Press the copy icon on the upper right of code blocks to copy the code</li>
+						</ul>
+                    </div>
+
+                    <aside class="speaker-notes">
+                    Lesson Plan:
+                    12:05 - String conversion
+                    12:10 - Exercise
+                    12:20 - While loops
+                    12:40 - Exercise
+                     1:10 - For loops
+                     1:20 - Exercise
+                     1:40 - Randomness
+                    </aside>
+				</section>
+
+                <section>
+                    <h3>Class outline:</h3>
+
+                    <ul>
+                        <li>Review
+                        <li>String conversion
+                        <li>While loops
+                        <li>For loops
+                        <li>Randomness
+                    </ul>
+                </section>
+
+                <section class="heading-only">
+                    <h2>String conversion</h2>
+                </section>
+
+                <section>
+                    <h3>Concatenating strings with numbers</h3>
+
+                    <p>The following results in an error:</p>
+                    <pre style="font-size:0.8em; margin-bottom:48px;"><code data-trim data-noescape class="python">
+                    count = 3
+                    noun = 'cat'
+                    plural = 'I have ' + count + ' ' + noun + 's'
+                    </code></pre>
+
+                    <p><strong>Strings can only be concatenated with other strings.</strong><br>
+                        You can convert other values using <code>str()</code>:</p>
+
+                    <pre style="font-size:0.8em"><code data-trim data-noescape class="python">
+                    plural = 'I have ' + str(count) + ' ' + noun + 's'
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Exercise: String conversion</h3>
+
+                    <p>We'll do the first one together, and you'll do the other two individually.</p>
+
+                    <ul>
+                        <li><a href="https://replit.com/team/gdi01/StringConversionSolarSystem" target="_blank">solar_system()</a>
+                            <li><a href="https://replit.com/team/gdi01/StringConversionMenu" target="_blank">menu()</a>
+                        <li><a href="https://replit.com/team/gdi01/StringConversionLocationLocation" target="_blank">location()</a>
+                        <li><a href="https://replit.com/team/gdi01/StringConversionFancyDate" target="_blank">fancy_date()</a>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>While loops</h2>
+                </section>
+
+                <section>
+                    <h3>Why loops?</h3>
+
+                    <p>Consider the following code...</p>
+                    <pre style="font-size:0.8em"><code data-trim data-noescape class="python">
+                    print(9 * 1)
+                    print(9 * 2)
+                    print(9 * 3)
+                    print(9 * 4)
+                    print(9 * 5)
+                    </code></pre>
+
+                    <p>This code is repetitive and variable, but the variability
+                        is sequential - it just adds one to the right-hand side number each time.
+                        In English, we could describe this as "print out the first 5 multiples of 9".</p>
+
+                    <p>We can simplify this code with a loop!</p>
+                </section>
+
+                <section>
+                    <h3>While loops</h3>
+
+                    <p>The while loop syntax:</p>
+
+                    <pre style="font-size:0.8em"><code data-trim data-noescape class="python">
+                    while &lt;condition&gt;:
+                        &lt;statement&gt;
+                        &lt;statement&gt;
+                    </code></pre>
+
+                    <p>As long as the condition is true, the statements below it are executed.</p>
+
+                    <pre style="font-size:0.8em"><code data-trim data-noescape class="python">
+                    multiplier = 1
+                    while multiplier &lt;= 5:
+                        print(9 * multiplier)
+                        multiplier += 1
+                    </code></pre>
+
+                    <p>The code is significantly shorter, and it can easily be extended
+                        to loop for more or less iterations.</p>
+
+                </section>
+
+                <section>
+                    <h3>Changing a while loop #1</h3>
+
+                    <p>You can change the initial values of the variables used in the condition:</p>
+
+                    <pre style="font-size:0.8em"><code data-trim data-noescape class="python">
+                    multiplier = 3
+                    while multiplier &lt;= 5:
+                        print(9 * multiplier)
+                        multiplier += 1
+                    </code></pre>
+
+                    <ul>
+                        <li>What will be the first thing displayed? <span class="fragment">27</span>
+                        <li>What will be the last thing displayed? <span class="fragment">45</span>
+                        <li>How many iterations? <span class="fragment">3 (for values of 3, 4, 5)<span>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Changing a while loop #2</h3>
+
+                    <p>You can change the condition:</p>
+                    <pre style="font-size:0.8em"><code data-trim data-noescape class="python">
+                    multiplier = 3
+                    while multiplier &lt;= 10:
+                        print(9 * multiplier)
+                        multiplier += 1
+                    </code></pre>
+
+                    <ul>
+                        <li>What will be the first thing displayed? <span class="fragment">27</span>
+                        <li>What will be the last thing displayed? <span class="fragment">90</span>
+                        <li>How many iterations? <span class="fragment">8 (for values of 3, 4, 5, 6, 7, 8, 9, 10)<span>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Changing a while loop #3</h3>
+
+                    <p>You can change how much the values change between iterations:</p>
+                    <pre style="font-size:0.8em"><code data-trim data-noescape class="python">
+                    multiplier = 3
+                    while multiplier &lt;= 10:
+                        print(9 * multiplier)
+                        multiplier += 2
+                    </code></pre>
+
+                    <ul>
+                        <li>What will be the first thing displayed? <span class="fragment">27</span>
+                        <li>What will be the last thing displayed? <span class="fragment">81</span>
+                        <li>How many iterations? <span class="fragment">4 (for values of 3, 5, 7, 9)<span>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h3>Changing a while loop #4</h3>
+
+                    <p>You can change the computation inside the while loop:</p>
+                    <pre style="font-size:0.8em"><code data-trim data-noescape class="python">
+                    multiplier = 3
+                    while multiplier &lt;= 10:
+                        print(10 * multiplier)
+                        multiplier += 2
+                    </code></pre>
+
+                    <ul>
+                        <li>What will be the first thing displayed? <span class="fragment">30</span>
+                        <li>What will be the last thing displayed? <span class="fragment">90</span>
+                        <li>How many iterations? <span class="fragment">4 (for values of 3, 5, 7, 9)<span>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Using a counter variable</h3>
+
+                    <p>It's common to use a <strong>counter variable</strong>
+                        whose job is keeping track of the number of iterations.</p>
+
+                    <pre style="font-size:0.8em"><code data-trim data-noescape class="python">
+                    total = 0
+                    counter = 0
+                    while counter < 5:
+                      total += pow(2, 1)
+                      counter += 1
+                    </code></pre>
+
+                    <p>The counter variable may also be involved in the loop computation:</p>
+
+                    <pre style="font-size:0.8em"><code data-trim data-noescape class="python">
+                    total = 0
+                    counter = 0
+                    while counter < 5:
+                      total += pow(2, counter)
+                      counter += 1
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Beware infinite loops</h3>
+
+                    <p>Uh oh..</p>
+                    <pre style="font-size:0.8em"><code data-trim data-noescape class="python">
+                    counter = 1
+                    while counter < 5:
+                        total += pow(2, counter)
+                    </code></pre>
+
+                    <p>What one line of code would fix this?
+                        <br><code class="fragment">counter += 1</code>
+                    </p>
+
+                    <div class="fragment">
+                    <pre style="font-size:0.8em"><code data-trim data-noescape class="python">
+                    counter = 6
+                    while counter > 5:
+                      total += pow(2, counter)
+                      counter += 1
+                    </code></pre>
+
+                    <p>How do we save this code?
+                        <br><span class="fragment">Intentions are unclear! Change the initial value and condition?
+                    </p>
+                    </div>
+
+                </section>
+
+                <section>
+                    <h3>Loops in environment diagrams</h3>
+
+                    <p>How Python interprets a while loop:</p>
+                    <ol>
+                        <li>Evaluate the header’s Boolean expression.
+                        <li>If it is a true value, execute the suite of statements,
+                            then return to step 1.
+                    </ol>
+                    <img src="images/pythontutor_loops.png" alt="Screenshot of a loop in PythonTutor" height="250">
+                    <p class="python-tutor-link">
+                        <a target="_blank" href="http://pythontutor.com/visualize.html#code=sum%20%3D%200%0Acounter%20%3D%200%0Awhile%20counter%20%3C%2010%3A%0A%20%20%20%20sum%20%2B%3D%20pow%28counter,%202%29%0A%20%20%20%20counter%20%2B%3D%201%0A&cumulative=true&curInstr=0&heapPrimitives=nevernest&mode=display&origin=opt-frontend.js&py=3&rawInputLstJSON=%5B%5D&textReferences=false">
+                            View in PythonTutor</a>
+                    </p>
+                </section>
+
+                <section>
+                    <h3>Loops in functions</h3>
+
+                    <p>A loop in a function will commonly use a parameter to determine some aspect of its repetition.</p>
+
+                    <pre style="font-size:0.8em"><code data-trim data-noescape class="python">
+                    def sum_up_squares(from, to)
+                        counter = from
+                        while counter &lt;= to:
+                          total += pow(2, counter)
+                          counter += 1
+                        return total
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Exercise</h3>
+
+                    <p>We'll work through the first one together, then you'll work individually on the others.</p>
+
+                    <ul>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/WhileLoopsCountEvens">count_evens()</a></li>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/WhileLoopsCountMultiples">count_multiples()</a></li>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/WhileLoopsSumMultiples">sum_multiples()</a></li>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/WhileLoopsBuggyLoop">product_of_numbers()</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>The break statement</h3>
+
+                    <p>To prematurely exit a loop, use the <code>break</code> statement:</p>
+
+                    <pre style="font-size:0.8em"><code data-trim data-noescape class="python">
+                    counter = 100
+                    while counter < 200:
+                        if counter % 7 == 0:
+                            first_multiple = counter
+                            break
+                        counter += 1
+                    </code></pre>
+
+                    <p class="python-tutor-link">
+                        <a target="_blank" href="http://pythontutor.com/visualize.html#code=counter%20%3D%20100%0Awhile%20counter%20%3C%20200%3A%0A%20%20%20%20if%20counter%20%25%207%20%3D%3D%200%3A%0A%20%20%20%20%20%20%20%20first_multiple%20%3D%20counter%0A%20%20%20%20%20%20%20%20break%0A%20%20%20%20counter%20%2B%3D%201&cumulative=true&curInstr=0&heapPrimitives=nevernest&mode=display&origin=opt-frontend.js&py=3&rawInputLstJSON=%5B%5D&textReferences=false">View in PythonTutor</a>
+                    </p>
+                </section>
+
+                <section>
+                    <h3>Looping while true</h3>
+
+                    <p>If you are brave, you can write while loops like this:</p>
+
+                    <pre style="font-size:0.8em"><code data-trim data-noescape class="python">
+                    counter = 100
+                    while True:
+                        if counter % 62 == 0:
+                            first_multiple = counter
+                            break
+                        counter += 1
+                    </code></pre>
+
+                    <p>⚠️ Be very sure that you're not coding an infinite loop!</p>
+
+                    <p><a href="https://twitter.com/Carnage4Life/status/1416890838462832642" target="_blank">Don't trust me? Ask Twitter!</a></p>
+                </section>
+
+                <section class="heading-only">
+                    <h2>For loops</h2>
+                </section>
+
+                <section>
+                    <h3>For loop</h3>
+
+                    <p>The for loop syntax:</p>
+
+                    <pre style="font-size:0.8em"><code data-trim data-noescape class="python">
+                    for &lt;value&gt; in &lt;sequence&gt;:
+                        &lt;statement&gt;
+                        &lt;statement&gt;
+                    </code></pre>
+
+                    <p>The for loop provides a cleaner way to write many while loops,
+                        as long as they are iterating over some sort of sequence.
+                    </p>
+
+                    <p>A for loop iterating over a sequence of numbers:</p>
+                    <pre style="font-size:0.8em"><code data-trim data-noescape class="python">
+                    for num in range(1, 5):
+                        print(9 * num)
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>range() options</h3>
+                    <p class="smaller">If just one argument, range starts at 0 and ends just before it:</p>
+                    <pre style="font-size:0.8em; margin-bottom:48px;"><code data-trim data-noescape class="python">
+                    for num in range(6):
+                        print(num)       # 0, 1, 2, 3, 4, 5
+                    </code></pre>
+                    <p class="smaller">If two arguments, range starts at first and ends just before second:</p>
+                    <pre style="font-size:0.8em; margin-bottom:48px;"><code data-trim data-noescape class="python">
+                    for num in range(1, 6):
+                        print(num)       # 1, 2, 3, 4, 5
+                    </code></pre>
+                    <p class="smaller">If three arguments, the range steps at that rate:</p>
+                    <pre style="font-size:0.8em"><code data-trim data-noescape class="python">
+                    for num in range(1, 6, 2):
+                        print(num)       # 1, 3, 5
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Exercise: For in range</h3>
+
+                    <p>We'll work on the first part of this together.</p>
+
+                    <a href="https://replit.com/team/gdi01/Ranges" targeet="_blank">Range fixer</a></p>
+
+                </section>
+
+                <section>
+                    <h3>Coming soon...</h3>
+
+                    <p>...to a Zoom class NEAR YOU!!</p
+
+                    <p>Next class will include another super common way to use <code>for</code> loops!</p>
+                </section>
+
+                <section class="heading-only">
+                    <h2>Random numbers</h2>
+                </section>
+
+                <section>
+                    <h3>Random numbers in Python</h3>
+
+                    <p>The <a href="https://docs.python.org/3/library/random.html" target="_blank"><code>random</code></a> module contains
+                        various functions for generating randomness.</p>
+
+                    <pre style="font-size:1.0em"><code data-trim data-noescape class="python">
+                    import random
+
+                    rando = random.randint(1, 5)   # 1, 2, 3, 4, or 5
+
+                    randy = random.randrange(1, 6) # 1, 2, 3, 4, or 5
+                    </code></pre>
+
+                </section>
+
+                <section>
+                    <h3>Random example</h3>
+
+                    <pre style="font-size:0.8em"><code data-trim data-noescape class="python">
+                    def random_rgb():
+                        r = random.randint(0, 255)
+                        g = random.randint(0, 255)
+                        b = random.randint(0, 255)
+                        return r, g, b
+
+                    r1,g1,b1 = random_rgb()
+                    </code></pre>
+
+                    <p><a href="https://replit.com/@pamelafox/RandomColor#main.py" target="_blank">PyGame: Random squares!</a></p>
+
+                </section>
+
+                <section>
+                    <h3>Can computers be truly random?</h3>
+
+                    <p><strong>No</strong>. Computers use pseudo-random number generators,
+                        which are considered good enough for most purposes.</p>
+
+                    <p>For true randomness (if it exists), you have to find
+                        random phenomena in the world, like atmospheric noise. <br>
+                        See <a href="https://www.random.org/faq/" target="_blank">random.org</a></p>
+                    <br>
+                    <p>🤔  Is anything truly random? Do humans have free will?</p>
+                </section>
+
+                <section>
+                    <h3>How random is random?</h3>
+
+                    <p>Let's test it and see!</p>
+
+                    <p><a target="_blank" href="https://replit.com/@gdi01/RandomTester">Random Tester</a></p>
+
+                </section>
+
+			</div>
+		</div>
+
+		<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/plugin/highlight/highlight.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.15.5/js/jsplumb.min.js"></script>
+		<script>
+			const srcUrlPrefix = "https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/";
+			Reveal.initialize({
+				hash: true,
+				center: false,
+				slideNumber: true,
+				showNotes: false,
+				margin: 0.1,
+				preloadIframes: true,
+				plugins: [ RevealHighlight ],
+				pdfSeparateFragments: true
+			});
+
+            // add HighlightJS-badge (options are optional)
+            var options = {
+                copyIconContent: "📄",
+                checkIconContent: "✅"
+            };
+            window.highlightJsBadge(options);
+
+            if (window.location.search == "?print-pdf") {
+                var uncounted = document.querySelectorAll("[data-visibility='uncounted']");
+                uncounted.forEach(node => {
+                    node.parentNode.classList.add("no-print")
+                })
+            }
+		</script>
+	</body>
+</html>
+
