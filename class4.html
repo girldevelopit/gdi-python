@@ -369,12 +369,15 @@
                     <p>A loop in a function will commonly use a parameter to determine some aspect of its repetition.</p>
 
                     <pre style="font-size:0.8em"><code data-trim data-noescape class="python">
-                    def sum_up_squares(from, to)
-                        counter = from
-                        while counter &lt;= to:
-                          total += pow(2, counter)
+                    def sum_up_squares(start, end):
+                        counter = start
+                        total = 0
+                        while counter <= end:
+                          total += pow(counter, 2)
                           counter += 1
                         return total
+
+                    sum_up_squares(1, 5)
                     </code></pre>
                 </section>
 
