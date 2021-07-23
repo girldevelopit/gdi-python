@@ -118,7 +118,7 @@
 			<div class="slides">
 
 				<section class="heading-only" style="padding-top:5%">
-                    <h1>Tuples, Dictionaries, Strings, and Demos</h1>
+                    <h1>Tuples & Dictionaries</h1>
 
 					<div class="no-print" style="text-align: left; margin-top: 100px; font-size: 70%;">
 						Tips for navigating the slides:
@@ -135,22 +135,22 @@
                     <h3>Class outline:</h3>
 
                     <ul style="font-size:1.0em;">
-                        <li>List comprehensions
                         <li>Tuples
-                        <li>String iteration
+                        <li>String things
                         <li>Dictionaries
+                        <li>Nested data
+                        <li>Demos
                     </ul>
 
-                </section>
-
-                <section class="heading-only">
-                    <h2>List comprehensions</h2>
-                </section>
-
-                <section>
-                    <h3>List comprehension syntax</h3>
-
-                    <p>A <strong>list comprehension</strong> [<map exp> for <name> in <iter exp>]</p>
+                    <!-- Lesson plan
+                    12:05 - Tuples
+                    12:10 - String things
+                    12:20 - Dictionaries
+                    12:35 - Exercise #1
+                    12:50 - Nested data
+                    12:55 - Exercise #2
+                     1:15 - Demos
+                    -->
                 </section>
 
                 <section class="heading-only">
@@ -180,7 +180,6 @@
                     for price in prices:
                         total += price
                     </pre></code>
-
                 </section>
 
                 <section>
@@ -211,7 +210,6 @@
                     <pre style="font-size:0.7em"><code data-trim data-noescape class="python">
                     x = position[1]
                     </pre></code>
-
                     </div>-->
 
 
@@ -225,12 +223,46 @@
                     <p>Just like a list, a string is <strong>iterable</strong>:
                         it can be iterated through with a for loop.</p>
 
+                    <pre style="font-size:1.0em; margin-bottom:36px;"><code data-trim data-noescape class="python">
+                    alphabet = 'abcdefghijklmnopqrstuvwxyz'
+                    for letter in alphabet:
+                        uppered = letter.upper()
+                        print(uppered)
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Bracket notation with strings</h3>
+
+                    <p>Strings can also be accessed using bracket notation,
+                        both to access individual characters or to make "slices".</p>
+
+                    <pre style="font-size:0.7em; margin-bottom:36px;"><code data-trim data-noescape class="python">
+                    alphabet = 'superduper'
+
+                    alphabet[0] # 's'
+                    alphabet[-1] # 'r'
+
+                    alphabet[0:5] # 'super'
+                    alphabet[5:]  # 'duper'
+                    </code></pre>
                 </section>
 
                 <section>
                     <h3>Splitting strings</h3>
 
-                    <p>The string <code>split()</code> method turns a string into a list of strings:</p>
+                    <p>The string <code>split()</code> method turns a string into a list of strings,
+                    by splitting at the specified delimiter.</p>
+
+                    <pre style="font-size:0.9em; margin-bottom:36px;"><code data-trim data-noescape class="python">
+                    my_groceries = 'apples,bananas,carrots'
+                    grocery_items = my_groceries.split(',')
+
+                    for item in grocery_items:
+                        print(item)
+                    </code></pre>
+
+                    <p><a href="https://docs.python.org/3/library/stdtypes.html#str.split">Python documentation: str.split</a></p>
 
                 </section>
 
@@ -255,6 +287,18 @@
 
                 </section>
 
+                <section>
+                    <h3>Exercise</h3>
+
+                    <ul>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/StringsBracketAccess">Bracket access</a></li>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/StringsSplitJoin">Split/Join</a></li>
+                    </ul>
+                </section>
+
+                <section class="heading-only">
+                    <h2>Dictionaries</h2>
+                </section>
 
 				<section>
 					<h3>Dictionaries</h3>
@@ -456,7 +500,11 @@
 						<tr>
 							<td style="font-weight:bold;">Lists of tuples</td>
 							<td><code>[ (1, 2), (3, 4) ]</code></td>
-						</tr>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold;">Lists of dicts</td>
+                            <td><code>[{"x": 1, "y": 2}, {"x": 5, "y": 8}]</code></td>
+                        </tr>
 						<tr>
 							<td style="font-weight:bold;">Tuples of tuples</td>
 							<td><code>( (1, 2), (3, 4) )</code></td>
@@ -464,7 +512,7 @@
 						<tr>
 							<td style="font-weight:bold;">Dicts of tuples</td>
 							<td><code>{"x": (1, 2), "y": (3, 4)}</code></td>
-						</tr>
+                        </tr>
 						<tr>
 							<td style="font-weight:bold;">Dicts of lists</td>
 							<td><code>{"heights": [89, 97], "ages": [6, 8]}</code></td>
@@ -478,6 +526,8 @@
 
                     <ul>
                         <li><a target="_blank" href="https://replit.com/team/gdi01/DictionariesBookList">reading list</a></li>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/ListsGridSum">grid_sum()</a></li>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/ListsGridContains15">contains_15()</a></li>
                     </ul>
                 </section>
 
@@ -502,25 +552,6 @@
 
                 </section>
 
-                <section>
-                    <h3>Web scraping & Markov chains</h3>
-
-                    <a href="https://replit.com/@PamelaFox2/BeautifulSoupDemo" target="_blank">👉🏽 Demo: Composing Gobbledygooks</a>
-
-                    <p><strong>Web scraping</strong>: Getting data from webpages by traversing the HTML.</p>
-
-                    <p><strong>Markov chain</strong>: A way to generate a sequence based on the probabalistic next token.</p>
-                    <img src="https://sookocheff.com/post/nlp/ngram-modeling-with-markov-chains/following-transitions-from-I.png" alt="Markov diagram"/>
-
-                    <br>
-
-                    <p class="smaller">Further learning:
-                        <a href="https://docs.python.org/3/howto/urllib2.html" target="_blank">urllib2 module</a>,
-                        <a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/" target="_blank">BeautifulSoup docs</a>,
-                        <a href="https://sookocheff.com/post/nlp/ngram-modeling-with-markov-chains/" target="_blank">N-Gram modeling with Markov chains</a>,
-                        CS70/EECS126 for Markov chains
-                    </p>
-                </section>
 
 
 
@@ -530,7 +561,7 @@
                     <p>A Python web application can be built with a server framework like Flask/Django
                         plus a database for persistent data storage.</p>
 
-                    <img src="https://i.imgur.com/saWrqSL.png" alt="Diagram of SQL usage in web application">
+                    <img src="https://www.teaching-materials.org/tech101/images/webconvo.png" alt="Diagram of web application">
 
                 </section>
 
@@ -564,6 +595,25 @@
                 </section>
 
 
+
+                <section>
+                    <h3>Web scraping & Markov chains</h3>
+
+                    <a href="https://replit.com/@PamelaFox2/BeautifulSoupDemo" target="_blank">👉🏽 Demo: Composing Gobbledygooks</a>
+
+                    <p><strong>Web scraping</strong>: Getting data from webpages by traversing the HTML.</p>
+
+                    <p><strong>Markov chain</strong>: A way to generate a sequence based on the probabalistic next token.</p>
+                    <img src="https://sookocheff.com/post/nlp/ngram-modeling-with-markov-chains/following-transitions-from-I.png" alt="Markov diagram"/>
+
+                    <br>
+
+                    <p class="smaller">Further learning:
+                        <a href="https://docs.python.org/3/howto/urllib2.html" target="_blank">urllib2 module</a>,
+                        <a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/" target="_blank">BeautifulSoup docs</a>,
+                        <a href="https://sookocheff.com/post/nlp/ngram-modeling-with-markov-chains/" target="_blank">N-Gram modeling with Markov chains</a>
+                    </p>
+                </section>
 
                 <section>
                     <h3>Turtle & L-systems</h3>
@@ -605,8 +655,7 @@
                     <p class="smaller">Further learning:
                         <a href="http://www.nltk.org/book/ch08.html" target="_blank">NLTK Book</a>,
                         <a href="https://realpython.com/python-nltk-sentiment-analysis/" target="_blank">NLTK Sentiment Analysis</a>,
-                        <a href="https://web.stanford.edu/~jurafsky/" target="_blank">Dan Jurafsky's lectures and books</a>,
-                        Berkeley classes: INFO 159, CS 288
+                        <a href="https://web.stanford.edu/~jurafsky/" target="_blank">Dan Jurafsky's lectures and books</a>
                     </p>
 
                 </section>
