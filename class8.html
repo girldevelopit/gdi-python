@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-		<title>Files</title>
+		<title>Files & Errors</title>
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reset.css">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.css">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/theme/simple.css" id="theme">
@@ -135,10 +135,10 @@
                     <h3>Class outline:</h3>
 
                     <ul style="font-size:1.0em;">
-                        <li>Welcome
-                        <li>String formatting
-                        <li>String methods
-                        <li>Files
+                        <li>Reading/writing Files
+                        <li>CSV Files
+                        <li>Error types
+                        <li>Exceptions
                     </ul>
 
                     <!-- Lesson plan
@@ -146,7 +146,10 @@
                     12:15 - Exercise
                     12:30 - CSV Files
                     12:40 - Exercise
-                    1:15 - ?
+                    1:15 - Error types
+                    1:25 - Exercise
+                    1:40 - Exceptions
+                    1:50 - Exercise
                     -->
                 </section>
 
@@ -424,6 +427,222 @@
 
                 </section>
 
+                <section>
+                    <h3>Exercise</h3>
+
+                    <ul>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/FilesPlantsCSV">Plants CSV</a></li>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/FilesBooksCSV">Books CSV</a></li>
+                    </ul>
+
+                    <p>💬  If you need any tips or help, just DM on Zoom and say 'I'm stuck on...' or 'Can you give me a tip on...'</p>
+
+                </section>
+
+                <section class="heading-only">
+                    <h2>Errors</h2>
+                </section>
+
+                <section>
+                    <h3>Types of errors</h3>
+
+                    <ul>
+                        <li>Syntax errors</li>
+                        <li>Logic errors</li>
+                        <li>Runtime errors</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Syntax errors</h3>
+
+                    <p>Each programming language has syntactic rules.
+                        If the rules aren't followed, the program cannot be parsed
+                        and will not be executed at all.</p>
+
+                    <p>Spot the syntax errors:</p>
+                    <pre style="font-size:0.7em;"><code data-trim data-noescape class="python">
+                    if x > 5 <span class="fragment"># Missing colon</span>
+                       x += 1
+                    </code></pre>
+
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    sum = 0
+                    for x in range(0, 10):
+                       sum + = x <span class="fragment"># No space needed between + and =</span>
+                    </code></pre>
+
+                    <p>To fix a syntax error, read the message carefully and go through your code with a critical eye. 👁 </p>
+                </section>
+
+                <section>
+                    <h3>Logic errors</h3>
+
+                    <p>A program has a logic error if it does not behave as expected.
+                        Typically discovered via failing tests or bug reports from users.
+                    </p>
+
+                    <p>Spot the logic error:</p>
+                    <pre style="font-size:0.9em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    # Sum up the numbers from 1 to 10
+                    sum = 0
+                    for x in range(1, 10):
+                      sum += x
+                    </code></pre>
+
+                    <p>To avoid the wrath of angry users, <a target="_blank" href="https://replit.com/@pamelafox/SumTenTested">write tests</a>.</p>
+                </section>
+
+                <section>
+                    <h3>Runtime errors</h3>
+
+                    <p>A runtime error happens <em>while</em> a program is running,
+                        often halting the execution of the program.
+                     Each programming language defines its own runtime errors.
+                    </p>
+
+                    <p>Spot the runtime error:</p>
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    def div_numbers(dividend, divisor):
+                        return dividend/divisor
+
+                    quot1 = div_numbers(10, 2)
+                    quot2 = div_numbers(10, 1)
+                    quot3 = div_numbers(10, 0)  <span class="fragment"># Cannot divide by 0!</span>
+                    quot4 = div_numbers(10, -1)
+                    </code></pre>
+
+                    <p>To prevent runtime errors, code defensively and write tests for all edge cases.</p>
+                </section>
+
+                <section>
+                    <h3>Exercise</h3>
+
+                    <ul>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/ErrorsErrorQuiz">Errors Quiz</a></li>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/ErrorsFixSumUp">FixerUpper: Sum Up</a></li>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/ErrorsFixCountPositive">FixerUpper: Count Positive</a></li>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/ErrorsFixGetIndex">FixerUpper: Get Index</a></li>
+                    </ul>
+
+                    <p>💬  If you need any tips or help, just DM on Zoom and say 'I'm stuck on...' or 'Can you give me a tip on...'</p>
+                </section>
+
+                </section>
+
+                <section class="heading-only">
+                    <h2>Exceptions</h2>
+                </section>
+
+                <section>
+                    <h3>Exceptions</h3>
+
+                    <p>Python raises an <strong>exception</strong> whenever a runtime error occurs.
+                    An exception is a mechanism in many languages used to declare and respond to "exceptional" conditions.</p>
+
+                    <p>How an exception is reported:</p>
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    >>> 10/0
+                    Traceback (most recent call last):
+                        File "&lt;stdin&gt;", line 1, in <module>
+                    ZeroDivisionError: division by zero
+                    </code></pre>
+
+                    <p>If an exception is not handled, the program stops executing immediately.</p>
+                </section>
+
+                <section>
+                    <h3>Types of exceptions</h3>
+
+                    <p>A few exception types and examples of buggy code:</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Exception
+                                <th>Example
+                        <tbody>
+                            <tr>
+                                <td><code>OverflowError</code>
+                                <td><code>pow(2.12, 1000)</code>
+                            <tr>
+                                <td><code>TypeError</code>
+                                <td><code>'hello'[1] = 'j'</code>
+                            <tr>
+                                <td><code>IndexError</code>
+                                <td><Code>'hello'[7]</code>
+                            <tr>
+                                <td><code>NameError</code>
+                                <td><code>x += 5</code>
+                            <tr>
+                                <td><code>FileNotFoundError</code>
+                                <td><code>open('dsfdfd.txt')</code>
+                    </table>
+
+                    <p>See full list in the <a target="_blank" href="https://docs.python.org/3/library/exceptions.html">exceptions docs</a>.</p>
+
+                </section>
+
+                <section>
+                    <h3>The try statement</h3>
+
+                    <p>To handle an exception (keep the program running), use a <code>try</code> statement.</p>
+
+                    <pre style="font-size:1.0em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    try:
+                        &lt;try suite&gt;
+                    except &lt;exception class&gt; as &lt;name&gt;:
+                        &lt;except suite&gt;
+                       ...
+                    </code></pre>
+
+                    <p class="smaller">The <code>&lt;try suite&gt;</code> is executed first.
+                        If, during the course of executing the <code>&lt;try suite&gt;</code>, an exception is raised that is not handled otherwise, and
+                        If the class of the exception inherits from <code>&lt;exception class&gt;</code>, then
+                        the <code>&lt;except suite&gt;</code> is executed, with <code>&lt;name&gt;</code> bound to the exception.
+                    </p>
+                </section>
+
+                <section>
+                    <h3>Try statement example</h3>
+
+                    <pre style="font-size:1.0em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    try:
+                        quot = 10/0
+                    except ZeroDivisionError as e:
+                        print('handling a', type(e))
+                        quot = 0
+                    </code></pre>
+
+                    <p class="python-tutor-link"><a target="_blank" href="http://pythontutor.com/visualize.html#code=try%3A%0A%20%20%20%20quot%20%3D%2010/0%0Aexcept%20ZeroDivisionError%20as%20e%3A%0A%20%20%20%20print%28'handling%20a',%20type%28e%29%29%0A%20%20%20%20quot%20%3D%200&cumulative=true&curInstr=0&heapPrimitives=nevernest&mode=display&origin=opt-frontend.js&py=3&rawInputLstJSON=%5B%5D&textReferences=false">Try in PythonTutor</a></p>
+                </section>
+
+                <section>
+                    <h3>Try inside a function</h3>
+
+                    <pre style="font-size:0.9em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    def div_numbers(dividend, divisor):
+                        try:
+                            quotient = dividend/divisor
+                        except ZeroDivisionError:
+                            print("Function was called with 0 as divisor")
+                            quotient = 0
+                        return quotient
+
+                    div_numbers(10, 2)
+                    div_numbers(10, 0)
+                    div_numbers(10, -1)
+                    </code></pre>
+
+                    <p class="python-tutor-link"><a target="_blank" href="http://pythontutor.com/visualize.html#code=def%20div_numbers%28dividend,%20divisor%29%3A%0A%20%20%20%20try%3A%0A%20%20%20%20%20%20%20%20quotient%20%3D%20dividend/divisor%0A%20%20%20%20except%20ZeroDivisionError%3A%0A%20%20%20%20%20%20%20%20print%28%22Function%20was%20called%20with%200%20as%20divisor%22%29%0A%20%20%20%20%20%20%20%20quotient%20%3D%200%0A%20%20%20%20return%20quotient%0A%0Adiv_numbers%2810,%202%29%0Adiv_numbers%2810,%200%29%0Adiv_numbers%2810,%20-1%29&cumulative=true&curInstr=0&heapPrimitives=nevernest&mode=display&origin=opt-frontend.js&py=3&rawInputLstJSON=%5B%5D&textReferences=false">Try in PythonTutor</a></p>
+                </section>
+
+                <section>
+                    <h3>Exercise</h3>
+
+                    <p>We'll start this one together.</p>
+
+                    <p><a target="_blank" href="https://replit.com/team/gdi01/ErrorsExceptionCatcher">Exception catcher</a></p>
+                </section>
 
 			</div>
 		</div>
