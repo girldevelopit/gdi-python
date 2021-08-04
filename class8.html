@@ -1,0 +1,464 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>Files</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reset.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/theme/simple.css" id="theme">
+		<link rel="stylesheet" href="https://cs61a.org/assets/css/mono-blue.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
+		<style>
+			.reveal {
+				font-family: "Work Sans", sans-serif;
+			}
+
+			.reveal .slides section {
+				text-align: left;
+				font-size: smaller;
+			}
+
+			.reveal pre {
+				background-color: #f5f5f5;
+				width: 100%;
+				border: 1px solid #ccc;
+				border-radius: 4px;
+				box-shadow: none;
+			}
+
+			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+				font-family: "Roboto", sans-serif;
+				color: #0072c1;
+			}
+
+			.reveal section.heading-only {
+				text-align:center;
+				padding-top:20%;
+			}
+
+            .column .no-code-badge .code-badge {
+                display: none;
+            }
+
+            .code-badge-language {
+                display: none;
+            }
+
+			.python-tutor-link {
+				font-size: smaller;
+			}
+
+			.python-tutor-link:before {
+				content: "";
+				display: block;
+				background: url("http://pythontutor.com/favicon.ico") no-repeat;
+				width: 48px;
+				height: 48px;
+				float: left;
+				margin: 0 6px 0 0;
+			}
+
+			.reveal h3 {
+				margin-bottom: 40px;
+			}
+
+            .smaller {
+                font-size: smaller;
+            }
+
+            code {
+                padding: 2px 4px;
+                font-size: 90%;
+                color: #0072c1;
+                background-color: #f9f2f4;
+                border-radius: 4px;
+            }
+
+            p.padded {
+                margin-top: 32px;
+            }
+
+            section .row {
+                display: flex;
+            }
+
+            section .column {
+                flex: 48%;
+                margin: 10px;
+            }
+
+			@media print
+			{
+				.no-print, .no-print *
+				{
+					display: none !important;
+				}
+			}
+
+
+            .regex-input {
+                border:1px solid rgb(204, 204, 204);
+                background: rgb(245, 245, 245);
+                padding: 8px;
+            }
+
+            .regex-input input {
+                font-size: inherit;
+            }
+
+            .regex-input input[type=text]:invalid {
+                background-color: pink;
+            }
+
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+				<section class="heading-only" style="padding-top:5%">
+                    <h1>Files</h1>
+
+					<div class="no-print" style="text-align: left; margin-top: 100px; font-size: 70%;">
+						Tips for navigating the slides:
+						<ul>
+							<li>Press O or Escape for overview mode.</li>
+							<li>Visit <a href="?print-pdf" target="_blank">this link</a> for a nice printable version</li>
+							<li>Press the copy icon on the upper right of code blocks to copy the code</li>
+						</ul>
+					</div>
+				</section>
+
+
+                <section>
+                    <h3>Class outline:</h3>
+
+                    <ul style="font-size:1.0em;">
+                        <li>Welcome
+                        <li>String formatting
+                        <li>String methods
+                        <li>Files
+                    </ul>
+
+                    <!-- Lesson plan
+                    12:05 - Files
+                    12:15 - Exercise
+                    12:30 - CSV Files
+                    12:40 - Exercise
+                    1:15 - ?
+                    -->
+                </section>
+
+
+                <section class="heading-only">
+                    <h2>Files</h2>
+                </section>
+
+                <section>
+                    <h3>Types of files</h3>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Type
+                                <th>Description
+                        <tbody class="smaller">
+                            <tr>
+                                <td>Text
+                                <td>Contains one or more lines that contain text characters,
+                                    encoded according to a character encoding (like UTF-8).
+                                    Each file ends with a control character:<br>
+                                    <ul>
+                                        <li>Unix/Linux: Line feed (<code>\n</code>)
+                                        <li>Mac: Carriage return (<code>\r</code>)
+                                        <li>Windows: Both (<code>\n\r</code>)
+                                    </ul>
+                                    <br><br>
+                            <tr>
+                                <td>Binary
+                                <td>Any file that is not a text file. The bytes are typically
+                                    intended to be interpreted as something other than a text file,
+                                    according to the file extension.<br>
+                                    e.g. images (GIF/JPG/PNG/), audio files (WAV/MP3), video files (MOV/MP4),
+                                    compressed files (ZIP/RAR).
+                    </table>
+                </section>
+
+                <section>
+                    <h3>File manipulation</h3>
+                    <ol>
+                        <li>Open the file
+                        <li>Either read data from file or write data to file
+                        <li>Close the file
+                    </ol>
+                </section>
+
+                <section>
+                    <h3>The built-in open()</h3>
+
+                    <p><a href="https://docs.python.org/3/library/functions.html#open" target="_blank"><code>open(file, mode='r', ...)</code></a>:
+                        Returns a file object for the specified <code>file</code> and <code>mode</code>.
+                    </p>
+
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    my_file = open("myinfo.txt", mode="r")
+                    </code></pre>
+
+                    <p class="smaller">Some of the possible modes:</p>
+                    <table class="smaller">
+                        <thead>
+                            <tr>
+                                <td>Character
+                                <td>Mode
+                                <td>Description
+                        <tbody>
+                            <tr>
+                                <td><code>r</code>
+                                <td>Read
+                                <td>If the file does not exist, this raises an error.
+                            <tr>
+                                <td><code>w</code>
+                                <td>Write
+                                <td>If the file does not exist, this mode creates it.
+                                    If file already exists, this mode deletes all data.
+                            <tr>
+                                <td><code>z</code>
+                                <td>Append
+                                <td>If the file does not exist, this mode creates it.
+                                    If file already exists, this mode appends data to end
+                                    of existing data.
+                            <tr>
+                                <td><code>b</code>
+                                <td>Binary
+                                <td>Use for binary files along with <code>r</code> or <code>w</code> more.
+                    </table>
+                </section>
+
+                <section>
+                    <h3>Closing files</h3>
+
+                    <p>Option 1: The <code>file.close()</code> method closes the file, ending all operations
+                        and freeing up resources.</p>
+
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    my_file = open("myinfo.txt", mode="r")
+                    my_file.close()
+                    </code></pre>
+
+                    <p>Option 2: Use a <code>with</code> statement so that the file is closed automatically.</p>
+
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    with open("myinfo.txt", mode="r") as my_file:
+                        my_file.close()
+                    </code></pre>
+                </section>
+
+
+                <section>
+                    <h3>Reading the whole file</h3>
+
+                    <p>Use the <code>file.read()</code> method to
+                        receive the entire contents of the file as a string.</p>
+
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    with open("myinfo.txt", mode="r") as my_file:
+                        my_info = my_file.read()
+                    </code></pre>
+
+                    <p>Use the <code>file.readlines()</code> method to
+                        receive the entire file as a list of strings (one for each line).</p>
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    with open("myinfo.txt", mode="r") as my_file:
+                        my_details = my_file.readlines()
+
+                    for detail in my_details:
+                        print(detail)
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Reading lazily</h3>
+
+                    <p>Use the <code>file.readline()</code> method to read only one line
+                        at a time.</p>
+
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    rows = []
+                    with open("longbook.txt", mode="r") as my_file:
+                        for line in my_file:
+                            rows.append(line)
+                    </code></pre>
+
+                    <p>This approach allows you to stop reading before the end:</p>
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    rows = []
+                    with open("longbook.txt", mode="r") as my_file:
+                        for line in my_file:
+                            rows.append(line)
+                            if row.find('The End') > -1:
+                                break
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Exercise</h3>
+
+                    <ul>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/FilesCleanFile">clean_file()</a></li>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/FilesFileStart">file_start()</a></li>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/FilesFileWords">file_words()</a></li>
+                    </ul>
+
+                    <p>💬  If you need any tips or help, just DM on Zoom and say 'I'm stuck on...' or 'Can you give me a tip on...'</p>
+                </section>
+
+                <section>
+                    <h3>Writing to files</h3>
+
+                    <p>Use the <code>file.write()</code> method to write to a text file:</p>
+
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    with open("myinfo.txt", mode="w") as my_file:
+                        my_file.write("Birth city: Pasadena, CA")
+
+                    with open("myinfo.txt", mode="a") as my_file:
+                        my_file.write("First pet: Rosarita (Rabbit)")
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Example: Reading/writing lists</h3>
+
+                    <p>Write them items in a list to a file:</p>
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    authors = ["Ursula K. Le Guin", "N. K. Jemisin", "Octavia E. Butler"]
+                    with open("authors.txt", "w") as file:
+                        for author in authors:
+                            file.write(author + "\n")
+                    </code></pre>
+
+                    <p>Read the lines in a file into a list:</p>
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    authors = []
+                    with open("authors.txt") as file:
+                        for line in file:
+                            authors.append(line.replace("\n", ""))
+                    </code></pre>
+                </section>
+
+
+                <section>
+                    <h3>Exercise</h3>
+
+                    <ul>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/FilesGroceryList">grocery_list()</a></li>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/FilesGroceryListPt2">grocery_list2()</a></li>
+                    </ul>
+
+                    <p>💬  If you need any tips or help, just DM on Zoom and say 'I'm stuck on...' or 'Can you give me a tip on...'</p>
+                </section>
+
+                <section class="heading-only">
+                    <h2>CSV Files</h2>
+                </section>
+
+                <section>
+                    <h3>CSV file manipulation</h3>
+
+                    <ol>
+                        <li>Open the file (same as before)
+                        <li>Read using <code>csv.reader()</code> or write using <code>csv.writer()</code>
+                        <li>Close the file (same as before)
+                    </ol>
+                </section>
+
+                <section>
+                    <h3>Reading CSV files</h3>
+
+                    <p>Use <a target="_blank" href="https://docs.python.org/3/library/csv.html#csv.reader">csv.reader()</a>
+                        to read the lines of a CSV.</p>
+
+                    <p class="smaller">states.csv:</p>
+                    <pre style="font-size:0.5em;"><code data-trim data-noescape class="text">
+                    AD,Andorra,Andorra la Vella,Europe
+                    AF,Afghanistan,Kabul,Asia
+                    AG,Antigua and Barbuda,St. John's,North America
+                    AL,Albania,Tirana,Europe
+                    AM,Armenia,Yerevan,Asia
+                    AO,Angola,Luanda,Africa
+                    AR,Argentina,Buenos Aires,South America
+                    ...
+                    </code></pre>
+
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    import csv
+
+                    states = []
+                    with open("countries.csv", newline='') as file:
+                        reader = csv.reader(file)
+                        for row in reader:
+                            states.append(row)
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Writing CSV files</h3>
+
+                    <p>Use <a target="_blank" href="https://docs.python.org/3/library/csv.html#csv.writer">csv.writer()</a>
+                        to write lines of a CSV.</p>
+
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    import csv
+
+                    movies = [
+                        ["Ponyo", 2009],
+                        ["My Neighbor Totoro", 1993],
+                        ["Coco", 2017],
+                        ["Moana", 2016]
+                    ]
+                    with open("movies.csv", mode="w", newline="") as file:
+                        writer = csv.writer(file)
+                        writer.writerows(movies)
+                    </code></pre>
+
+                </section>
+
+
+			</div>
+		</div>
+
+		<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/plugin/highlight/highlight.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.15.5/js/jsplumb.min.js"></script>
+		<script>
+			const srcUrlPrefix = "https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/";
+			Reveal.initialize({
+				hash: true,
+				center: false,
+				slideNumber: true,
+				showNotes: false,
+				margin: 0.1,
+				preloadIframes: true,
+				plugins: [ RevealHighlight ],
+				pdfSeparateFragments: true
+			});
+
+            // add HighlightJS-badge (options are optional)
+            var options = {
+                copyIconContent: "📄",
+                checkIconContent: "✅"
+            };
+            window.highlightJsBadge(options);
+
+            if (window.location.search == "?print-pdf") {
+                var uncounted = document.querySelectorAll("[data-visibility='uncounted']");
+                uncounted.forEach(node => {
+                    node.parentNode.classList.add("no-print")
+                })
+            }
+		</script>
+	</body>
+</html>
+
