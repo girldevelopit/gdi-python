@@ -639,6 +639,28 @@
                 </section>
 
                 <section>
+                    <h3>Handle file exceptions</h3>
+
+                    <pre style="font-size:0.9em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    def read_movies(filename):
+                        try:
+                          with open(filename, newline="") as file:
+                            movies = []
+                            reader = csv.reader(file)
+                            for row in reader:
+                              movies.append(row)
+                            return movies
+                        except Exception as e:
+                          print(e)
+                          return []
+
+                    read_movies("movies.csv")
+                    read_movies("movies2.csv")
+                    </code></pre>
+
+                </section>
+
+                <section>
                     <h3>Exercise</h3>
 
                     <p>We'll start this one together.</p>
