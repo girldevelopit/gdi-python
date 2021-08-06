@@ -136,6 +136,8 @@
 
                     <ul style="font-size:1.0em;">
                         <li>Error types
+                        <li>Tracebacks
+                        <li>Debugging
                         <li>Exceptions
                     </ul>
 
@@ -158,11 +160,51 @@
                 <section>
                     <h3>Types of errors</h3>
 
+                    <p>These are common to all programming languages:</p>
                     <ul>
-                        <li>Syntax errors</li>
                         <li>Logic errors</li>
+                        <li>Syntax errors</li>
                         <li>Runtime errors</li>
                     </ul>
+                </section>
+
+                <section class="heading-only">
+                    <h2>Logic errors</h2>
+                </section>
+
+                <section>
+                    <h3>Logic errors</h3>
+
+                    <p>A program has a logic error if it does not behave as expected.
+                        Typically discovered via failing tests or bug reports from users.
+                    </p>
+
+                    <p>Spot the logic error:</p>
+                    <pre style="font-size:0.9em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    # Sum up the numbers from 1 to 10
+                    sum = 0
+                    for x in range(1, 10):
+                      sum += x
+                    </code></pre>
+
+                    <p>To avoid the wrath of angry users, <a target="_blank" href="https://replit.com/@pamelafox/SumTenTested">write tests</a>.</p>
+                </section>
+
+                <section>
+                    <h3>Exercise</h3>
+
+                    <ul>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/ErrorsFixSumUp">FixerUpper: Sum Up</a></li>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/ErrorsFixCountPositive">FixerUpper: Count Positive</a></li>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/ErrorsFixGetIndex">FixerUpper: Get Index</a></li>
+                    </ul>
+
+                    <p>💬  If you need any tips or help, just DM on Zoom and say 'I'm stuck on...' or 'Can you give me a tip on...'</p>
+
+                </section>
+
+                <section class="heading-only">
+                    <h2>Syntax errors</h2>
                 </section>
 
                 <section>
@@ -188,21 +230,71 @@
                 </section>
 
                 <section>
-                    <h3>Logic errors</h3>
+                    <h3><code>SyntaxError</code></h3>
 
-                    <p>A program has a logic error if it does not behave as expected.
-                        Typically discovered via failing tests or bug reports from users.
+                    <p class="smaller"><em>What it technically means:</em>
+                        <br>
+                        The file you ran isn’t valid python syntax
                     </p>
 
-                    <p>Spot the logic error:</p>
-                    <pre style="font-size:0.9em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
-                    # Sum up the numbers from 1 to 10
-                    sum = 0
-                    for x in range(1, 10):
-                      sum += x
+                    <p class="smaller"><em>What it practically means:</em>
+                        <br>
+                        You made a typo
+                    </p>
+
+                    <p class="smaller"><em>What you should look for:</em>
+                            <ul class="smaller">
+                                <li>Extra or missing parenthesis
+                                <li>Missing colon at the end of an if, while, def statements, etc.
+                                <li>You started writing a statement but forgot to put any clauses inside
+                            </ul>
+                    </p>
+
+                    <p class="smaller"><em>Examples:</em></p>
+                    <pre style="font-size:0.7em;"><code data-trim data-noescape class="python">
+                    print("just testing here"))
+                    </code></pre>
+                    <pre style="font-size:0.7em;"><code data-trim data-noescape class="python">
+                    title = 'Hello, ' + name ', how are you?'
                     </code></pre>
 
-                    <p>To avoid the wrath of angry users, <a target="_blank" href="https://replit.com/@pamelafox/SumTenTested">write tests</a>.</p>
+                </section>
+
+                <section>
+                    <h3><code>IndentationError</code>/<code>TabError</code></h3>
+
+                    <p class="smaller"><em>What it technically means:</em>
+                        <br>
+                        The file you ran isn't valid Python syntax, due to indentation inconsistency.
+                    </p>
+
+                    <p class="smaller"><em>What it sometimes means:</em>
+                        <br>
+                        You used the wrong text editor (or one with different settings)
+                    </p>
+
+                    <p class="smaller"><em>What you should look for:</em>
+                        <ul class="smaller">
+                            <li>A typo or misaligned block of statements
+                            <li>A mix of tabs and spaces
+                                <ul>
+                                    <li>Open your file in an editor that shows them
+                                    <li><code>cat -A filename.py</code> will show them
+                                </ul>
+                        </ul>
+                    </p>
+
+                    <p class="smaller"><em>Example:</em></p>
+
+                    <pre style="font-size:0.7em;"><code data-trim data-noescape class="python">
+                    def sum(a, b):
+                        total = a + b
+                    	return total
+                    </code></pre>
+                </section>
+
+                <section class="heading-only">
+                    <h2>Runtime errors</h2>
                 </section>
 
                 <section>
@@ -227,19 +319,217 @@
                     <p>To prevent runtime errors, code defensively and write tests for all edge cases.</p>
                 </section>
 
+
+
+                <section>
+                    <h3 style="font-size:1.4em;"><code>TypeError:'X' object is not callable</code></h3>
+
+                    <p class="smaller"><em>What it technically means:</em>
+                        <br>
+                        Objects of type X cannot be treated as functions
+                    </p>
+
+                    <p class="smaller"><em>What it practically means:</em>
+                        <br>
+                        You accidentally called a non-function as if it were a function
+                    </p>
+
+                    <p class="smaller"><em>What you should look for:</em>
+                        <ul class="smaller">
+                            <li>Parentheses after variables that aren't functions
+                            <!--
+                            <li>Variables that should be functions being assigned to non-functions
+                            <li>Local variables that do not contain functions having the same name
+                            as functions in the global frame
+                            -->
+                        </ul>
+                    </p>
+
+                    <p class="smaller"><em>Example:</em></p>
+
+                    <pre style="font-size:0.7em;"><code data-trim data-noescape class="python">
+                    sum = 2 + 2
+                    sum(3, 5)
+                    </code></pre>
+                </section>
+
+
+                <section>
+                    <h3><code>...NoneType...</code></h3>
+
+                    <p class="smaller"><em>What it technically means:</em>
+                        <br>
+                        You used None in some operation it wasn't meant for
+                    </p>
+
+                    <p class="smaller"><em>What it practically means:</em>
+                        <br>
+                        You forgot a return statement in a function
+                    </p>
+
+                    <p class="smaller"><em>What you should look for:</em>
+                        <ul class="smaller">
+                            <li>Functions missing return statements
+                            <li>Printing instead of returning a value
+                        </ul>
+                    </p>
+
+                    <p class="smaller"><em>Example:</em></p>
+
+                    <pre style="font-size:0.7em;"><code data-trim data-noescape class="python">
+                    def sum(a, b):
+                        print(a + b)
+
+                    total = sum( sum(30, 45), sum(10, 15) )
+                    </code></pre>
+
+                </section>
+
+                <section>
+                    <h3><code>NameError</code></h3>
+
+                    <p class="smaller"><em>What it technically means:</em>
+                        <br>
+                        Python looked up a name but couldn't find it
+                    </p>
+
+                    <p class="smaller"><em>What it practically means:</em>
+                        <ul class="smaller">
+                            <li>You made a typo
+                            <!--<li>You are trying to access variables from the wrong frame-->
+                        </ul>
+                    </p>
+
+                    <p class="smaller"><em>What you should look for:</em>
+                        <ul class="smaller">
+                            <li>A typo in the name
+                            <!--<li>The variable being defined in a different frame than expected-->
+                        </ul>
+                    </p>
+
+                    <p class="smaller"><em>Example:</em></p>
+
+                    <pre style="font-size:0.7em;"><code data-trim data-noescape class="python">
+                    fav_nut = 'pistachio'
+                    best_chip = 'chocolate'
+                    trail_mix = Fav_Nut + best__chip
+                    </code></pre>
+
+                </section>
+
+                <!--<section>
+                    <h3><code>UnboundLocalError</code></h3>
+
+                    <p class="smaller"><em>What it technically means:</em>
+                        <br>
+                        A variable that's local to a frame was used before it was assigned
+                    </p>
+
+                    <p class="smaller"><em>What it practically means:</em>
+                        <br>
+                        You are trying to both use a variable from a parent frame,
+                        and have the same variable be a local variable in the current frame
+                    </p>
+
+                    <p class="smaller"><em>What you should look for:</em>
+                        <br>
+                        Assignments statements after the variable name
+                    </p>
+
+                    <p class="smaller"><em>Example:</em></p>
+
+                    <pre style="font-size:0.7em;"><code data-trim data-noescape class="python">
+                    </code></pre>
+
+                </section>-->
+
+
+                <section class="heading-only">
+                    <h2>TraceBacks</h2>
+                </section>
+
+                <section>
+                    <h3>What's a traceback?</h3>
+
+                    <p>When there's a runtime error in your code,
+                        you'll see a <strong>traceback</strong> in the console.</p>
+
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                        def div_numbers(dividend, divisor):
+                            return dividend/divisor
+
+                        quot1 = div_numbers(10, 2)
+                        quot2 = div_numbers(10, 1)
+                        quot3 = div_numbers(10, 0)
+                        quot4 = div_numbers(10, -1)
+                    </code></pre>
+
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="no-highlight" style="color:black;">
+                    Traceback (most recent call last):
+                        File "main.py", line 14, in &lt;module&gt;
+                            quot3 = div_numbers(10, 0)
+                        File "main.py", line 10, in div_numbers
+                            return dividend/divisor
+                    ZeroDivisionError: division by zero
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Parts of a Traceback</h3>
+
+                    <ul>
+                        <li><span style="color:red">The error message itself</span>
+                        <li><span style="color:green">Lines #s on the way to the error</span>
+                        <li><span style="color:blue">What’s on those lines</span>
+                    </ul>
+
+                    <p>The most recent line of code is always last (right before the error message).</p>
+
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="no-highlight" style="color:black;">
+                    Traceback (most recent call last):
+                        File "main.py", <span style="color:green">line 14</span>, in &lt;module&gt;
+                            <span style="color:blue">quot3 = div_numbers(10, 0)</span>
+                        File "main.py", <span style="color:green">line 10</span>, in div_numbers
+                            <span style="color:blue">return dividend/divisor</span>
+                    <span style="color:red">ZeroDivisionError: division by zero</span>
+                    </code></pre>
+                </section>
+
+
+                <section>
+                    <h3>Reading a Traceback</h3>
+
+                    <ol>
+                        <li>Read the error message (remember what common error messages mean!)
+                        <li>Look at <span style="color:blue">each line</span>, bottom to top,
+                            and see if you can find the error.
+                    </ol>
+
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="no-highlight" style="color:black;">
+                    Traceback (most recent call last):
+                        File "main.py", <span style="color:green">line 14</span>, in &lt;module&gt;
+                            <span style="color:blue">quot3 = div_numbers(10, 0)</span>
+                        File "main.py", <span style="color:green">line 10</span>, in div_numbers
+                            <span style="color:blue">return dividend/divisor</span>
+                    <span style="color:red">ZeroDivisionError: division by zero</span>
+                    </code></pre>
+                </section>
+
                 <section>
                     <h3>Exercise</h3>
 
+                    <p>Fix up all these projects:</p>
                     <ul>
-                        <li><a target="_blank" href="https://replit.com/team/gdi01/ErrorsErrorQuiz">Errors Quiz</a></li>
-                        <li><a target="_blank" href="https://replit.com/team/gdi01/ErrorsFixSumUp">FixerUpper: Sum Up</a></li>
-                        <li><a target="_blank" href="https://replit.com/team/gdi01/ErrorsFixCountPositive">FixerUpper: Count Positive</a></li>
-                        <li><a target="_blank" href="https://replit.com/team/gdi01/ErrorsFixGetIndex">FixerUpper: Get Index</a></li>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/ErrorsBrokenSongify">Broken Songify</a></li>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/ErrorsBrokenFiles">Broken Files</a></li>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/ErrorsBrokenStrings">Broken Strings</a></li>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/ErrorsBrokenCounts">Broken Counts</a></li>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/ErrorsBrokenSums">Broken Sums</a></li>
                     </ul>
 
-                    <p>💬  If you need any tips or help, just DM on Zoom and say 'I'm stuck on...' or 'Can you give me a tip on...'</p>
-                </section>
+                    <p>Plus an <a target="_blank" href="https://replit.com/team/gdi01/ErrorsErrorQuiz">Errors Quiz</a></p>
 
+                    <p>💬  If you need any tips or help, just DM on Zoom and say 'I'm stuck on...' or 'Can you give me a tip on...'</p>
                 </section>
 
                 <section class="heading-only">
@@ -355,6 +645,52 @@
 
                     <p><a target="_blank" href="https://replit.com/team/gdi01/ErrorsExceptionCatcher">Exception catcher</a></p>
                 </section>
+                <!--
+                <section class="heading-only">
+                    <h2>Testing</h3>
+                </section>
+
+                <section>
+                    <h3>Types of tests</h3>
+                    <ul>
+                        <li><strong>Unit tests</strong>: Does the small units of the system give a correct output for each input?
+                        <li><strong>Integration tests</strong>: Do the different parts of the system work together correctly?
+                        <li><strong>Smoke tests</strong>: Do the most basic features of the system work?
+                        <li><strong>End-to-end tests</strong>: Does the system handle an entire user workflow from start to end?
+                        <li><strong>User acceptance tests</strong>: Does the system meet the business requirements?
+                        <li><strong>Performance/load tests</strong>: Can the system scale to meet possible demand?
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Python unit tests</h3>
+
+                    <p class="smaller">It is possible to use <a href="https://docs.python.org/3/library/doctest.html">doctests</a> for unit testing,
+                        but it is better to use the <a href="https://docs.python.org/3/library/unittest.html">unit test</a> module
+                        to test production code.</p>
+
+                    <p>Make a separate file for testing:</p>
+                    <pre style="font-size:0.9em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    import unittest
+
+                    from main import div_numbers
+
+                    class TestStringMethods(unittest.TestCase):
+
+                        def test_div_integers(self):
+                            self.assertEqual(div_numbers(50, 25), 2)
+                            self.assertEqual(div_numbers(-50, 25), -2)
+
+                        def test_div_zero(self):
+                            self.assertEqual(div_numbers(50, 0), 0)
+
+                    if __name__ == '__main__':
+                            unittest.main()
+                    </code></pre>
+
+                </section>
+                -->
+
 
 			</div>
 		</div>
