@@ -1,0 +1,881 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>Inheritance + Composition</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reset.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/theme/simple.css" id="theme">
+		<link rel="stylesheet" href="https://cs61a.org/assets/css/mono-blue.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
+		<style>
+			.reveal {
+				font-family: "Work Sans", sans-serif;
+			}
+
+			.reveal .slides section {
+				text-align: left;
+				font-size: smaller;
+			}
+
+			.reveal pre {
+				background-color: #f5f5f5;
+				width: 100%;
+				border: 1px solid #ccc;
+				border-radius: 4px;
+				box-shadow: none;
+			}
+
+			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+				font-family: "Roboto", sans-serif;
+				color: #0072c1;
+			}
+
+			.reveal section.heading-only {
+				text-align:center;
+				padding-top:20%;
+			}
+
+            .column .no-code-badge .code-badge {
+                display: none;
+            }
+
+            .code-badge-language {
+                display: none;
+            }
+
+			.python-tutor-link {
+				font-size: smaller;
+			}
+
+			.python-tutor-link:before {
+				content: "";
+				display: block;
+				background: url("http://pythontutor.com/favicon.ico") no-repeat;
+				width: 48px;
+				height: 48px;
+				float: left;
+				margin: 0 6px 0 0;
+			}
+
+			.reveal h3 {
+				margin-bottom: 40px;
+			}
+
+            .smaller {
+                font-size: smaller;
+            }
+
+            code {
+                padding: 2px 4px;
+                font-size: 90%;
+                color: #0072c1;
+                background-color: #f9f2f4;
+                border-radius: 4px;
+            }
+
+            p.padded {
+                margin-top: 32px;
+            }
+
+            section .row {
+                display: flex;
+            }
+
+            section .column {
+                flex: 48%;
+                margin: 10px;
+            }
+
+			@media print
+			{
+				.no-print, .no-print *
+				{
+					display: none !important;
+				}
+			}
+
+
+            .regex-input {
+                border:1px solid rgb(204, 204, 204);
+                background: rgb(245, 245, 245);
+                padding: 8px;
+            }
+
+            .regex-input input {
+                font-size: inherit;
+            }
+
+            .regex-input input[type=text]:invalid {
+                background-color: pink;
+            }
+
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section class="heading-only">
+					<h1>Inheritance + Composition</h1>
+
+					<div class="no-print" style="text-align: left; margin-top: 100px; font-size: 70%;">
+						Tips for navigating the slides:
+						<ul>
+							<li>Press O or Escape for overview mode.</li>
+							<li>Visit <a href="?print-pdf" target="_blank">this link</a> for a nice printable version</li>
+							<li>Press the copy icon on the upper right of code blocks to copy the code</li>
+						</ul>
+					</div>
+				</section>
+
+                <section class="heading-only">
+                    <h2>Motivation</h2>
+                </section>
+
+                <section>
+                    <h3>Building "Animal Conserving"</h3>
+
+                    <p class="smaller">A game where we take care of cute furry/ferocious animals:</p>
+
+                    <img class="r-stretch" src="https://i.imgur.com/2mkDuTf.png" alt="A bunch of pairs of animals"/>
+                </section>
+
+                <section>
+                    <h3>What should be the classes?</h3>
+
+                    <img class="r-stretch" src="https://i.imgur.com/2mkDuTf.png" alt="A bunch of pairs of animals"/>
+
+                    <pre style="font-size:0.65em" class="fragment"><code data-trim data-noescape class="python">
+                    Panda()
+                    Lion()
+                    Rabbit()
+                    Vulture()
+                    Elephant()
+                    Food()
+                    </code></pre>
+
+                </section>
+
+                <section>
+
+                    <h3>A Food class</h3>
+
+                    <p>Let's start simple:</p>
+
+                    <pre style="font-size:0.8em"><code data-trim data-noescape class="python">
+                    class Food:
+
+                        def __init__(self, name, type, calories):
+                            self.name = name
+                            self.type = type
+                            self.calories = calories
+                    </code></pre>
+
+                    <p class="smaller">How would we use that class?</p>
+                    <pre style="font-size:0.8em" class="fragment"><code data-trim data-noescape class="python">
+                    broccoli = Food("Broccoli Rabe", "veggies", 20)
+                    bone_marrow = Food("Bone Marrow", "meat", 100)
+                    </code></pre>
+
+                </section>
+
+                <section>
+                    <h3>An Elephant class</h3>
+
+                    <pre style="font-size:0.4em"><code data-trim data-noescape class="python">
+                    class Elephant:
+                        species_name = "African Savanna Elephant"
+                        scientific_name = "Loxodonta africana"
+                        calories_needed = 8000
+
+                        def __init__(self, name, age=0):
+                            self.name = name
+                            self.age = age
+                            self.calories_eaten  = 0
+                            self.happiness = 0
+
+                        def play(self, num_hours):
+                            self.happiness += (num_hours * 4)
+                            print("WHEEE PLAY TIME!")
+
+                        def eat(self, food):
+                            self.calories_eaten += food.calories
+                            print(f"Om nom nom yummy {food.name}")
+                            if self.calories_eaten > self.calories_needed:
+                                self.happiness -= 1
+                                print("Ugh so full")
+
+                        def interact_with(self, animal2):
+                            self.happiness += 1
+                            print(f"Yay happy fun time with {animal2.name}")
+                    </code></pre>
+
+                    <p class="smaller">How would we use that class?</p>
+                    <pre style="font-size:0.6em" class="fragment"><code data-trim data-noescape class="python">
+                    el1 = Elephant("Willaby", 5)
+                    el2 = Elephant("Wallaby", 3)
+                    el1.play(2)
+                    el1.interact_with(el2)
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>A Rabbit class</h3>
+
+                    <pre style="font-size:0.4em"><code data-trim data-noescape class="python">
+                    class Rabbit:
+                        species_name = "European rabbit"
+                        scientific_name = "Oryctolagus cuniculus"
+                        calories_needed = 200
+
+                        def __init__(self, name, age=0):
+                            self.name = name
+                            self.age = age
+                            self.calories_eaten = 0
+                            self.happiness = 0
+
+                        def play(self, num_hours):
+                            self.happiness += (num_hours * 10)
+                            print("WHEEE PLAY TIME!")
+
+                        def eat(self, food):
+                            self.calories_eaten += food.calories
+                            print(f"Om nom nom yummy {food.name}")
+                            if self.calories_eaten > self.calories_needed:
+                                self.happiness -= 1
+                                print("Ugh so full")
+
+                        def interact_with(self, animal2):
+                            self.happiness += 4
+                            print(f"Yay happy fun time with {animal2.name}")
+                    </code></pre>
+
+                    <p class="smaller">How would we use that class?</p>
+                    <pre style="font-size:0.6em" class="fragment"><code data-trim data-noescape class="python">
+                    rabbit1 = Rabbit("Mister Wabbit", 3)
+                    rabbit2 = Rabbit("Bugs Bunny", 2)
+                    rabbit1.eat(broccoli)
+                    rabbit2.interact_with(rabbit1)
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Notice similarities?</h3>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Elephant</th>
+                                <th>Rabbit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                            <pre style="font-size:0.65em" class="no-code-badge"><code data-trim data-noescape class="python">
+                            # Class variables
+                            species_name
+                            scientific_name
+                            calories_needed
+
+                            # Instance variables
+                            name
+                            age
+                            happiness
+
+                            # Methods
+                            eat(food)
+                            play()
+                            interact_with(other)
+                            </code></pre>
+                                </td>
+                                <td>
+                            <pre style="font-size:0.65em" class="no-code-badge"><code data-trim data-noescape class="python">
+                            # Class variables
+                            species_name
+                            scientific_name
+                            calories_needed
+
+                            # Instance variables
+                            name
+                            age
+                            happiness
+
+                            # Methods
+                            eat(food)
+                            play()
+                            interact_with(other)
+                            </code></pre>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p class="smaller"><code>Elephant</code> and <code>Rabbit</code> are both animals,
+                        so they have similar attributes.
+                        Instead of repeating code, we can <em>inherit</em> the code.
+                    </p>
+                </section>
+
+                <section class="heading-only">
+                    <h3>Inheritance</h3>
+                </section>
+
+
+                <section>
+                    <h3>Base classes and subclasses</h3>
+
+                    <p>When multiple classes share similar attributes,
+                        you can reduce redundant code by defining a base class
+                        and then subclasses can inherit from the base class.</p>
+
+                    <img class="r-stretch" src="https://i.imgur.com/Sab6KOd.png" alt="Diagram of animal classes extending from Animal">
+
+                    <p class="smaller">Tip: The base class is also known as the <strong>superclass</strong>.</p>
+                </section>
+
+
+                <section>
+                    <h3>The base class</h3>
+
+                    <p>The base class
+                        contains method headers common to the subclasses,
+                        and code that is used by multiple subclasses.
+                    </p>
+
+                    <pre style="font-size:0.35em"><code data-trim data-noescape class="python">
+                    class Animal:
+                        species_name = "Animal"
+                        scientific_name = "Animalia"
+                        play_multiplier = 2
+                        interact_increment = 1
+
+                        def __init__(self, name, age=0):
+                            self.name = name
+                            self.age = age
+                            self.calories_eaten  = 0
+                            self.happiness = 0
+
+                        def play(self, num_hours):
+                            self.happiness += (num_hours * self.play_multiplier)
+                            print("WHEEE PLAY TIME!")
+
+                        def eat(self, food):
+                            self.calories_eaten += food.calories
+                            print(f"Om nom nom yummy {food.name}")
+                            if self.calories_eaten > self.calories_needed:
+                                self.happiness -= 1
+                                print("Ugh so full")
+
+                        def interact_with(self, animal2):
+                            self.happiness += self.interact_increment
+                            print(f"Yay happy fun time with {animal2.name}")
+                    </code></pre>
+
+                    <aside class="notes">What DON'T you see?</aside>
+
+                </section>
+
+                <section>
+                    <h3>The subclasses</h3>
+
+                    <p>To declare a subclass, put parentheses after the class name and specify the base class in the parentheses:</p>
+                    <pre style="font-size:0.85em"><code data-trim data-noescape class="python">
+                    class Panda(Animal):
+                    </code></pre>
+
+                    <p class="smaller">Then the subclasses only need the code that's unique to them. They can redefine any aspect: class variables, method definitions, or constructor.
+                    A redefinition is called <strong>overriding</strong>.
+                    </p>
+
+                    <p class="smaller">The simplest subclass overrides nothing:</p>
+
+                    <pre style="font-size:0.85em"><code data-trim data-noescape class="python">
+                    class AmorphousBlob(Animal):
+                        pass
+                    </code></pre>
+
+                </section>
+
+                <section>
+                    <h3>Overriding class variables</h3>
+
+                    <p>Subclasses can override existing class variables and assign new class variables:</p>
+
+                    <pre style="font-size:0.65em"><code data-trim data-noescape class="python">
+                    class Rabbit(Animal):
+                        species_name = "European rabbit"
+                        scientific_name = "Oryctolagus cuniculus"
+                        calories_needed = 200
+                        play_multiplier = 8
+                        interact_increment = 4
+                        num_in_litter = 12
+
+                    class Elephant(Animal):
+                        species_name = "African Savanna Elephant"
+                        scientific_name = "Loxodonta africana"
+                        calories_needed = 8000
+                        play_multiplier = 4
+                        interact_increment = 2
+                        num_tusks = 2
+                    </code></pre>
+
+                </section>
+
+                <section>
+                    <h3>Exercise</h3>
+
+                    <ul>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/OOPAnimalClassVars">Animal subclasses</a></li>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/OOPLearnableContentClassVars">LearnableContent subclasses</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Overriding methods</h3>
+
+                    <p>If a subclass overrides a method, Python will use that
+                        definition instead of the superclass definition.
+                    </p>
+
+                    <pre style="font-size:0.8em"><code data-trim data-noescape class="python">
+                    class Panda(Animal):
+                        species_name = "Giant Panda"
+                        scientific_name = "Ailuropoda melanoleuca"
+                        calories_needed = 6000
+
+                        def interact_with(self, other):
+                            print(f"I'm a Panda, I'm solitary, go away {other.name}!")
+                    </code></pre>
+
+                    <p class="smaller">How would we call that method?</p>
+                    <pre style="font-size:0.8em" class="fragment"><code data-trim data-noescape class="python">
+                    panda1 = Panda("Pandeybear", 6)
+                    panda2 = Panda("Spot", 3)
+                    panda1.interact_with(panda2)
+                    </code></pre>
+
+                </section>
+
+                <section>
+                    <h3>Exercise</h3>
+
+                    <ul>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/OOPCharacterMethods">Character methods</a></li>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/OOPClothingMethods">Clothing methods</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Using methods from the base class</h3>
+
+                    <p>To refer to a superclass method, we can use <code>super()</code>:</p>
+
+                    <pre style="font-size:0.8em"><code data-trim data-noescape class="python">
+                    class Lion(Animal):
+                        species_name = "Lion"
+                        scientific_name = "Panthera"
+                        calories_needed = 3000
+
+                        def eat(self, food):
+                            if food.type == "meat":
+                                super().eat(food)
+                    </code></pre>
+
+                    <p class="smaller">How would we call that method?</p>
+                    <pre style="font-size:0.8em" class="fragment"><code data-trim data-noescape class="python">
+                    bones = Food("Bones", "meat")
+                    mufasa = Lion("Mufasa", 10)
+                    mufasa.eat(bones)
+                    </code></pre>
+
+                    <aside class="notes">
+                        Why can't we write self.eat(food)? !
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>More on super()</h3>
+
+                    <p><code>super().attribute</code>
+                    refers to the definition of <code>attribute</code> in
+                    the superclass of the first parameter to the method.
+                    </p>
+
+                    <pre style="font-size:0.8em"><code data-trim data-noescape class="python">
+                    def eat(self, food):
+                        if food.type == "meat":
+                            super().eat(food)
+                    </code></pre>
+
+                    <p class="smaller">...is the same as:</p>
+                    <pre style="font-size:0.8em"><code data-trim data-noescape class="python">
+                    def eat(self, food):
+                        if food.type == "meat":
+                            Animal.eat(self, food)
+                    </code></pre>
+
+                    <p class="smaller"><code>super()</code> is better style than <code>BaseClassName</code>, though slightly slower.</p>
+
+                </section>
+
+                <section>
+                    <h3>Overriding __init__</h3>
+
+                    <p class="smaller">Similarly, we need to explicitly call <code>super().__init__()</code>
+                    if we want to call the <code>__init__</code> functionality
+                    of the base class.
+                    </p>
+
+                    <pre style="font-size:0.7em"><code data-trim data-noescape class="python">
+                    class Elephant(Animal):
+                        species_name = "Elephant"
+                        scientific_name = "Loxodonta"
+                        calories_needed = 8000
+
+                        def __init__(self, name, age=0):
+                            super().__init__(name, age)
+                            if age < 1:
+                                self.calories_needed = 1000
+                            elif age < 5:
+                                self.calories_needed = 3000
+                    </code></pre>
+
+                    <p>What would this display?</p>
+                    <pre style="font-size:0.7em"><code data-trim data-noescape class="python">
+                    elly = Elephant("Ellie", 3)
+                    elly.calories_needed        <span class="fragment"># 3000</span>
+                    </code></pre>
+
+                </section>
+
+
+                <section>
+                    <h3>Exercise</h3>
+
+                    <ul>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/OOPCatPlay">Cat play</a></li>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/OOPDogWeight">Dog weight</a></li>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/OOPCatLives">9 Cat lives</a></li>
+                    </ul>
+                </section>
+
+                <section class="heading-only">
+                    <h3>Layers of inheritance</h3>
+                </section>
+
+                <section>
+                    <h3>Object base class</h3>
+
+                    <p>Every Python 3 class implicitly extends the <code>object</code> class.</p>
+
+                    <img class="r-stretch" src="https://i.imgur.com/CC7MjSJ.png" alt="Diagram of Animal extending from object">
+
+                    <aside class="notes">Could also show how list/bool/etc extend. Also could show explicitly extending it!</aside>
+                </section>
+
+                <section>
+                    <h3>Adding layers of inheritance</h3>
+
+                    <p>But we can also add in more levels ourselves.</p>
+
+                    <img class="r-stretch" src="https://i.imgur.com/Oy9hwoq.png" alt="Diagram of animals extending from Herbivore and Carnivore which extend from Animal which extends from object">
+                </section>
+
+                <section>
+                    <h3>Adding layers of inheritance</h3>
+
+                    <p>First we define the new classes:</p>
+
+                    <pre style="font-size:0.55em"><code data-trim data-noescape class="python">
+                    class Herbivore(Animal):
+
+                        def eat(self, food):
+                            if food.type == "meat":
+                                self.happiness -= 5
+                            else:
+                                super().eat(food)
+
+                    class Carnivore(Animal):
+
+                        def eat(self, food):
+                            if food.type == "meat":
+                                super().eat(food)
+                    </code></pre>
+
+                    <p>Then we change the base classes for the subclasses:</p>
+                    <pre style="font-size:0.55em"><code data-trim data-noescape class="python">
+                    class Rabbit(Herbivore):
+                    class Panda(Herbivore):
+                    class Elephant(Herbivore):
+
+                    class Vulture(Carnivore):
+                    class Lion(Carnivore):
+                    </code></pre>
+
+                </section>
+
+                <section>
+                    <h3>Exercise</h3>
+
+                    <ul>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/OOPHerbivoresCarnivores">Herbivores & Carnivores</a></li>
+                        <li><a target="_blank" href="https://replit.com/team/gdi01/OOPNoisyDog">Noisy Dog</a></li>
+                    </ul>
+                </section>
+
+                <section class="heading-only">
+                    <h2>Multiple inheritance</h2>
+                </section>
+
+                <section>
+                    <h3>Multiple inhteritance</h3>
+
+                    <p>A class may inherit from multiple base classes in Python.</p>
+
+                    <img class="r-stretch" src="https://i.imgur.com/z1XrW69.png" alt="Diagram of some animals extending from both Carnivore/Predator and Herbivore/Prey">
+
+                </section>
+
+                <section>
+                    <h3>The new base classes</h3>
+
+                    <p>First we define the new base classes:</p>
+
+                    <pre style="font-size:0.7em"><code data-trim data-noescape class="python">
+                    class Predator(Animal):
+
+                        def interact_with(self, other):
+                            if other.type == "meat":
+                                self.eat(other)
+                                print("om nom nom, I'm a predator")
+                            else:
+                                super().interact_with(other)
+
+                    class Prey(Animal):
+                        type = "meat"
+                        calories = 200
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Inheriting from multiple base classes</h3>
+
+                    <p>Then we inherit from them by putting both names in the parentheses:</p>
+
+                    <pre style="font-size:0.7em"><code data-trim data-noescape class="python">
+                    class Rabbit(Prey, Herbivore):
+                    class Lion(Predator, Carnivore):
+                    </code></pre>
+
+                    <p>Python can find the attributes in any of the base classes:</p>
+
+                    <pre style="font-size:0.7em"><code data-trim data-noescape class="python">
+                    >>> r = Rabbit("Peter", 4)           <span class="fragment" data-fragment-index="1"># Animal __init__</span>
+                    >>> r.play()                         <span class="fragment" data-fragment-index="1"># Animal method</span>
+                    >>> r.type                           <span class="fragment" data-fragment-index="1"># Prey class variable</span>
+                    >>> r.eat(Food("carrot", "veggies")) <span class="fragment" data-fragment-index="1"># Herbivore method</span>
+                    >>> l = Lion("Scar", 12)             <span class="fragment" data-fragment-index="1"># Animal __init__</span>
+                    >>> l.eat(Food("zazu", "meat"))      <span class="fragment" data-fragment-index="1"># Carnivore method</span>
+                    >>> l.encounter(r)                   <span class="fragment" data-fragment-index="1"># Predator method</span>
+                    </code></pre>
+                </section>
+
+                <section class="heading-only">
+                    <h2>Identity</h2>
+                </section>
+
+                <section>
+                    <h3>Checking identity</h3>
+
+                    <p><strong><code>exp0 is exp1</code></strong><br>
+						<span style="font-size:smaller;">evaluates to <code>True</code>
+                        if both <code>exp0</code> and <code>exp1</code> evaluate to the same object</span>
+                    </p>
+
+                    <pre style="font-size:0.7em"><code data-trim data-noescape class="python">
+                    mufasa = Lion("Mufasa", 15)
+                    nala = Lion("Nala", 16)
+
+                    mufasa is mufasa     <span class="fragment" data-fragment-index="1"># True</span>
+                    mufasa is Nala       <span class="fragment" data-fragment-index="1"># False</span>
+                    mufasa is not Nala   <span class="fragment" data-fragment-index="1"># True</span>
+                    nala is not None     <span class="fragment" data-fragment-index="1"># True</span>
+                    </code></pre>
+                </section>
+
+                <section class="heading-only">
+                    <h2>Composition</h2>
+                </section>
+
+                <section>
+                    <h3>Composition</h3>
+
+                    <p>An object can contain references to objects of other classes.</p>
+
+                    <p>What examples of composition are in an animal conservatory?</p>
+                    <ul>
+                        <li>An animal has a mate.</li>
+                        <li>An animal has a mother.</li>
+                        <li>An animal has children.</li>
+                        <li>A conservatory has animals.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Referencing other instances</h3>
+
+                    <p>An instance variable can refer to another instance:</p>
+
+                    <pre style="font-size:0.7em"><code data-trim data-noescape class="python">
+                    class Animal:
+
+                        def mate_with(self, other):
+                            if other is not self and other.species_name == self.species_name:
+                                self.mate = other
+                                other.mate = self
+                    </code></pre>
+
+                    <p class="smaller">How would we call that method?</p>
+                    <pre style="font-size:0.8em" class="fragment"><code data-trim data-noescape class="python">
+                    mr_wabbit = Rabbit("Mister Wabbit", 3)
+                    jane_doe = Rabbit("Jane Doe", 2)
+                    mr_wabbit.mate_with(jane_doe)
+                    </code></pre>
+                </section>
+
+
+                <section>
+                    <h3>Referencing a list of instances</h3>
+
+                    <p>An instance variable can also refer to a list of instances:</p>
+
+                    <pre style="font-size:0.8em"><code data-trim data-noescape class="python">
+                    class Rabbit(Animal):
+
+                        def reproduce_like_rabbits(self):
+                            if self.mate is None:
+                                print("oh no! better go on ZoOkCupid")
+                                return
+                            self.babies = []
+                            for _ in range(0, self.num_in_litter):
+                                self.babies.append(Rabbit("bunny", 0))
+                    </code></pre>
+
+                    <p class="smaller">How would we call that function?</p>
+                    <pre style="font-size:0.8em" class="fragment"><code data-trim data-noescape class="python">
+                    mr_wabbit = Rabbit("Mister Wabbit", 3)
+                    jane_doe = Rabbit("Jane Doe", 2)
+                    mr_wabbit.mate_with(jane_doe)
+                    jane_doe.reproduce_like_rabbits()
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Relying on a common interface</h3>
+
+                    <p class="smaller">If all instances implement a method with the same function signature,
+                    a program can rely on that method across instances of different subclasses.
+                    </p>
+
+                    <pre style="font-size:0.7em"><code data-trim data-noescape class="python">
+                    def partytime(animals):
+                        """Assuming ANIMALS is a list of Animals, cause each
+                        to interact with all the others exactly once."""
+                        for i in range(len(animals)):
+                            for j in range(i + 1, len(animals)):
+                                animals[i].interact_with(animals[j])
+                    </code></pre>
+
+                    <p class="smaller">How would we call that function?</p>
+                    <pre style="font-size:0.7em" class="fragment"><code data-trim data-noescape class="python">
+                    jane_doe = Rabbit("Jane Doe", 2)
+                    scar = Lion("Scar", 12)
+                    elly = Elephant("Elly", 5)
+                    pandy = Panda("PandeyBear", 4)
+                    partytime([jane_doe, scar, elly, pandy])
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Composition vs. Inheritance</h3>
+
+                    <p>Inheritance is best for representing "is-a" relationships</p>
+                    <ul class="smaller">
+                        <li>Rabbit is a specific type of Animal</li>
+                        <li>So, Rabbit inherits from Animal</li>
+                    </ul>
+                    <p>Composition is best for representing "has-a" relationships</p>
+                    <ul class="smaller">
+                        <li>A conservatory has a collection of animals it cares for</li>
+                        <li>So, a conservatory has a list of animals as an instance variable</li>
+                    </ul>
+                </section>
+
+                <section class="heading-only">
+                    <h3>Quiz</h3>
+                </section>
+
+                <section>
+                    <h3>What would Python print?</h3>
+
+                    <pre style="font-size:0.7em"><code data-trim data-noescape class="python">
+                    class Parent:
+                        def f(s):
+                            print("Parent.f")
+
+                        def g(s):
+                            s.f()
+
+                    class Child(Parent):
+                        def f(me):
+                            print("Child.f")
+
+                    a_child = Child()
+                    a_child.g()
+                    </code></pre>
+
+                    <p class="python-tutor-link">
+                        <a target="_blank" href="http://pythontutor.com/composingprograms.html#code=class%20Parent%3A%0A%20%20%20%20def%20f%28s%29%3A%0A%20%20%20%20%20%20%20%20print%28%22Parent.f%22%29%0A%20%20%20%20%0A%20%20%20%20def%20g%28s%29%3A%0A%20%20%20%20%20%20%20%20s.f%28%29%0A%20%20%20%20%20%20%20%20%0Aclass%20Child%28Parent%29%3A%0A%20%20%20%20def%20f%28me%29%3A%0A%20%20%20%20%20%20%20%20print%28%22Child.f%22%29%0A%20%20%20%20%20%20%20%20%0Aa_child%20%3D%20Child%28%29%0Aa_child.g%28%29&cumulative=true&curInstr=0&mode=display&origin=composingprograms.js&py=3&rawInputLstJSON=%5B%5D">
+                        Find out in PythonTutor
+                        </a>
+                    </p>
+                </section>
+
+			</div>
+		</div>
+
+		<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/plugin/highlight/highlight.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.15.5/js/jsplumb.min.js"></script>
+		<script>
+			const srcUrlPrefix = "https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/";
+			Reveal.initialize({
+				hash: true,
+				center: false,
+				slideNumber: true,
+				showNotes: false,
+				margin: 0.1,
+				preloadIframes: true,
+				plugins: [ RevealHighlight ],
+				pdfSeparateFragments: true
+			});
+
+            // add HighlightJS-badge (options are optional)
+            var options = {
+                copyIconContent: "📄",
+                checkIconContent: "✅"
+            };
+            window.highlightJsBadge(options);
+
+            if (window.location.search == "?print-pdf") {
+                var uncounted = document.querySelectorAll("[data-visibility='uncounted']");
+                uncounted.forEach(node => {
+                    node.parentNode.classList.add("no-print")
+                })
+            }
+		</script>
+	</body>
+</html>
