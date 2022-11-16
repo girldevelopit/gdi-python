@@ -733,27 +733,79 @@
                 </section>
 
 
-                <section>
-                    <h3>Feedback survey</h3>
+                <!-- OPTIONAL: Show and Tell  -->
+				<!-- <section>
+					<p>(Optional Slide)</p>
+					<h2>Share What You've Built!</h2>
+				</section> -->
 
-                    <p>Please fill out the <a target="_blank" href="https://forms.gle/P6qDrJ1Q631JHduo9">GDI feedback survey</a>
-                        to help us improve future classes.</p>
+        <!-- MUST USE/SHOW SLIDE -->
+                <!-- Resources -->
+				<section>
+					<h2>Additional Resources</h2>
+                    <h3><a href="https://www.freecodecamp.org/" target="blank">Free Code Camp</a></h3>
+                    <h3><a href="https://www.codecademy.com/" target="blank">Codecademy</a></h3>
+                    <h3><a href="https://www.datacamp.com/" target="blank">DataCamp</a></h3>
+                    <h3><a href="https://www.w3schools.com/python/" target="blank">W3 Schools</a></h3>
+				</section>
 
-                    <p>Thanks for being great students!</p>
-                </section>
+				<!-- MUST USE/SHOW SLIDE -->
+				<!-- Course Survey -->
+				<section>
+					<h2>Give Us Your Feedback</h2>
+					<h3><a href="#" target="blank">Survey Link</a></h3>
+				</section>
 
-			</div>
-		</div>
+				<!-- MUST USE/SHOW SLIDE -->
+				<!-- GDI Promo - Upcoming Courses -->
+				<section>
+					<h2>New GDI Courses</h2>
+					<!-- ADD A LIST OF GDI COURSES -->
+                    <!-- <h3><a href="">COURSE</a></h3> -->
+					<!-- <h3><a href="">COURSE</a></h3> -->
+					<!-- <h3><a href="">COURSE</a></h3> -->
+                    <h4><a href="https://girldevelopit.com/events/" target="blank">www.girldevelopit.com/events</a></h4>
+				</section>	
+				
+                <!-- OPTIONAL: Instructor / TA Contact -->
+                <!-- <section>
+					<h2>Keep in Touch</h2>
+					<p>Instructor and/or TA Contact</p>
+				</section> -->
 
+                <!-- OPTIONAL: Q & A  -->
+                <!-- <section>
+					<h2>Q&A</h2>
+				</section> -->
+
+				<!-- Thank You -->
+				<section>
+					<img src="../assets/imgs/gdi-logos/gdi-logo_peach.png" alt="GDI Logo" width="300px" class="noborder"/>
+					<br>
+					<h2>Thank You!</h2>
+				</section>
+			</div> <!-- End of Slides container -->
+		
+			<footer>
+				<!-- Update with Course Name -->
+				<div class="copyright">
+					<img src="../assets/imgs/gdi-logos/gdi-logo_peach.png" alt="GDI Logo" width="40px" class="noborder"/>
+					<p>Intro to Python</p>
+					<a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc/3.0/80x15.png"/></a>
+				</div>
+			</footer>
+		</div> <!-- End of Reveal wrapper -->
+		
+		<!-- REVEAL.JS Script Files - Do Not Edit -->
 		<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/plugin/highlight/highlight.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.15.5/js/jsplumb.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/plugin/highlight/highlight.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.15.5/js/jsplumb.min.js"></script>
 		<script>
 			const srcUrlPrefix = "https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/";
 			Reveal.initialize({
 				hash: true,
-				center: false,
+				center: true,
 				slideNumber: true,
 				showNotes: false,
 				margin: 0.1,
@@ -762,19 +814,19 @@
 				pdfSeparateFragments: true
 			});
 
-            // add HighlightJS-badge (options are optional)
-            var options = {
-                copyIconContent: "📄",
-                checkIconContent: "✅"
-            };
-            window.highlightJsBadge(options);
+      // add HighlightJS-badge (options are optional)
+			var options = {
+					copyIconContent: "📄",
+					checkIconContent: "✅"
+			};
+			window.highlightJsBadge(options);
 
-            if (window.location.search == "?print-pdf") {
-                var uncounted = document.querySelectorAll("[data-visibility='uncounted']");
-                uncounted.forEach(node => {
-                    node.parentNode.classList.add("no-print")
-                })
-            }
+			if (window.location.search == "?print-pdf") {
+					var uncounted = document.querySelectorAll("[data-visibility='uncounted']");
+					uncounted.forEach(node => {
+							node.parentNode.classList.add("no-print")
+					})
+			}
 		</script>
 	</body>
 </html>
