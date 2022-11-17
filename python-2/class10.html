@@ -703,17 +703,26 @@
                 </section>
 
 			</div>
-		</div>
-
+			<footer>
+				<!-- Update with Course Name -->
+				<div class="copyright">
+					<img src="../assets/imgs/gdi-logos/gdi-logo_peach.png" alt="GDI Logo" width="40px" class="noborder"/>
+					<p>Python 2</p>
+					<a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc/3.0/80x15.png"/></a>
+				</div>
+			</footer>
+		</div> <!-- End of Reveal wrapper -->
+		
+		<!-- REVEAL.JS Script Files - Do Not Edit -->
 		<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/plugin/highlight/highlight.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.15.5/js/jsplumb.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/plugin/highlight/highlight.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.15.5/js/jsplumb.min.js"></script>
 		<script>
 			const srcUrlPrefix = "https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/";
 			Reveal.initialize({
 				hash: true,
-				center: false,
+				center: true,
 				slideNumber: true,
 				showNotes: false,
 				margin: 0.1,
@@ -722,20 +731,19 @@
 				pdfSeparateFragments: true
 			});
 
-            // add HighlightJS-badge (options are optional)
-            var options = {
-                copyIconContent: "📄",
-                checkIconContent: "✅"
-            };
-            window.highlightJsBadge(options);
+      // add HighlightJS-badge (options are optional)
+			var options = {
+					copyIconContent: "📄",
+					checkIconContent: "✅"
+			};
+			window.highlightJsBadge(options);
 
-            if (window.location.search == "?print-pdf") {
-                var uncounted = document.querySelectorAll("[data-visibility='uncounted']");
-                uncounted.forEach(node => {
-                    node.parentNode.classList.add("no-print")
-                })
-            }
+			if (window.location.search == "?print-pdf") {
+					var uncounted = document.querySelectorAll("[data-visibility='uncounted']");
+					uncounted.forEach(node => {
+							node.parentNode.classList.add("no-print")
+					})
+			}
 		</script>
 	</body>
 </html>
-
