@@ -1,0 +1,707 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>HTTP requests & JSON</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reset.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/theme/simple.css" id="theme">
+		<link rel="stylesheet" href="https://cs61a.org/assets/css/mono-blue.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
+		<style>
+			.reveal {
+				font-family: "Work Sans", sans-serif;
+			}
+
+			.reveal .slides section {
+				text-align: left;
+				font-size: smaller;
+			}
+
+			.reveal pre {
+				background-color: #f5f5f5;
+				width: 100%;
+				border: 1px solid #ccc;
+				border-radius: 4px;
+				box-shadow: none;
+			}
+
+			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+				font-family: "Roboto", sans-serif;
+				color: #0072c1;
+			}
+
+			.reveal section.heading-only {
+				text-align:center;
+				padding-top:20%;
+			}
+
+            .column .no-code-badge .code-badge {
+                display: none;
+            }
+
+            .code-badge-language {
+                display: none;
+            }
+
+			.python-tutor-link {
+				font-size: smaller;
+			}
+
+			.python-tutor-link:before {
+				content: "";
+				display: block;
+				background: url("http://pythontutor.com/favicon.ico") no-repeat;
+				width: 48px;
+				height: 48px;
+				float: left;
+				margin: 0 6px 0 0;
+			}
+
+			.reveal h3 {
+				margin-bottom: 40px;
+			}
+
+            .smaller {
+                font-size: smaller;
+            }
+
+            code {
+                padding: 2px 4px;
+                font-size: 90%;
+                color: #0072c1;
+                background-color: #f9f2f4;
+                border-radius: 4px;
+            }
+
+            p.padded {
+                margin-top: 32px;
+            }
+
+            section .row {
+                display: flex;
+            }
+
+            section .column {
+                flex: 48%;
+                margin: 10px;
+            }
+
+            .reveal section ul li {
+                margin-bottom: .3em;
+            }
+
+			@media print
+			{
+				.no-print, .no-print *
+				{
+					display: none !important;
+				}
+			}
+
+
+            .regex-input {
+                border:1px solid rgb(204, 204, 204);
+                background: rgb(245, 245, 245);
+                padding: 8px;
+            }
+
+            .regex-input input {
+                font-size: inherit;
+            }
+
+            .regex-input input[type=text]:invalid {
+                background-color: pink;
+            }
+
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+				<section class="heading-only" style="padding-top:5%">
+                    <h1>HTTP requests & JSON</h1>
+
+					<div class="no-print" style="text-align: left; margin-top: 100px; font-size: 70%;">
+						Tips for navigating the slides:
+						<ul>
+							<li>Press O or Escape for overview mode.</li>
+							<li>Visit <a href="?print-pdf" target="_blank">this link</a> for a nice printable version</li>
+							<li>Press the copy icon on the upper right of code blocks to copy the code</li>
+						</ul>
+					</div>
+				</section>
+
+
+                <section>
+                    <h3>Class outline:</h3>
+
+                    <ul style="font-size:1.0em;">
+                        <li>Review
+                        <li>HTTP basics
+                        <li>Making GET requests
+                        <li>Parsing JSON responses
+                        <li>Handling HTTP exceptions
+                    </ul>
+                </section>
+                <section class="heading-only">
+                    <h2>Review: Errors & exception handling</h2>
+                </section>
+                <section>
+                    <h3>Types of errors</h3>
+
+                    <p>These are common to all programming languages:</p>
+                    <ul>
+                        <li>Syntax errors</li>
+                        <li>Logic errors</li>
+                        <li>Runtime errors</li>
+                    </ul>
+                </section>
+                <section class="heading-only">
+                    <h2>Syntax errors</h2>
+                </section>
+                <section>
+                    <h3><code>Common syntax errors</code></h3>
+                            <ul>
+                                <li>Extra or missing parenthesis
+                                <li>Missing colon at the end of an if, while, def statements, etc.
+                                <li>Missing/unmatched quotes
+                                <li>Incorrect/misaligned indents
+                            </ul>
+                    </p>
+
+                    <p>To fix a syntax error, read the message carefully and go through your code with a critical eye. 👁 <br>
+                    ...and lint your code!</p>
+
+                </section>
+
+            <section>
+                <h3>Linting</h3>
+
+                <p>To avoid syntax errors, use a linting tool to check your code as you write it. Many IDEs have a Python linter built in or available as an extension (ex: <a href="https://code.visualstudio.com/docs/python/linting">VSCode Python linting</a>).</p>
+
+                <p>You can also run <a href="https://pypi.org/project/pylint">Pylint</a> on your code</p>
+
+                <pre style="font-size:0.9em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    # import pylint
+                    # Already installed in Replit - no import needed
+                    def sum(a, b):
+                        total = a + b
+                    return total
+                    </code></pre>
+                    <p>In Replit, switch to the Shell tab and type <code>pylint main.py</code></a> and press <code>Enter</code>.<br>
+                    When prompted to select a version, press <code>Enter</code> again.</p>
+            </section>
+                <section>
+                    <h3>Logic errors</h3>
+
+                    <p>A program has a logic error if it does not behave as expected.
+                        Typically discovered via failing tests or bug reports from users.
+                    </p>
+
+                    <p>Spot the logic error:</p>
+                    <pre style="font-size:0.9em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    # Which medal goes to the first place winner?
+                    medals = ["gold", "silver", "bronze"]
+                    first_place = medals[1]
+                    print(first_place)
+                    </code></pre>
+                    <p>To avoid the wrath of angry users due to logic errors, write tests!</p>
+                </section>
+                <section>
+                    <h3>Testing</h3>
+
+                    <p>There are several Python testing frameworks. <a href="https://docs.pytest.org/">Pytest</a> is a good one to start with.</p>
+
+                    <pre style="font-size:0.9em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    import pytest
+
+                    medals = ["gold", "silver", "bronze"]
+                    def get_medal(place):
+                        return medals[place]
+
+                    def test_get_medal():
+                        assert get_medal(1) == "gold"
+                    </code></pre>
+                    <p>In Replit, click Run to install Pytest, then switch to the Shell tab and type <code>pytest main.py</code> and press <code>Enter</code>.</p>
+                </section>
+                <section>
+                    <h3>Runtime errors</h3>
+                    <p>Even with testing and linting, errors can slip through!</p>
+                    <p>A runtime error happens <em>while</em> a program is running,
+                        often halting the execution of the program.
+                    </p>
+
+                    <p>Spot the runtime error:</p>
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    def div_numbers(dividend, divisor):
+                        return dividend/divisor
+
+                    quot1 = div_numbers(10, 2)
+                    quot2 = div_numbers(10, 1)
+                    quot3 = div_numbers(10, 0)  <span class="fragment"># Cannot divide by 0!</span>
+                    quot4 = div_numbers(10, -1)
+                    </code></pre>
+
+                    <p>To prevent runtime errors, code defensively and write tests for all edge cases.</p>
+                </section>
+                <section>
+                    <h3>Tracebacks</h3>
+
+                    <p>When there's a runtime error in your code,
+                        you'll see a <strong>traceback</strong> in the console.</p>
+
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                        def div_numbers(dividend, divisor):
+                            return dividend/divisor
+
+                        quot1 = div_numbers(10, 2)
+                        quot2 = div_numbers(10, 1)
+                        quot3 = div_numbers(10, 0)
+                        quot4 = div_numbers(10, -1)
+                    </code></pre>
+
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="no-highlight" style="color:black;">
+                    Traceback (most recent call last):
+                        File "main.py", line 14, in &lt;module&gt;
+                            quot3 = div_numbers(10, 0)
+                        File "main.py", line 10, in div_numbers
+                            return dividend/divisor
+                    ZeroDivisionError: division by zero
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>Exceptions</h3>
+
+                    <p>Python raises an <strong>exception</strong> whenever a runtime error occurs.
+                    An exception is a mechanism in many languages used to declare and respond to "exceptional" conditions.</p>
+
+                    <p>How an exception is reported:</p>
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    >>> 10/0
+                    Traceback (most recent call last):
+                        File "&lt;stdin&gt;", line 1, in <module>
+                    ZeroDivisionError: division by zero
+                    </code></pre>
+
+                    <p>If an exception is not handled, the program stops executing immediately.</p>
+                </section>
+                <section>
+                    <h3>The try statement</h3>
+
+                    <p>To handle an exception (keep the program running), use a <code>try</code> statement.</p>
+
+                    <pre style="font-size:1.0em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    try:
+                        &lt;code you want to run if all goes well&gt;
+                    except:
+                        &lt;code you want to run if this particular exception happens&gt;
+                       ...
+                    </code></pre>
+
+                    <p class="smaller">The <code>&lt;try statement&gt;</code> is executed first.
+                        If and exception is raised with the <code>&lt;try statement&gt;</code> executes,
+                        the <code>&lt;except statement&gt;</code> is executed.
+                    </p>
+                </section>
+                <section>
+                    <h3>Try statement example</h3>
+
+                    <pre style="font-size:1.0em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    try:
+                        quot = 10/0
+                    except:
+                        print("An error happened")
+                        quot = 0
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Getting error details</h3>
+                    <p>To get the error message that Python returned, we need to catch the Exception and assign it to a variable.</p>
+                    <pre style="font-size:1.0em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    try:
+                        quot = 10/0
+                    except Exception as e:
+                        print('Handling an error:', e)
+                        quot = 0
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>Default Exception</h3>
+                    <p>All exception types are derived from the parent class <code><a href="https://docs.python.org/3/library/exceptions.html#Exception">Exception</a></code>.</p>
+                    <ul>
+                        <li><code><a href="https://docs.python.org/3/library/exceptions.html#Exception">Exception</a></code> can be used as a wildcard that catches (almost) everything</li>
+                        <li>It can be used on its own, or as a last resort to catch exceptions that you haven't caught with a more specific type</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Types of exceptions</h3>
+
+                    <p>A few exception types and examples of buggy code:</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Exception
+                                <th>Example
+                        <tbody>
+                            <tr>
+                                <td><code><a href="https://docs.python.org/3/library/exceptions.html#TypeError">TypeError</a></code>
+                                <td><code>'hello'[1] = 'j'</code>
+                            <tr>
+                                <td><code>IndexError</code>
+                                <td><Code>'hello'[7]</code>
+                            <tr>
+                                <td><code><a href="https://docs.python.org/3/library/exceptions.html#IndexError">NameError</a></code>
+                                <td><code>x += 5</code>
+                            <tr>
+                                <td><code><a href="https://docs.python.org/3/library/exceptions.html#FileNotFoundError">FileNotFoundError</a></code>
+                                <td><code>open('dsfdfd.txt')</code>
+                    </table>
+
+                    <p>See full list in the <a target="_blank" href="https://docs.python.org/3/library/exceptions.html">exceptions docs</a>. Note: Third party Python packages often include their own custom exception types!</p>
+
+                </section>
+                <section>
+                    <h3>Catching a specific exception type</h3>
+                    <p>In some cases, we need to catch and handle specific exceptions. Multiple except statements that catch different exception types are allowed. It's a best practice to catch the default Exception, in addition to specific types.</p>
+                    <pre style="font-size:1.0em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    try:
+                        quot = 10/0
+                    except ZeroDivisionError as e:
+                        print('Handling zero division exception:', e)
+                        quot = 0
+                    except Exception as e:
+                        print('Something else went wrong:', e)
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>Try inside a function</h3>
+                    <pre style="font-size:0.9em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    def div_numbers(dividend, divisor):
+                        try:
+                            quotient = dividend/divisor
+                        except ZeroDivisionError as e:
+                            print('Handling zero division exception:', e)
+                            quotient = 0
+                        except Exception as e:
+                            print('Something else went wrong:', e)
+                            quotient = None
+                        return quotient
+
+                    div_numbers(10, 2)
+                    div_numbers(10, 0)
+                    div_numbers(10, 'foo')
+                    </code></pre>
+                    <p class="small">Depending on the case, we may want to place the return statement inside the try statement, so that there is only a return value if the code succeeds.</p>
+                </section>
+                <section>
+                    <h3>System Exit</h3>
+                    <p>To stop the program if a certain exception is encountered, move the <code>return</code> statement inside the <code>try</code> statement and raise a SystemExit() inside the <code>except</code> statement.
+                    <pre style="font-size:0.9em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    def div_numbers(dividend, divisor):
+                        try:
+                            quotient = dividend/divisor
+                        except ZeroDivisionError as e:
+                            print('Encountered error:', e)
+                            quotient = 0
+                        except Exception as e:
+                            print('Something else went wrong:', e)
+                            raise SystemExit()
+                        return quotient
+
+                    div_numbers(10, 2)
+                    div_numbers(10, 0)
+                    div_numbers(10, -1)
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>Raising custom exceptions</h3>
+                    <p>You can raise an exception and cause the program to stop, even if there's no problem that Python encounters.<br>
+                        This is helpful when your program requires certain values or conditions in order to work properly.</p>
+                    <pre style="font-size:0.9em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    x = 10
+                    if x > 5:
+                        raise Exception("x cannot exceed 5")
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>Exercise review:</h3>
+                    <ul>
+                        <li><a target="_blank" href="https://replit.com/@lizkrznarich/Class9Ex1SyntaxErrors">Class9Ex1SyntaxErrors</a></li>
+                        <li><a target="_blank" href="https://replit.com/@lizkrznarich/Class9Ex2PytestTest">Class9Ex2Pytest</a></li>
+                        <li><a target="_blank" href="https://replit.com/@lizkrznarich/Class9Ex3TryExcept">Class9Ex3TryExcept</a></li>
+                    </ul>
+                </section>
+                <section class="heading-only">
+                    <h2>HTTP basics</h2>
+                </section>
+                <section>
+                    <h3>What is HTTP?</h3>
+                    <p>Hypertext Transfer Protocol (HTTP) is how we send data and files around the Web</p>
+                    <p>HTTP works as a request-response protocol between a <b>client</b> and <b>server</b>.</p>
+                    <ul>
+                        <li><b>Client</b> could be a web browser (operated by a human) or an application (like a computer running a Python program)</li>
+                        <li><b>Server</b> could be a computer with files (like HTML) stored on it, or an application serving up data through an API</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>HTTP requests</h3>
+                    <p>An HTTP request consists of:</p>
+                    <ol>
+                        <li><b>Method</b> (required) GET, PUT, POST, etc</li>
+                        <li><b>Request URI</b> (required) Full URI, including any query parameters</li>
+                        <li><b>Header(s)</b> (optional) Ex: API token)</li>
+                        <li><b>Body</b> (optional) Ex: data you want to send</li>
+                    </ol>
+                    <pre style="font-size:1.0em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                        curl # Command-line tool used to send HTTP requests
+                        -X GET # Method
+                        -H 'Accept: application/json' # Header
+                        # Request URI
+                        'https://api.open-meteo.com/v1/forecast?latitude=43.07&longitude=-89.40&hourly=temperature_2m'
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>HTTP requests</h3>
+                    <p>Common request methods</p>
+                    <table>
+                        <tbody>
+                            <tr><td><b>GET</b></td><td>Retreive data from a specified resource</td></tr>
+                            <tr><td><b>POST</b></td><td>Send data to a server (usually via an API) to create/overwrite a resource</td></tr>
+                            <tr><td><b>PUT</b></td><td>Send data to a server (usually via an API) to create/update a resource</td></tr>
+                            <tr><td><b>DELETE</b></td><td>Delete a specified resource</td></tr>
+                        </tbody>
+                    </table>
+                </section>
+                <section>
+                    <h3>Why do we care about HTTP requests?</h3>
+                    <p><b>APIs!</b> We communicate with and integrate other software and services into our apps via APIs. Many web services offer APIs:</p>
+                    <ul>
+                        <li>Google (many APIs for different services)</li>
+                        <li>AWS (and other cloud compute providers)</li>
+                        <li>Salesforce (and other CRMs)</li>
+                        <li>Github (and other dev tools)
+                        <li>Social media & email marketing platforms</li>
+                    </ul>
+                    <p>Python is a great language for working with APIs!</p>
+                </section>
+                <section class="heading-only">
+                    <h2>Making HTTP requests</h2>
+                </section>
+                <section>
+                    <h3>Requests module</h3>
+                    <p>The <a href="https://pypi.org/project/requests/">Requests module</a> is a third-party library,
+                        and is the de-facto standard for sending HTTP requests and receiving responses using Python.</p>
+                    <p>On your own machine, you need to install requests before you can import it into Python files</p>
+                    <pre style="font-size:1.0em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                        pip install requests
+                    </code></pre>
+                    <p><a href="https://requests.readthedocs.io/en/latest">Requests module documentation</a></p>
+                </section>
+                <section>
+                    <h3>Requests module</h3>
+                    <p>In Replit, install requests by clicking <b>Tools > Packages</b>, then searching for <b>"requests"</b></p>
+                    <img src="../images/replit-packages-requests.png" >
+                </section>
+                <section>
+                    <h3>Making a GET request</h3>
+                    <p><a href="https://requests.readthedocs.io/en/latest/api/#requests.get">requests.get()</a> sends an HTTP request and returns an HTTP response object</p>
+                    <pre style="font-size:1.0em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                        import requests
+                        response = requests.get("https://girldevelopit.com")
+                        print(vars(response))
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>What's in a Response?</h3>
+                    <p>Lots of stuff! <a href="https://requests.readthedocs.io/en/latest/api/#requests.Response">See full list</a>. The values we're typically concerned about are:
+                    <table>
+                        <tbody>
+                            <tr><td><b>.status_code</b></td><td>Status code of the request (200 OK, 404 Not found, etc)</td></tr>
+                            <tr><td><b>.text</b>, <b>.json</b> or <b>.raw</b></td><td>Body of the response (stored in different attributes, depending on the type of response</td></tr>
+                            <tr><td><b>.headers</b></td><td>HTTP response headers, with details about the response content and where it came from </td></tr>
+                        </tbody>
+                    </table>
+                </section>
+                <section>
+                    <h3>What's in a Response?</h3>
+                        <p>Let's look at some response values</p>
+                        <pre style="font-size:1.0em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                            import requests
+
+                            response = requests.get("https://girldevelopit.com")
+                            print(response.status_code) # HTTP status code (200)
+                            print(response.headers) # Content-type tells us what kind of response this is (text/html)
+                            print(response.text) # The full body of the response (HTML, in this case)
+                        </code></pre>
+                </section>
+                <section class="heading-only">
+                    <h2>Working with APIs</h2>
+                </section>
+                <section>
+                    <h3>What's an API?</h3>
+                    <p>An <b>Application Programming Interface (API)</b> is a way for 2 separate computer systems to communicate. Essentially, it's a set of rules for retrieving, creating, updating and/or deleting data in another system.</p>
+                    <p>There are many different types of APIs, but on the Web we're typically talking about <b><a href="https://en.wikipedia.org/wiki/Representational_state_transfer">RESTful APIs</a></b>, which allow 2 applications to exchange data securely over the Internet. RESTful APIs use URIs to identify resources.</p>
+                </section>
+                <section>
+                    <h3>How do APIs work?</h3>
+                    <p>Most Web APIs accept HTTP requests and return JSON responses (more on that in a moment!).</p>
+                    <p>Beyond that, each API has it's own rules for:</p>
+                    <ul>
+                        <li>What resources are available</li>
+                        <li>Which methods are allowed (GET, PUT, POST, DELETE)</li>
+                        <li>Which headers are allowed/required</li>
+                        <li>Which query parameters are allowed/required</li>
+                        <li>What type of authentication is required (if any)</li>
+                    </ul>
+                    <p>Check the documentation for the API you're interested. <a href="https://github.com/public-apis/public-apis">Here's a list of free APIs to get you started!</a></p>
+                </section>
+                <section>
+                    <h3>The NASA APOD API</h3>
+                    <p>NASA posts an <a href="https://apod.nasa.gov/apod/astropix.html">Astronomy Picture of the Day</a> each day, which is also available via an API. To use this API, you first need to register for a key at <a href="https://api.nasa.gov/">https://api.nasa.gov</a></p>
+                    <img src="../images/nasa-key.png" height="400">
+                </section>
+                <section>
+                    <h3>The NASA APOD API</h3>
+                    <p>After registering, you should recieve a key, along with a sample request.</p>
+                    <img src="../images/nasa-key-request.png">
+                </section>
+                <section>
+                    <h3>Query parameters</h3>
+                    <p>In the NASA API, your key is added as a <b>query paramter</b></p>
+                    <pre style="font-size:1.0em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                        ?api_key=eIkpQYXKa6mq1J75qPMYc0Rvit3K8wNaytEJCnTn&start_date=2023-01-01
+                    </code></pre>
+                    <p>Query parameters ("params") are key/value pairs that allow adding extra context to a URL.</p>
+                    <ul>
+                        <li>Query param portion of a URL begins with <code>?</code></li>
+                        <li>Each additional param is preceded with <code>&</code></li>
+                    </ul>
+                    <pre style="font-size:1.0em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                        https://api.nasa.gov/planetary/apod?api_key=eIkpQYXKa6mq1J75qPMYc0Rvit3K8wNaytEJCnTn&start_date=2023-01-01
+                    </code></pre>
+                    <p class="smaller"><em>Params are specific to seach site/app/API - there's no universal set of available params</em></p>
+                </section>
+                <section>
+                    <h3>The NASA APOD API</h3>
+                    <p>Let's run this in Python</p>
+                    <pre style="font-size:1.0em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                        import requests
+
+                        # per NASA API docs, we need to pass the key as a query parameter
+                        params = {'api_key': 'eIkpQYXKa6mq1J75qPMYc0Rvit3K8wNaytEJCnTn'}
+                        response = requests.get("https://api.nasa.gov/planetary/apod", params=params)
+                        print(response.status_code)
+                        print(response.headers)
+                    </code></pre>
+                </section>
+
+                <section class="heading-only">
+                    <h2>Parsing JSON responses</h2>
+                </section>
+                <section>
+                    <h3>About JSON</h3>
+                    <p><a href="https://en.wikipedia.org/wiki/JSON">Javascript Object Notation (JSON)</a> is an open standard file format that stores data in key/value pairs. It looks a lot like a Python dictionary!</p>
+                    <p>Requests has a built-in <code>.json()</code> method for parsing JSON responses, and Python has a built-in JSON library, too.</p>
+                    <pre style="font-size:1.0em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                        import requests
+                        params = {'api_key': 'eIkpQYXKa6mq1J75qPMYc0Rvit3K8wNaytEJCnTn'}
+                        response = requests.get("https://api.nasa.gov/planetary/apod", params=params)
+                        print(response.json())
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>JSON example</h3>
+
+                    <pre style="font-size:1.0em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                        {
+                            'copyright': 'Mike Selby',
+                            'date': '2023-02-04',
+                            'explanation': 'Centered in this colorful cosmic canvas, NGC 2626 is a beautiful, bright, blue reflection nebula in the southern Milky Way. Next to an obscuring dust cloud and surrounded by reddish hydrogen emission from large H II region RCW 27 it lies within a complex of dusty molecular clouds known as the Vela Molecular Ridge. NGC 2626 is itself a cloud of interstellar dust reflecting blue light from the young hot embedded star visible within the nebula. But astronomical explorations reveal many other young stars and associated nebulae in the star-forming region. NGC 2626 is about 3,200 light-years away. At that distance this telescopic field of view would span about 30 light-years along the Vela Molecular Ridge.',
+                            'hdurl': 'https://apod.nasa.gov/apod/image/2302/NGC_2626_CDK_700_II_20_Jan_2023.jpg',
+                            'media_type': 'image',
+                            'service_version': 'v1',
+                            'title': 'NGC 2626 along the Vela Molecular Ridge',
+                            'url': 'https://apod.nasa.gov/apod/image/2302/NGC_2626_CDK_700_II_20_Jan_2023_1024.jpg'
+                        }
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>Accessing JSON values</h3>
+                    <p>Once the response values are parsed as JSON, we can treat it like a dictionary and access individual fields with bracket notation.</p>
+                    <pre style="font-size:1.0em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                        import requests
+                        params = {'api_key': 'eIkpQYXKa6mq1J75qPMYc0Rvit3K8wNaytEJCnTn'}
+                        response = requests.get("https://api.nasa.gov/planetary/apod", params=params)
+                        url = response['url']
+                        print(url)
+                    </code></pre>
+                </section>
+                <section class="heading-only">
+                    <h2>Handling HTTP errors</h2>
+                </section>
+                <section>
+                    <h3>HTTP status exceptions</h3>
+                    <p>Requests includes custom exception types, such as <a href="https://requests.readthedocs.io/en/latest/api/#requests.HTTPError">HTTP error</a>, which covers issues like 404 not found and 403 access denied (bad credentials).</p>
+                    <p>Requests does not automatically raise HTTP exceptions; we need to do that explicitly with the <a href="https://requests.readthedocs.io/en/latest/api/#requests.HTTPError">.raise_for_status() method</a> and handle the exception.</p>
+                </section>
+                <section>
+                    <h3>Handling HTTP errors</h3>
+                    <pre style="font-size:1.0em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                        import requests
+
+                        params = {'api_key': 'eIkpQYXKa6mq1J75qPMYc0Rvit3K8wNaytEJCnTn'}
+
+                        try:
+                            response = requests.get("https://api.nasa.gov/planetary/apo", params=params)
+                            response.raise_for_status()
+                            url = response['url']
+                            print(url)
+                        except requests.exceptions.HTTPError as e:
+                            print("Oh no, an error happened: ", e)
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>Exercise: Requests</h3>
+                    <p>Let's play with the NASA APOD API!</p>
+                    <p><a target="_blank" href="https://replit.com/@lizkrznarich/Class10Ex1Requests">Class10Ex1Requests</a></p>
+                </section>
+			</div>
+		</div>
+		<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.js"></script>Ex1
+        <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/plugin/highlight/highlight.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.15.5/js/jsplumb.min.js"></script>
+		<script>
+			const srcUrlPrefix = "https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/";
+			Reveal.initialize({
+				hash: true,
+				center: false,
+				slideNumber: true,
+				showNotes: false,
+				margin: 0.1,
+				preloadIframes: true,
+				plugins: [ RevealHighlight ],
+				pdfSeparateFragments: true
+			});
+
+            // add HighlightJS-badge (options are optional)
+            var options = {
+                copyIconContent: "📄",
+                checkIconContent: "✅"
+            };
+            window.highlightJsBadge(options);
+
+            if (window.location.search == "?print-pdf") {
+                var uncounted = document.querySelectorAll("[data-visibility='uncounted']");
+                uncounted.forEach(node => {
+                    node.parentNode.classList.add("no-print")
+                })
+            }
+		</script>
+	</body>
+</html>
+

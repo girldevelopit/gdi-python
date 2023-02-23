@@ -1,0 +1,295 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>Coming soon: Python 2!</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reset.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/theme/simple.css" id="theme">
+		<link rel="stylesheet" href="https://cs61a.org/assets/css/mono-blue.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
+		<style>
+			.reveal {
+				font-family: "Work Sans", sans-serif;
+			}
+
+			.reveal .slides section {
+				text-align: left;
+				font-size: smaller;
+			}
+
+			.reveal pre {
+				background-color: #f5f5f5;
+				width: 100%;
+				border: 1px solid #ccc;
+				border-radius: 4px;
+				box-shadow: none;
+			}
+
+			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+				font-family: "Roboto", sans-serif;
+				color: #0072c1;
+			}
+
+			.reveal section.heading-only {
+				text-align:center;
+				padding-top:20%;
+			}
+
+            .column .no-code-badge .code-badge {
+                display: none;
+            }
+
+            .code-badge-language {
+                display: none;
+            }
+
+			.python-tutor-link {
+				font-size: smaller;
+			}
+
+			.python-tutor-link:before {
+				content: "";
+				display: block;
+				background: url("http://pythontutor.com/favicon.ico") no-repeat;
+				width: 48px;
+				height: 48px;
+				float: left;
+				margin: 0 6px 0 0;
+			}
+
+			.reveal h3 {
+				margin-bottom: 40px;
+			}
+
+            .smaller {
+                font-size: smaller;
+            }
+
+            code {
+                padding: 2px 4px;
+                font-size: 90%;
+                color: #0072c1;
+                background-color: #f9f2f4;
+                border-radius: 4px;
+            }
+
+            p.padded {
+                margin-top: 32px;
+            }
+
+            section .row {
+                display: flex;
+            }
+
+            section .column {
+                flex: 48%;
+                margin: 10px;
+            }
+
+            .reveal section ul li {
+                margin-bottom: .4em;
+            }
+
+			@media print
+			{
+				.no-print, .no-print *
+				{
+					display: none !important;
+				}
+			}
+
+
+            .regex-input {
+                border:1px solid rgb(204, 204, 204);
+                background: rgb(245, 245, 245);
+                padding: 8px;
+            }
+
+            .regex-input input {
+                font-size: inherit;
+            }
+
+            .regex-input input[type=text]:invalid {
+                background-color: pink;
+            }
+
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+				<section class="heading-only" style="padding-top:5%">
+                    <h2>🐍 Coming soon: Python 2!</h2>
+
+					<div class="no-print" style="text-align: left; margin-top: 100px; font-size: 70%;">
+						Tips for navigating the slides:
+						<ul>
+							<li>Press O or Escape for overview mode.</li>
+							<li>Visit <a href="?print-pdf" target="_blank">this link</a> for a nice printable version</li>
+							<li>Press the copy icon on the upper right of code blocks to copy the code</li>
+						</ul>
+					</div>
+				</section>
+                <section>
+                    <h3>Welcome! A bit about Girl Develop It</h3>
+                    <p>We create welcoming, supportive and accessible environments for women and non-binary adults to learn software development.</p>
+                    <p>We are dedicated to providing a welcoming and comfortable environment for all to learn coding.<br>
+                    <a href="girldevelopit.com/codeofconduct/">Code of conduct</a></p>
+                </section>
+                <section>
+                    <h3>What does Girl Develop It teach?</h3>
+                    <ul>
+                        <li>Web Development
+                        <li>Data Science
+                        <li>UX Design & Research
+                        <li>Workforce Classes
+                        <li>Career-Building Events & Conferences
+                    </ul>
+                    <p>Check out all of our classes & events <a href="https://girldevelopit.com/">girldevelopit.com</a></p>
+                </section>
+                <section>
+                    <h3>Your Instructor</h3>
+                    <ul>
+                        <li>Liz Krznarich (she/her)</li>
+                        <li>Technical Lead, <a href="https://datacite.org">DataCite</a></li>
+                        <li>Many tech hats worn! Fullstack engineer, frontend engineer, technical trainer, graphic designer...</li>
+                        <li>Python, Java, JS (Angular/React/Ember), DevOps (Ansible/Terraform/Puppet)</li>
+                        <li>Fun fact: Degrees in Art and Library Science. First professional job involved hot dog ads.</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Classroom "rules"</h3>
+                    <ul>
+                        <li>I am here for you!</li>
+                        <li>Every question is important</li>
+                        <li>Help each other</li>
+                        <li>Have fun</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>What's in store for Python 2?</h3>
+
+                    <p>This may change if we end up needing more or less time for certain topics.</p>
+                    <ul>
+                        <li>Class 7: Review & reading from/writing to files
+                        <li>Class 8: More file operations, argument parsing & list comprehension
+                        <li>Class 9: Error handling
+                        <li>Class 10: HTTP requests
+                        <li>Class 11: Intro to Python frameworks & object-oriented Python
+                        <li>Class 12: Your own app with Django!
+                    </ul>
+                    <p><small><em>(note: Python 1 series included classes 1-6)</em></small></p>
+                </section>
+                <section>
+                    <h3>Working with files</h3>
+                    <p>Have lots of files you need to combine, extract data from, clean up, rename or format into a nice report? We can do that!</p>
+                    <img src="../images/files.png" alt="Screenshot of files converted to report">
+                </section>
+                <section>
+                    <h3>Errors! Why they happen & what to do about them</h3>
+                    <p>We don't want users (or ourselves) to see mysterious errors at runtime
+                    <pre><code data-trim data-noescape>
+                        Traceback (most recent call last):
+                        File "<stdin>", line 1, in <module>
+                        TypeError: 'type' object is not iterable
+                        >>>
+                    </code></pre>
+                    <p>We want to provide fallback code or a useful error message
+                    <pre><code data-trim data-noescape>
+                        try:
+                            for item in list:
+                                do_really_cool_thing()
+                        except:
+                            print("Oh noes! Something went wrong with an item:"")
+                            print(item)
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>HTTP requests</h3>
+                    <p><b>"Hypertext transfer protocol" sounds like it's from 1995, but it's still the way data gets around on the Web!</b></p>
+                    <p>We'll learn how to use the <code>requests</code> module to get data from external sources, like APIs</p>
+                    <pre><code data-trim data-noescape>
+                        import requests
+                        r = requests.get('https://api.github.com/users/lizkrznarich')
+                        print(r.status_code)
+                        200
+                        print(r.json())
+                        {'login': 'lizkrznarich', 'id': 8026886, 'node_id': 'MDQ6VXNlcjgwMjY4ODY=', 'avatar_url': 'https://avatars.githubusercontent.com/u/8026886?v=4', 'gravatar_id': '', 'url': 'https://api.github.com/users/lizkrznarich', 'html_url': 'https://github.com/lizkrznarich', 'followers_url': 'https://api.github.com/users/lizkrznarich/followers', 'following_url': 'https://api.github.com/users/lizkrznarich/following{/other_user}', 'gists_url': 'https://api.github.com/users/lizkrznarich/gists{/gist_id}', 'starred_url': 'https://api.github.com/users/lizkrznarich/starred{/owner}{/repo}', 'subscriptions_url': 'https://api.github.com/users/lizkrznarich/subscriptions', 'organizations_url': 'https://api.github.com/users/lizkrznarich/orgs', 'repos_url': 'https://api.github.com/users/lizkrznarich/repos', 'events_url': 'https://api.github.com/users/lizkrznarich/events{/privacy}', 'received_events_url': 'https://api.github.com/users/lizkrznarich/received_events', 'type': 'User', 'site_admin': False, 'name': 'Liz Krznarich', 'company': 'DataCite', 'blog': '', 'location': None, 'email': None, 'hireable': None, 'bio': None, 'twitter_username': None, 'public_repos': 17, 'public_gists': 4, 'followers': 10, 'following': 0, 'created_at': '2014-06-30T13:28:04Z', 'updated_at': '2023-01-05T12:47:53Z'}
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>Building web apps with Django</h3>
+                    <p><a href="https://www.djangoproject.com/">Django</a> is a popular framework for building Python web apps quickly</p>
+                    <p>We'll use it to build a small app that fetches data from an API and displays it in a web page.</p>
+                    <img src="../images/django.png" alt="Screenshot of Django landing page">
+                </section>
+                <section>
+                    <h3>What should I know before starting Python 2?</h3>
+
+                    <p>Python 2 builds on Python 1, so you should be familiar with the basics covered in that class:</p>
+                    <ul>
+                        <li>Data types & expressions (strings, integers, floats, booleans)
+                        <li>Data structures (lists, dictionaries, tuples)
+                        <li>Defining functions
+                        <li>Calling functions & methods
+                        <li>Conditionals (if/then/else)
+                        <li>Loops (while & for)
+                    </ul>
+                </section>
+                <section>
+                    <h3>Class logistics</h3>
+                    <ul>
+                        <li>6 sessions: Weekly on Wed, Jan 18-Feb 22, 4-6pm EDT<br>
+                        <em>(Note: there may be a schedule change for Feb 8 class)</em></li>
+                        <li>Slides + exercise links: <a href="https://lizkrznarich.github.io/gdi-python-2">https://lizkrznarich.github.io/gdi-python-2</a> <em>
+                        <br>(I'll tweak class materials as we go, so you may see some changes from what's there now)</em></li>
+                        <li>Recording links will be emailed after each class</li>
+                        <li>Questions? Contact me at <a href="mailto:ejkrznarich@gmail.com">ejkrznarich@gmail.com</a></li>
+                        <li>Optional: <a href="https://join.slack.com/t/girldevelopit-z553572/shared_invite/zt-kl7e5zuu-FaWJeU7ecXksoZp7rK1BjA">Join the GDI Slack Community</a></li>
+
+                    </ul>
+                </section>
+                <section class="heading-only">
+                    <h2>Questions?</h2>
+                </section>
+
+			</div>
+		</div>
+
+		<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/plugin/highlight/highlight.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.15.5/js/jsplumb.min.js"></script>
+		<script>
+			const srcUrlPrefix = "https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/";
+			Reveal.initialize({
+				hash: true,
+				center: false,
+				slideNumber: true,
+				showNotes: false,
+				margin: 0.1,
+				preloadIframes: true,
+				plugins: [ RevealHighlight ],
+				pdfSeparateFragments: true
+			});
+
+            // add HighlightJS-badge (options are optional)
+            var options = {
+                copyIconContent: "📄",
+                checkIconContent: "✅"
+            };
+            window.highlightJsBadge(options);
+
+            if (window.location.search == "?print-pdf") {
+                var uncounted = document.querySelectorAll("[data-visibility='uncounted']");
+                uncounted.forEach(node => {
+                    node.parentNode.classList.add("no-print")
+                })
+            }
+		</script>
+	</body>
+</html>
+

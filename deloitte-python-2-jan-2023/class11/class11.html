@@ -1,0 +1,472 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>Intro to Python frameworks & Django setup</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reset.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/theme/simple.css" id="theme">
+		<link rel="stylesheet" href="https://cs61a.org/assets/css/mono-blue.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
+		<style>
+			.reveal {
+				font-family: "Work Sans", sans-serif;
+			}
+
+			.reveal .slides section {
+				text-align: left;
+				font-size: smaller;
+			}
+
+			.reveal pre {
+				background-color: #f5f5f5;
+				width: 100%;
+				border: 1px solid #ccc;
+				border-radius: 4px;
+				box-shadow: none;
+			}
+
+			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+				font-family: "Roboto", sans-serif;
+				color: #0072c1;
+			}
+
+			.reveal section.heading-only {
+				text-align:center;
+				padding-top:20%;
+			}
+
+            .column .no-code-badge .code-badge {
+                display: none;
+            }
+
+            .code-badge-language {
+                display: none;
+            }
+
+			.python-tutor-link {
+				font-size: smaller;
+			}
+
+			.python-tutor-link:before {
+				content: "";
+				display: block;
+				background: url("http://pythontutor.com/favicon.ico") no-repeat;
+				width: 48px;
+				height: 48px;
+				float: left;
+				margin: 0 6px 0 0;
+			}
+
+			.reveal h3 {
+				margin-bottom: 40px;
+			}
+
+            .smaller {
+                font-size: smaller;
+            }
+
+            code {
+                padding: 2px 4px;
+                font-size: 90%;
+                color: #0072c1;
+                background-color: #f9f2f4;
+                border-radius: 4px;
+            }
+
+            p.padded {
+                margin-top: 32px;
+            }
+
+            section .row {
+                display: flex;
+            }
+
+            section .column {
+                flex: 48%;
+                margin: 10px;
+            }
+
+            .reveal section ul li {
+                margin-bottom: .3em;
+            }
+
+			@media print
+			{
+				.no-print, .no-print *
+				{
+					display: none !important;
+				}
+			}
+
+
+            .regex-input {
+                border:1px solid rgb(204, 204, 204);
+                background: rgb(245, 245, 245);
+                padding: 8px;
+            }
+
+            .regex-input input {
+                font-size: inherit;
+            }
+
+            .regex-input input[type=text]:invalid {
+                background-color: pink;
+            }
+
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+				<section class="heading-only" style="padding-top:5%">
+                    <h2>Intro to Python frameworks & Django</h2>
+
+					<div class="no-print" style="text-align: left; margin-top: 100px; font-size: 70%;">
+						Tips for navigating the slides:
+						<ul>
+							<li>Press O or Escape for overview mode.</li>
+							<li>Visit <a href="?print-pdf" target="_blank">this link</a> for a nice printable version</li>
+							<li>Press the copy icon on the upper right of code blocks to copy the code</li>
+						</ul>
+					</div>
+				</section>
+
+
+                <section>
+                    <h3>Class outline:</h3>
+
+                    <ul style="font-size:1.0em;">
+                        <li>Review
+                        <li>About Python frameworks
+                        <li>About Django
+                        <li>Django MVT
+                        <li>Getting started with Django
+                    </ul>
+                </section>
+                <section class="heading-only">
+                    <h2>Review: HTTP requests & JSON</h2>
+                </section>
+                <section>
+                    <h3>What is HTTP?</h3>
+                    <p>Hypertext Transfer Protocol (HTTP) is how we send data and files around the Web</p>
+                    <p>HTTP works as a request-response protocol between a <b>client</b> and <b>server</b>.</p>
+                    <ul>
+                        <li><b>Client</b> could be a web browser (operated by a human) or an application (like a computer running a Python program)</li>
+                        <li><b>Server</b> could be a computer with files (like HTML) stored on it, or an application serving up data through an API</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>HTTP requests</h3>
+                    <p>An HTTP request consists of:</p>
+                    <ol>
+                        <li><b>Method</b> (required) GET, PUT, POST, etc</li>
+                        <li><b>Request URI</b> (required) Full URI, including any query parameters</li>
+                        <li><b>Header(s)</b> (optional) Ex: API token)</li>
+                        <li><b>Body</b> (optional) Ex: data you want to send</li>
+                    </ol>
+                    <pre style="font-size:1.0em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                        curl # Command-line tool used to send HTTP requests
+                        -X GET # Method
+                        -H 'Accept: application/json' # Header
+                        # Request URI
+                        'https://api.open-meteo.com/v1/forecast?latitude=43.07&longitude=-89.40&hourly=temperature_2m'
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>HTTP requests</h3>
+                    <p>Common request methods</p>
+                    <table>
+                        <tbody>
+                            <tr><td><b>GET</b></td><td>Retreive data from a specified resource</td></tr>
+                            <tr><td><b>POST</b></td><td>Send data to a server (usually via an API) to create/overwrite a resource</td></tr>
+                            <tr><td><b>PUT</b></td><td>Send data to a server (usually via an API) to create/update a resource</td></tr>
+                            <tr><td><b>DELETE</b></td><td>Delete a specified resource</td></tr>
+                        </tbody>
+                    </table>
+                </section>
+                <section>
+                    <h3>Requests module</h3>
+                    <p>The <a href="https://pypi.org/project/requests/">Requests module</a> is a third-party library,
+                        and is the de-facto standard for sending HTTP requests and receiving responses using Python.</p>
+                    <p>On your own machine, you need to install requests before you can import it into Python files</p>
+                    <pre style="font-size:1.0em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                        pip install requests
+                    </code></pre>
+                    <p><a href="https://requests.readthedocs.io/en/latest">Requests module documentation</a></p>
+                </section>
+                <section>
+                    <h3>Requests module</h3>
+                    <p>In Replit, install requests by clicking <b>Tools > Packages</b>, then searching for <b>"requests"</b></p>
+                    <img src="../images/replit-packages-requests.png" >
+                </section>
+                <section>
+                    <h3>Making a GET request</h3>
+                    <p><a href="https://requests.readthedocs.io/en/latest/api/#requests.get">requests.get()</a> sends an HTTP request and returns an HTTP response object</p>
+                    <pre style="font-size:1.0em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                        import requests
+                        response = requests.get("https://girldevelopit.com")
+                        print(vars(response))
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>What's in a Response?</h3>
+                    <p>Lots of stuff! <a href="https://requests.readthedocs.io/en/latest/api/#requests.Response">See full list</a>. The values we're typically concerned about are:
+                    <table>
+                        <tbody>
+                            <tr><td><b>.status_code</b></td><td>Status code of the request (200 OK, 404 Not found, etc)</td></tr>
+                            <tr><td><b>.text</b>, <b>.json</b> or <b>.raw</b></td><td>Body of the response (stored in different attributes, depending on the type of response</td></tr>
+                            <tr><td><b>.headers</b></td><td>HTTP response headers, with details about the response content and where it came from </td></tr>
+                        </tbody>
+                    </table>
+                </section>
+                <section>
+                    <h3>What's in a Response?</h3>
+                        <p>Let's look at some response values</p>
+                        <pre style="font-size:1.0em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                            import requests
+
+                            response = requests.get("https://girldevelopit.com")
+                            print(response.status_code) # HTTP status code (200)
+                            print(response.headers) # Content-type tells us what kind of response this is (text/html)
+                            print(response.text) # The full body of the response (HTML, in this case)
+                        </code></pre>
+                </section>
+                <section>
+                    <h3>What's an API?</h3>
+                    <p>An <b>Application Programming Interface (API)</b> is a way for 2 separate computer systems to communicate. Essentially, it's a set of rules for retrieving, creating, updating and/or deleting data in another system.</p>
+                    <p>There are many different types of APIs, but on the Web we're typically talking about <b><a href="https://en.wikipedia.org/wiki/Representational_state_transfer">RESTful APIs</a></b>, which allow 2 applications to exchange data securely over the Internet. RESTful APIs use URIs to identify resources.</p>
+                </section>
+                <section>
+                    <h3>The NASA APOD API</h3>
+                    <p>NASA posts an <a href="https://apod.nasa.gov/apod/astropix.html">Astronomy Picture of the Day</a> each day, which is also available via an API. To use this API, you first need to register for a key at <a href="https://api.nasa.gov/">https://api.nasa.gov</a></p>
+                    <img src="../images/nasa-key.png" height="400">
+                </section>
+                <section>
+                    <h3>The NASA APOD API</h3>
+                    <p>After registering, you should recieve a key, along with a sample request.</p>
+                    <img src="../images/nasa-key-request.png">
+                </section>
+                <section>
+                    <h3>Query parameters</h3>
+                    <p>In the NASA API, your key is added as a <b>query paramter</b></p>
+                    <pre style="font-size:1.0em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                        ?api_key=eIkpQYXKa6mq1J75qPMYc0Rvit3K8wNaytEJCnTn&start_date=2023-01-01
+                    </code></pre>
+                    <p>Query parameters ("params") are key/value pairs that allow adding extra context to a URL.</p>
+                    <ul>
+                        <li>Query param portion of a URL begins with <code>?</code></li>
+                        <li>Each additional param is preceded with <code>&</code></li>
+                    </ul>
+                    <pre style="font-size:1.0em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                        https://api.nasa.gov/planetary/apod?api_key=eIkpQYXKa6mq1J75qPMYc0Rvit3K8wNaytEJCnTn&start_date=2023-01-01
+                    </code></pre>
+                    <p class="smaller"><em>Params are specific to seach site/app/API - there's no universal set of available params</em></p>
+                </section>
+                <section>
+                    <h3>The NASA APOD API</h3>
+                    <p>Let's run this in Python</p>
+                    <pre style="font-size:1.0em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                        import requests
+
+                        # per NASA API docs, we need to pass the key as a query parameter
+                        params = {'api_key': 'eIkpQYXKa6mq1J75qPMYc0Rvit3K8wNaytEJCnTn'}
+                        response = requests.get("https://api.nasa.gov/planetary/apod", params=params)
+                        print(response.status_code)
+                        print(response.headers)
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>About JSON</h3>
+                    <p><a href="https://en.wikipedia.org/wiki/JSON">Javascript Object Notation (JSON)</a> is an open standard file format that stores data in key/value pairs. It looks a lot like a Python dictionary!</p>
+                    <p>Requests has a built-in <code>.json()</code> method for parsing JSON responses, and Python has a built-in JSON library, too.</p>
+                    <pre style="font-size:1.0em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                        import requests
+                        params = {'api_key': 'eIkpQYXKa6mq1J75qPMYc0Rvit3K8wNaytEJCnTn'}
+                        response = requests.get("https://api.nasa.gov/planetary/apod", params=params)
+                        print(response.json())
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>JSON example</h3>
+
+                    <pre style="font-size:1.0em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                        {
+                            'copyright': 'Mike Selby',
+                            'date': '2023-02-04',
+                            'explanation': 'Centered in this colorful cosmic canvas, NGC 2626 is a beautiful, bright, blue reflection nebula in the southern Milky Way. Next to an obscuring dust cloud and surrounded by reddish hydrogen emission from large H II region RCW 27 it lies within a complex of dusty molecular clouds known as the Vela Molecular Ridge. NGC 2626 is itself a cloud of interstellar dust reflecting blue light from the young hot embedded star visible within the nebula. But astronomical explorations reveal many other young stars and associated nebulae in the star-forming region. NGC 2626 is about 3,200 light-years away. At that distance this telescopic field of view would span about 30 light-years along the Vela Molecular Ridge.',
+                            'hdurl': 'https://apod.nasa.gov/apod/image/2302/NGC_2626_CDK_700_II_20_Jan_2023.jpg',
+                            'media_type': 'image',
+                            'service_version': 'v1',
+                            'title': 'NGC 2626 along the Vela Molecular Ridge',
+                            'url': 'https://apod.nasa.gov/apod/image/2302/NGC_2626_CDK_700_II_20_Jan_2023_1024.jpg'
+                        }
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>Accessing JSON values</h3>
+                    <p>Once the response values are parsed as JSON, we can treat it like a dictionary and access individual fields with bracket notation.</p>
+                    <pre style="font-size:1.0em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                        import requests
+                        params = {'api_key': 'eIkpQYXKa6mq1J75qPMYc0Rvit3K8wNaytEJCnTn'}
+                        response = requests.get("https://api.nasa.gov/planetary/apod", params=params)
+                        json = response.json()
+                        url = json['url']
+                        print(url)
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>HTTP status exceptions</h3>
+                    <p>Requests includes custom exception types, such as <a href="https://requests.readthedocs.io/en/latest/api/#requests.HTTPError">HTTP error</a>, which covers issues like 404 not found and 403 access denied (bad credentials).</p>
+                    <p>Requests does not automatically raise HTTP exceptions; we need to do that explicitly with the <a href="https://requests.readthedocs.io/en/latest/api/#requests.HTTPError">.raise_for_status() method</a> and handle the exception.</p>
+                </section>
+                <section>
+                    <h3>Handling HTTP errors</h3>
+                    <pre style="font-size:1.0em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                        import requests
+
+                        params = {'api_key': 'eIkpQYXKa6mq1J75qPMYc0Rvit3K8wNaytEJCnTn'}
+
+                        try:
+                            response = requests.get("https://api.nasa.gov/planetary/apo", params=params)
+                            response.raise_for_status()
+                            json = response.json()
+                            url = json['url']
+                            print(url)
+                        except requests.exceptions.HTTPError as e:
+                            print("Oh no, an error happened: ", e)
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>Exercise review: Requests</h3>
+                    <p><a target="_blank" href="https://replit.com/@lizkrznarich/Class10Ex1Requests">Class10Ex1Requests</a></p>
+                </section>
+                <section class="heading-only">
+                    <h2>Python frameworks</h2>
+                </section>
+                <section>
+                    <h3>What's a framework?</h3>
+                    <p>Software frameworks are packages of starter code that you can build on. They're often used to develop web applications quickly. Frameworks do things like:</p>
+                    <ul>
+                        <li>Provide code for common pieces of functionality, like serving web pages and authenticating users</li>
+                        <li>Help you follow security best practices without having to be a web security expert</li>
+                        <li>Allow you to focus on building functionality that's unique to your app</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>How is a framework different from a package/module?</h3>
+                    <ul>
+                        <li><b>Modules</b> that we import into Python (ex, Requests) are smaller bundles of code that serve a very specific purpose. They are building blocks that help us create larger apps.</li>
+                        <li><b>Frameworks</b> are larger packages of code which include all the basic parts needed for a full web application. We can still add modules as needed to extend a framework!</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Python web app frameworks</h3>
+                    <p>There are many Python frameworks out there! The 2 most popular general-purpose frameworks for web applications are:</p>
+                    <ul>
+                        <li><a href="https://www.djangoproject.com/Django">Django</a></li>
+                        <li><a href="https://flask.palletsprojects.com/">Flask</a></li>
+                    </ul>
+                    <p>Both allow you to build web applications and/or APIs, and both have a robust extension ecosystem</p>
+                </section>
+                <section class="heading-only">
+                    <h2>Django</h2>
+                </section>
+                <section>
+                    <h3>Django features</h3>
+                    <p>In this class, we'll use Django. Its features include:</p>
+                    <ul>
+                        <li>Built-in web server for development and testing</li>
+                        <li>Functionality for processing HTTP requests with custom logic</li>
+                        <li>Template system for displaying dynamic web pages to users</li>
+                        <li>Database connectivity + built-in methods for reading/writing</li>
+                        <li>Data modeling functionality to support converting between database data and Python objects</li>
+                        <li>Built-in admin interface + authentication features</li>
+                        <li>And much more! <a href="https://docs.djangoproject.com/en/4.1/intro/overview/">See feature overview</a></li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Ways to use Django</h3>
+                    <ul>
+                        <li><b>All-in-one MVT (model-view-template)</b> app, which means that both the app logic and the HTML page construction happen on the server side, within Django. This doesn't allow page content to change after loading, unless you add Javascript over the top.</li>
+                        <li><b>REST API backend only</b> that performs app logic and returns JSON to a separate frontend app (ex, a Javascript framework like React or Angular). This is a more "modern" approach that allows content to change after page load.</li>
+                    </ul>
+                    <p>In this class, we'll use the MVT approach</p>
+                </section>
+                <section class="heading-only">
+                    <h2>Django MVT</h2>
+                </section>
+                <section>
+                    <h3>Django MVT</h3>
+                    <ul>
+                        <li><b>Model</b> The data access layer. This layer contains everything about the data: how to access it, how to validate it, which behaviors it has, and the relationships between the data. <em>Note that this layer is not required! Sometimes a request only generates a view, which populates a template.</em></li>
+                        <li><b>View</b> The logic layer. This layer contains the logic that accesses the model and populates the appropriate template.</li>
+                        <li><b>Template</b> The presentation layer. This layer defines how something should be displayed on a Web page .</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Django MVT</h3>
+                    <img src="../images/django_mvt.png">
+                </section>
+                <section class="heading-only">
+                    <h2>Getting started with Django</h2>
+                </section>
+                <section>
+                    <h3>Installing Django locally</h3>
+                    <ul>
+                        <li><a href="https://pypi.org/project/Django/">Django is available in PyPi</a> and can be installed with <code>pip install</code>, like any other package.</li>
+                        <li>When you install Django, you're downloading the source code which is maintained in <a href="https://github.com/django/django">Github</a></li>
+                        <li>After installing Django, the first step is to <a href="https://docs.djangoproject.com/en/4.1/intro/tutorial01/#creating-a-project">create a new project</a></li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Django in Replit</h3>
+                    <p>For our project, we'll run Django in Replit. From here on out, we'll follow this tutorial:</p>
+                    <h3><a href="https://github.com/lizkrznarich/gdi-python-2/blob/main/class11/django-tutorial.md">Python 2 Django tutorial</a></h3>
+                    <p>The tutorial will guide us through building a simple Django web app the displays the current weather based on the user's location.</p>
+                </section>
+                <section>
+                    <h3>Homework!</h3>
+                    <p>For next time, please make sure you've completed <a href="https://github.com/lizkrznarich/gdi-python-2/blob/main/class11/django-tutorial.md#tutorial-build-a-web-app-with-django--replit">tutorial steps 1-3</a>!</p>
+                    <p>Also, please register for an OpenWeather API key! (<a href="https://github.com/lizkrznarich/gdi-python-2/blob/main/class11/django-tutorial.md#configure-openweather-api-key">step 1 in Configure OpenWeather API key</a>)</p>
+                </section>
+
+
+			</div>
+		</div>
+		<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.js"></script>Ex1
+        <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/plugin/highlight/highlight.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.15.5/js/jsplumb.min.js"></script>
+		<script>
+			const srcUrlPrefix = "https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/";
+			Reveal.initialize({
+				hash: true,
+				center: false,
+				slideNumber: true,
+				showNotes: false,
+				margin: 0.1,
+				preloadIframes: true,
+				plugins: [ RevealHighlight ],
+				pdfSeparateFragments: true
+			});
+
+            // add HighlightJS-badge (options are optional)
+            var options = {
+                copyIconContent: "📄",
+                checkIconContent: "✅"
+            };
+            window.highlightJsBadge(options);
+
+            if (window.location.search == "?print-pdf") {
+                var uncounted = document.querySelectorAll("[data-visibility='uncounted']");
+                uncounted.forEach(node => {
+                    node.parentNode.classList.add("no-print")
+                })
+            }
+		</script>
+	</body>
+</html>
+
