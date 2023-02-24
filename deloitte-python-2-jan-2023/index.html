@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8">
+  <title>GDI Python 2</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"/>
+ </head>
+ <body>
+ <div class="container">
+    <div id="header">
+        <h1 class="page-header">Girl Develop It Python 2</h1>
+        <h2>Overview</h2>
+        <p>This course builds on the basics covered in <a href="https://lizkrznarich.github.io/gdi-python-1/">Python 1</a> and includes more advanced topics, such as:</p>
+        <ul>
+          <li>File input/output</li>
+          <li>List comprehension</li>
+          <li>Argument parsing</li>
+          <li>Error handling</li>
+          <li>Making HTTP requests/parsing JSON responses</li>
+          <li>Python web app frameworks & building apps with Django</li>
+        </ul>
+        <p>Not sure if this class is for you? <a href="intro/intro.html">Check out the course intro slides</a></p>
+        <h2>Schedule</h2>
+        <p>6 sessions weekly on Wed, Jan 18-Feb 22, 4-6pm EDT/3-5pm CDT/1-3pm PDT.<br>
+          All class meetings will be held via Zoom.</p>
+        <ul>
+          <li><a href="#lesson7">Class 7: Wed, Jan 18</a></li>
+          <li><a href="#lesson8">Class 8: Wed, Jan 25</a></li>
+          <li><a href="#lesson9">Class 9: Wed, Feb 1</a></li>
+          <li><a href="#lesson10">Class 10: Wed, Feb 8</a></li>
+          <li><a href="#lesson11">Class 11: Wed, Feb 15</a></li>
+          <li><a href="#lesson12">Class 12: Wed, Feb 22</a></li>
+        </ul>
+        <h2>Contacts/Resources</h2>
+        <ul>
+            <li>Instructor: Liz Krznarich <a href="mailto:ejkrznarich@gmail.com">ejkrznarich@gmail.com</a></li>
+            <li>General GDI contact: <a href="mailto:events@girldevelopit.com">events@girldevelopit.com</a></li>
+            <li>Course materials page: <a href="https://github.com/lizkrznarich/gdi-python-2">gdi-python-2</a></li>
+            <li>Recordings and recap will be sent out via email after each class</li>
+            <li><a href="https://forms.gle/qN2WES5WUJX28GNn6">Class feedback form</a></li>
+            <li><a href="https://docs.python.org/3.8/">Official Python documentation</a></li>
+        </ul>
+        <h2>Coding environment setup</h2>
+        <p>We're using Replit, a web-based coding environment, for this class. To get started, <a href="https://replit.com/signup">create a Replit account</a>.</p>
+        <p>Replit tips:</p>
+        <ul>
+          <li>To use the class exercises below, open the link and click the "Fork repl" buttton to copy it to your own account</li>
+          <li>Each exercise contains 2 files: main.py and solution.py. Work on the exercise in the main.py file, as the Replit Run button only runs code in main.py</li>
+          <li>You can run code by typing directly into the Console tab or by typing into the main.py file and clicking the Run button.</li>
+        </ul>
+        <ul>
+
+    </div>
+
+    <div id="content">
+
+    <div id="lesson7" class="lesson">
+      <h2>
+        Lesson 7: Review from Python 1 & more reading/writing files
+      </h2>
+
+      <h3>Topics:</h3>
+      <p>Brief review of Python 1 topics, opening files for reading, writing to files, working with CSV</p>
+
+      <h3>Materials:</h3>
+      <ul>
+        <li><a href="class7/class7.html">Slides</a></li>
+        <li><a href="https://replit.com/@lizkrznarich/Class5Ex2CsvData">Repl: Class5Ex2CsvData</a> (review from Python 1)</li>
+        <li><a href="https://replit.com/@lizkrznarich/Class6Ex2CsvDataHeaders">Repl: Class6Ex2CsvDataHeaders</a> (review from Python 1)</li>
+        <li><a href="https://replit.com/@lizkrznarich/Class7Ex1MultipleFiles">Repl: Class7Ex1MultipleFiles</a></li>
+       </ul>
+    </div>
+    <div id="lesson8" class="lesson">
+      <h2>
+        Lesson 8: More file operations, argument parsing & list comprehension
+      </h2>
+
+      <h3>Topics:</h3>
+      <p>File system operations with the OS module, passing arguments to command-line apps with argparse</p>
+
+      <h3>Materials:</h3>
+       <ul>
+        <li><a href="class8/class8.html">Slides</a></li>
+        <li><a target="_blank" href="https://replit.com/@lizkrznarich/Class8Ex1MultipleFiles#main.py">Repl: Class8Ex1MultipleFiles</a></li>
+       </ul>
+    </div>
+    <div id="lesson9" class="lesson">
+      <h2>
+        Lesson 9: Error handling
+      </h2>
+
+      <h3>Topics:</h3>
+      <p>Types of errors, Python exception types, handling runtime exceptions with try/except blocks</p>
+
+      <h3>Materials:</h3>
+       <ul>
+        <li><a href="class9/class9.html">Slides</a></li>
+        <li><a href="https://lizkrznarich.github.io/gdi-python-1/class6/class6.html#/19">Dictionary review from Python 1</a></li>
+        <li><a href="https://replit.com/@lizkrznarich/Class9Ex1SyntaxErrors">Repl: Class9Ex1SyntaxErrors</a></li>
+        <li><a href="https://replit.com/@lizkrznarich/Class9Ex2PytestTest">Repl: Class9Ex2PytestTest</a></li>
+        <li><a href="https://replit.com/@lizkrznarich/Class9Ex3TryExcept">Repl: Class9Ex3TryExcept</a>
+       </ul>
+    </div>
+    <div id="lesson10" class="lesson">
+      <h2>
+        Lesson 10: HTTP requests
+      </h2>
+      <h3>Topics:</h3>
+      <p>Brief intro to HTTP/REST APIs, making API requests using the requests module, parsing responses</p>
+
+      <h3>Materials:</h3>
+      <ul>
+        <li><a href="class10/class10.html">Slides</a></li>
+        <li><a target="_blank" href="https://replit.com/@lizkrznarich/Class10Ex1Requests">Class10Ex1Requests</a></li>
+       </ul>
+    </div>
+
+    <div id="lesson11" class="lesson">
+      <h2>
+        Lesson 11: Intro to Python frameworks & getting started with Django
+      </h2>
+
+      <h3>Topics:</h3>
+      <p>Popular Python frameworks & what to use them for, Django features, and setting up a Django app</p>
+      <h3>Materials:</h3>
+      <ul>
+        <li><a href="class11/class11.html">Slides</a></li>
+        <li><a href="https://github.com/lizkrznarich/gdi-python-2/blob/main/class11/django-tutorial.md" target="_blank">Django web app tutorial</a></li>
+       </ul>
+    </div>
+
+       </ul>
+    </div>
+
+    <div id="lesson12" class="lesson">
+      <h2>
+        Lesson 12: Your own app with Django!
+      </h2>
+
+      <h3>Topics:</h3>
+      <p>Building on the basic Django setup to create a simple app with backend logic and frontend templates</p>
+
+      <h3>Materials:</h3>
+      <ul>
+        <li><a href="class12/class12.html">Slides</a></li>
+        <li><a href="https://github.com/lizkrznarich/gdi-python-2/blob/main/class11/django-tutorial.md" target="_blank">Django web app tutorial</a></li>
+        <li><a href="https://replit.com/@lizkrznarich/Python2WeatherAppStart">Repl: Python2WeatherAppStart</a> (basic Django project setup example)</li>
+        <li><a href="https://replit.com/@lizkrznarich/Python2WeatherAppFinished">Repl: Python2WeatherAppFinished</a> (completed Django app in Replit)</li>
+        <li><a href="https://python2weatherappfinished.lizkrznarich.repl.co/">Completed app example</a></li>
+       </ul>
+    </div>
+
+    <hr>
+    <div class="footer">
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/88x31.png" /></a><br />The materials are licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 License</a>.
+    </div>
+</div>
+</body>
+</html>

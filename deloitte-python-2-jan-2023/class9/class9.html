@@ -1,0 +1,808 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>Errors</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reset.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/theme/simple.css" id="theme">
+		<link rel="stylesheet" href="https://cs61a.org/assets/css/mono-blue.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
+		<style>
+			.reveal {
+				font-family: "Work Sans", sans-serif;
+			}
+
+			.reveal .slides section {
+				text-align: left;
+				font-size: smaller;
+			}
+
+			.reveal pre {
+				background-color: #f5f5f5;
+				width: 100%;
+				border: 1px solid #ccc;
+				border-radius: 4px;
+				box-shadow: none;
+			}
+
+			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+				font-family: "Roboto", sans-serif;
+				color: #0072c1;
+			}
+
+			.reveal section.heading-only {
+				text-align:center;
+				padding-top:20%;
+			}
+
+            .column .no-code-badge .code-badge {
+                display: none;
+            }
+
+            .code-badge-language {
+                display: none;
+            }
+
+			.python-tutor-link {
+				font-size: smaller;
+			}
+
+			.python-tutor-link:before {
+				content: "";
+				display: block;
+				background: url("http://pythontutor.com/favicon.ico") no-repeat;
+				width: 48px;
+				height: 48px;
+				float: left;
+				margin: 0 6px 0 0;
+			}
+
+			.reveal h3 {
+				margin-bottom: 40px;
+			}
+
+            .smaller {
+                font-size: smaller;
+            }
+
+            code {
+                padding: 2px 4px;
+                font-size: 90%;
+                color: #0072c1;
+                background-color: #f9f2f4;
+                border-radius: 4px;
+            }
+
+            p.padded {
+                margin-top: 32px;
+            }
+
+            section .row {
+                display: flex;
+            }
+
+            section .column {
+                flex: 48%;
+                margin: 10px;
+            }
+
+            .reveal section ul li {
+                margin-bottom: .3em;
+            }
+
+			@media print
+			{
+				.no-print, .no-print *
+				{
+					display: none !important;
+				}
+			}
+
+
+            .regex-input {
+                border:1px solid rgb(204, 204, 204);
+                background: rgb(245, 245, 245);
+                padding: 8px;
+            }
+
+            .regex-input input {
+                font-size: inherit;
+            }
+
+            .regex-input input[type=text]:invalid {
+                background-color: pink;
+            }
+
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+				<section class="heading-only" style="padding-top:5%">
+                    <h1>Error handling</h1>
+
+					<div class="no-print" style="text-align: left; margin-top: 100px; font-size: 70%;">
+						Tips for navigating the slides:
+						<ul>
+							<li>Press O or Escape for overview mode.</li>
+							<li>Visit <a href="?print-pdf" target="_blank">this link</a> for a nice printable version</li>
+							<li>Press the copy icon on the upper right of code blocks to copy the code</li>
+						</ul>
+					</div>
+				</section>
+
+
+                <section>
+                    <h3>Class outline:</h3>
+
+                    <ul style="font-size:1.0em;">
+                        <li>Review
+                        <li>Syntax errors & linting
+                        <li>Logic errors & testing
+                        <li>Runtime errors & exception handling
+                    </ul>
+                </section>
+                <section class="heading-only">
+                    <h2>Review: OS and argparse</h2>
+                </section>
+                <section>
+                    <h3>OS module</h3>
+                    <p>The <a href="https://docs.python.org/3/library/os.html">OS module</a> is part if the standard Python library
+                        and contains loads of functions for interacting with a
+                        computer's operating system, including:
+                        <ul>
+                            <li>Creating directories
+                            <li>Renaming/deleting files & folders
+                            <li>Listing files in a directory
+                            <li>Setting file permissions
+                            <li>Getting and setting environment variables
+                            <li>Managing processes
+                        </ul>
+                    </p>
+                </section>
+                <section>
+                    <h3>Create directories</h3>
+                    <p>Create a directory using os.makdir()</p>
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                        import os
+                        os.mkdir('./data')
+                        # now we can create a new file inside our dir
+                        authors = ["Ursula K. Le Guin", "N. K. Jemisin", "Octavia E. Butler"]
+                        with open("data/authors.txt", "a") as file:
+                            for author in authors:
+                                file.write(author + "\n")
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>List files in a directory</h3>
+                    <p>Check what's inside a directory using os.listdir().<br>
+                    This function returns a list of filenames as strings.</p>
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                        import os
+                        files = os.listdir('./data')
+                        for file in file:
+                            print(file)
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>OS.path module</h3>
+                    <p>The <a href="https://docs.python.org/3/library/os.path.html">os.path module</a> is also part if the standard Python library
+                        and contains handy functions for getting information about files, including:
+                        <ul>
+                            <li>Checking if a file/directory exists
+                            <li>Checking if a thing is a file or a directory
+                            <li>Extracting parts of a filepath, such as the parent directory, the filename or the fiel extension
+                        </ul>
+                    </p>
+                </section>
+                <section>
+                    <h3>Check if a file/directory exists</h3>
+                    <p>If we try to create a directory that already exists, we get an error.<br>
+                        It's a good practice to check whether a directory exists before creating a new one using os.path.exists()</p>
+                    <p>os.path.exists() returns <code>True</code> or <code>False</code></p>
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                        import os
+                        if not os.path.exists('./data'):
+                            os.mkdir('./data')
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>Get the file extension</h3>
+                    <p>Sometimes you need to get just file names or extensions.
+                        Use os.path.splitext() to return a list with 2 items: the file name and the extension</p>
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                        import os
+                        files = os.listdir('./data')
+                        for file in file:
+                            split = os.path.splitext(file)
+                            name = split[0]
+                            print(name)
+                            extension  = split[1]
+                            print(extension)
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>argparse module</h3>
+                    <p>The <a href="https://docs.python.org/3/library/argparse.html">argparse module</a> is part of the standard Python library
+                        and contains functions that allow accepting and processing command line arguments,
+                        as well as providing help text to users.
+                    </p>
+                </section>
+                <section>
+                    <h3>Defining arguments</h3>
+                    <p>add_argument() is used to define a new argument.<br>
+                       A name is required, and additional parameters can also be set, such as:</p>
+                       <ul>
+                         <li><b>type</b> automatically convert an argument to the given type (str, int, float, etc). Default is str.
+                         <li><b>required</b> whether an argument is required or optional (True or False). Default is False.
+                         <li><b>help</b> message for the script user about the argument
+                         <li><b>choices</b> limit values to a specific set of choices (formatted as a list or range, ex ['foo', 'bar'])
+                       </ul>
+                </section>
+                <section>
+                    <h3>Defining arguments</h3>
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                        import argparse
+                        # initialize the argument parser
+                        parser=argparse.ArgumentParser()
+                        # define an argument
+                        parser.add_argument('-d', '--directory',
+                                            type=str,
+                                            required=True,
+                                            help='The directory that report files are located in')
+                    </code></pre>
+                    <p>Note: 1 argument can have multiple names. It's common to support both a short <code>-d</code> and long <code>--directory</code> name version.
+                        <code>-</code> and <code>--</code> before short and long names are not required, but they are common convention in CLI commands.</p>
+                </section>
+                <section>
+                    <h3>Using argument values</h3>
+                    <p>parse_args() is used to extract values passed in as arguments
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                        import argparse
+                        # initialize the argument parser
+                        parser=argparse.ArgumentParser()
+                        # define an argument
+                        parser.add_argument('-d', '--directory',
+                                            type=str,
+                                            required=True,
+                                            help='The directory that report files are located in')
+                        # parse the arguments
+                        args=parser.parse_args()
+                        # get a specifc argument value
+                        directory = args.directory
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>Multiple arguments</h3>
+                    <p>Can we have multiple arguments? Of course!
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                        import argparse
+                        # initialize the argument parser
+                        parser=argparse.ArgumentParser()
+                        # define an argument
+                        parser.add_argument('-d', '--directory',
+                                            type=str,
+                                            required=True,
+                                            help='The directory that report files are located in')
+                        parser.add_argument('-n', '--name',
+                                            type=str,
+                                            required=True,
+                                            help='Your name')
+                        # parse the arguments (parse_args() parses all arguments)
+                        args=parser.parse_args()
+                        # get a specifc argument value
+                        directory = args.directory
+                        name = args.name
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>Passing arguments in Replit</h3>
+                    <p>The Replit <b>Run</b> button does the equivalent of typing <code>python main.py</code> into a command line interface (CLI).</p>
+                    <p>We can access the CLI in Replit by switching the right panel from <b>Console</b> to <b>Shell</b></p>
+                </section>
+                <section>
+                    <h3>Passing arguments in Replit</h3>
+                    <img src="../images/run-w-args.png" alt="screenshot showing replit shell">
+                </section>
+                <section>
+                    <h3>Exercise review</h3>
+                    <ul>
+                        <li><a target="_blank" href="https://replit.com/@lizkrznarich/Class8Ex1MultipleFiles#main.py">Repl: Class8Ex1MultipleFiles</a></li>
+                    </ul>
+                </section>
+                <section class="heading-only">
+                    <h2>Errors</h2>
+                </section>
+                <section>
+                    <h3>Types of errors</h3>
+
+                    <p>These are common to all programming languages:</p>
+                    <ul>
+                        <li>Syntax errors</li>
+                        <li>Logic errors</li>
+                        <li>Runtime errors</li>
+                    </ul>
+                </section>
+                <section class="heading-only">
+                    <h2>Syntax errors</h2>
+                </section>
+                <section>
+                    <h3>Syntax errors</h3>
+                    <p>Each programming language has syntactic rules.
+                        If the rules aren't followed, the program cannot be parsed
+                        and will not be executed at all.</p>
+
+                    <p>Spot the syntax errors:</p>
+                    <pre style="font-size:0.7em;"><code data-trim data-noescape class="python">
+                    if x > 5 <span class="fragment"># Missing colon</span>
+                       x += 1
+                    </code></pre>
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    sum = 0
+                    for x in range(0, 10):
+                       sum + = x <span class="fragment"># No space needed between + and =</span>
+                    </code></pre>
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                        def my_func(num_1, num_2):
+                           sum = num_1 + num_2
+                        return sum <span class="fragment"># Return is not indented</span>
+                        </code></pre>
+
+                </section>
+
+                <section>
+                    <h3><code>Common syntax errors</code></h3>
+                            <ul>
+                                <li>Extra or missing parenthesis
+                                <li>Missing colon at the end of an if, while, def statements, etc.
+                                <li>Missing/unmatched quotes
+                                <li>Incorrect/misaligned indents
+                            </ul>
+                    </p>
+
+                    <p>To fix a syntax error, read the message carefully and go through your code with a critical eye. 👁 <br>
+                    ...and lint your code!</p>
+
+                </section>
+
+            <section>
+                <h3>Linting</h3>
+
+                <p>To avoid syntax errors, use a linting tool to check your code as you write it. Many IDEs have a Python linter built in or available as an extension (ex: <a href="https://code.visualstudio.com/docs/python/linting">VSCode Python linting</a>).</p>
+
+                <p>You can also run <a href="https://pypi.org/project/pylint">Pylint</a> on your code</p>
+
+                <pre style="font-size:0.9em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    # import pylint
+                    # Already installed in Replit - no import needed
+                    def sum(a, b):
+                        total = a + b
+                    return total
+                    </code></pre>
+                    <p>In Replit, switch to the Shell tab and type <code>pylint main.py</code></a> and press <code>Enter</code>.<br>
+                    When prompted to select a version, press <code>Enter</code> again.</p>
+            </section>
+            <section>
+                <h3>Exercise</h3>
+                <p>Fix this code!</p>
+                <p><a target="_blank" href="https://replit.com/@lizkrznarich/Class9Ex1SyntaxErrors">Class9Ex1SyntaxErrors</a></p>
+            </section>
+                <section class="heading-only">
+                    <h2>Logic errors</h2>
+                </section>
+                <section>
+                    <h3>Logic errors</h3>
+
+                    <p>A program has a logic error if it does not behave as expected.
+                        Typically discovered via failing tests or bug reports from users.
+                    </p>
+
+                    <p>Spot the logic error:</p>
+                    <pre style="font-size:0.9em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    # Which medal goes to the first place winner?
+                    medals = ["gold", "silver", "bronze"]
+                    first_place = medals[1]
+                    print(first_place)
+                    </code></pre>
+                    <p>To avoid the wrath of angry users due to logic errors, write tests!</p>
+                </section>
+                <section>
+                    <h3>Testing</h3>
+
+                    <p>There are several Python testing frameworks. <a href="https://docs.pytest.org/">Pytest</a> is a good one to start with.</p>
+
+                    <pre style="font-size:0.9em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    import pytest
+
+                    medals = ["gold", "silver", "bronze"]
+                    def get_medal(place):
+                        return medals[place]
+
+                    def test_get_medal():
+                        assert get_medal(1) == "gold"
+                    </code></pre>
+                    <p>In Replit, click Run to install Pytest, then switch to the Shell tab and type <code>pytest main.py</code> and press <code>Enter</code>.</p>
+                </section>
+                <section>
+                    <h3>Exercise: Pytest</h3>
+                    <p>Add a test with Pytest</p>
+                    <p><a target="_blank" href="https://replit.com/@lizkrznarich/Class9Ex2PytestTest">Class9Ex2Pytest</a></p>
+                </section>
+                <section class="heading-only">
+                    <h2>Runtime errors</h2>
+                </section>
+
+                <section>
+                    <h3>Runtime errors</h3>
+                    <p>Even with testing and linting, errors can slip through!</p>
+                    <p>A runtime error happens <em>while</em> a program is running,
+                        often halting the execution of the program.
+                    </p>
+
+                    <p>Spot the runtime error:</p>
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    def div_numbers(dividend, divisor):
+                        return dividend/divisor
+
+                    quot1 = div_numbers(10, 2)
+                    quot2 = div_numbers(10, 1)
+                    quot3 = div_numbers(10, 0)  <span class="fragment"># Cannot divide by 0!</span>
+                    quot4 = div_numbers(10, -1)
+                    </code></pre>
+
+                    <p>To prevent runtime errors, code defensively and write tests for all edge cases.</p>
+                </section>
+
+                <section>
+                    <h3><code>NameError</code></h3>
+
+                    <p class="smaller"><em>What it technically means:</em>
+                        <br>
+                        Python looked up a name but couldn't find it
+                    </p>
+
+                    <p class="smaller"><em>What it practically means:</em>
+                        <ul class="smaller">
+                            <li>You made a typo
+                        </ul>
+                    </p>
+
+                    <p class="smaller"><em>What you should look for:</em>
+                        <ul class="smaller">
+                            <li>A typo in the name
+                        </ul>
+                    </p>
+
+                    <p class="smaller"><em>Example:</em></p>
+
+                    <pre style="font-size:0.7em;"><code data-trim data-noescape class="python">
+                    fav_nut = 'pistachio'
+                    best_chip = 'chocolate'
+                    trail_mix = Fav_Nut + best__chip
+                    </code></pre>
+
+                </section>
+                <section>
+                    <h3><code>...NoneType...</code></h3>
+
+                    <p class="smaller"><em>What it technically means:</em>
+                        <br>
+                        You used <code>None</code> (null) in some operation it wasn't meant for
+                    </p>
+
+                    <p class="smaller"><em>What it practically means:</em>
+                        <br>
+                        You forgot a return statement in a function
+                    </p>
+
+                    <p class="smaller"><em>What you should look for:</em>
+                        <ul class="smaller">
+                            <li>Functions missing return statements
+                            <li>Printing instead of returning a value
+                        </ul>
+                    </p>
+
+                    <p class="smaller"><em>Example:</em></p>
+
+                    <pre style="font-size:0.7em;"><code data-trim data-noescape class="python">
+                    def sum(a, b):
+                        print(a + b)
+
+                    total = sum( sum(30, 45), sum(10, 15) )
+                    </code></pre>
+
+                </section>
+
+                <section>
+                    <h3 style="font-size:1.4em;"><code>TypeError:'X' object is not callable</code></h3>
+
+                    <p class="smaller"><em>What it technically means:</em>
+                        <br>
+                        Objects of type X cannot be treated as functions
+                    </p>
+
+                    <p class="smaller"><em>What it practically means:</em>
+                        <br>
+                        You accidentally called a non-function as if it were a function
+                    </p>
+
+                    <p class="smaller"><em>What you should look for:</em>
+                        <ul class="smaller">
+                            <li>Parentheses after variables that aren't functions
+                            <li>Variables with same name as a function
+                        </ul>
+                    </p>
+
+                    <p class="smaller"><em>Example:</em></p>
+
+                    <pre style="font-size:0.7em;"><code data-trim data-noescape class="python">
+                    sum = 2 + 2
+                    sum(3, 5)
+                    </code></pre>
+                </section>
+                <section class="heading-only">
+                    <h2>TraceBacks</h2>
+                </section>
+
+                <section>
+                    <h3>What's a traceback?</h3>
+
+                    <p>When there's a runtime error in your code,
+                        you'll see a <strong>traceback</strong> in the console.</p>
+
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                        def div_numbers(dividend, divisor):
+                            return dividend/divisor
+
+                        quot1 = div_numbers(10, 2)
+                        quot2 = div_numbers(10, 1)
+                        quot3 = div_numbers(10, 0)
+                        quot4 = div_numbers(10, -1)
+                    </code></pre>
+
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="no-highlight" style="color:black;">
+                    Traceback (most recent call last):
+                        File "main.py", line 14, in &lt;module&gt;
+                            quot3 = div_numbers(10, 0)
+                        File "main.py", line 10, in div_numbers
+                            return dividend/divisor
+                    ZeroDivisionError: division by zero
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Parts of a Traceback</h3>
+
+                    <ul>
+                        <li><span style="color:red">The error message itself</span>
+                        <li><span style="color:green">Lines #s on the way to the error</span>
+                        <li><span style="color:blue">What’s on those lines</span>
+                    </ul>
+
+                    <p>The most recent line of code is always last (right before the error message).</p>
+
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="no-highlight" style="color:black;">
+                    Traceback (most recent call last):
+                        File "main.py", <span style="color:green">line 14</span>, in &lt;module&gt;
+                            <span style="color:blue">quot3 = div_numbers(10, 0)</span>
+                        File "main.py", <span style="color:green">line 10</span>, in div_numbers
+                            <span style="color:blue">return dividend/divisor</span>
+                    <span style="color:red">ZeroDivisionError: division by zero</span>
+                    </code></pre>
+                </section>
+
+
+                <section>
+                    <h3>Reading a Traceback</h3>
+
+                    <ol>
+                        <li>Read the error message (remember what common error messages mean!)
+                        <li>Look at <span style="color:blue">each line</span>, bottom to top,
+                            and see if you can find the error.
+                    </ol>
+
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="no-highlight" style="color:black;">
+                    Traceback (most recent call last):
+                        File "main.py", <span style="color:green">line 14</span>, in &lt;module&gt;
+                            <span style="color:blue">quot3 = div_numbers(10, 0)</span>
+                        File "main.py", <span style="color:green">line 10</span>, in div_numbers
+                            <span style="color:blue">return dividend/divisor</span>
+                    <span style="color:red">ZeroDivisionError: division by zero</span>
+                    </code></pre>
+                </section>
+                <section class="heading-only">
+                    <h2>Exceptions</h2>
+                </section>
+
+                <section>
+                    <h3>Exceptions</h3>
+
+                    <p>Python raises an <strong>exception</strong> whenever a runtime error occurs.
+                    An exception is a mechanism in many languages used to declare and respond to "exceptional" conditions.</p>
+
+                    <p>How an exception is reported:</p>
+                    <pre style="font-size:0.7em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    >>> 10/0
+                    Traceback (most recent call last):
+                        File "&lt;stdin&gt;", line 1, in <module>
+                    ZeroDivisionError: division by zero
+                    </code></pre>
+
+                    <p>If an exception is not handled, the program stops executing immediately.</p>
+                </section>
+                <section>
+                    <h3>The try statement</h3>
+
+                    <p>To handle an exception (keep the program running), use a <code>try</code> statement.</p>
+
+                    <pre style="font-size:1.0em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    try:
+                        &lt;code you want to run if all goes well&gt;
+                    except:
+                        &lt;code you want to run if this particular exception happens&gt;
+                       ...
+                    </code></pre>
+
+                    <p class="smaller">The <code>&lt;try statement&gt;</code> is executed first.
+                        If and exception is raised with the <code>&lt;try statement&gt;</code> executes,
+                        the <code>&lt;except statement&gt;</code> is executed.
+                    </p>
+                </section>
+                <section>
+                    <h3>Try statement example</h3>
+
+                    <pre style="font-size:1.0em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    try:
+                        quot = 10/0
+                    except:
+                        print("An error happened")
+                        quot = 0
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Getting error details</h3>
+                    <p>To get the error message that Python returned, we need to catch the Exception and assign it to a variable.</p>
+                    <pre style="font-size:1.0em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    try:
+                        quot = 10/0
+                    except Exception as e:
+                        print('Handling an error:', e)
+                        quot = 0
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>Default Exception</h3>
+                    <p>All exception types are derived from the parent class <code><a href="https://docs.python.org/3/library/exceptions.html#Exception">Exception</a></code>.</p>
+                    <ul>
+                        <li><code><a href="https://docs.python.org/3/library/exceptions.html#Exception">Exception</a></code> can be used as a wildcard that catches (almost) everything</li>
+                        <li>It can be used on its own, or as a last resort to catch exceptions that you haven't caught with a more specific type</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Types of exceptions</h3>
+
+                    <p>A few exception types and examples of buggy code:</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Exception
+                                <th>Example
+                        <tbody>
+                            <tr>
+                                <td><code><a href="https://docs.python.org/3/library/exceptions.html#TypeError">TypeError</a></code>
+                                <td><code>'hello'[1] = 'j'</code>
+                            <tr>
+                                <td><code>IndexError</code>
+                                <td><Code>'hello'[7]</code>
+                            <tr>
+                                <td><code><a href="https://docs.python.org/3/library/exceptions.html#IndexError">NameError</a></code>
+                                <td><code>x += 5</code>
+                            <tr>
+                                <td><code><a href="https://docs.python.org/3/library/exceptions.html#FileNotFoundError">FileNotFoundError</a></code>
+                                <td><code>open('dsfdfd.txt')</code>
+                    </table>
+
+                    <p>See full list in the <a target="_blank" href="https://docs.python.org/3/library/exceptions.html">exceptions docs</a>. Note: Third party Python packages often include their own custom exception types!</p>
+
+                </section>
+                <section>
+                    <h3>Catching a specific exception type</h3>
+                    <p>In some cases, we need to catch and handle specific exceptions. Multiple except statements that catch different exception types are allowed. It's a best practice to catch the default Exception, in addition to specific types.</p>
+                    <pre style="font-size:1.0em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    try:
+                        quot = 10/0
+                    except ZeroDivisionError as e:
+                        print('Handling zero division exception:', e)
+                        quot = 0
+                    except Exception as e:
+                        print('Something else went wrong:', e)
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>Try inside a function</h3>
+                    <pre style="font-size:0.9em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    def div_numbers(dividend, divisor):
+                        try:
+                            quotient = dividend/divisor
+                        except ZeroDivisionError as e:
+                            print('Handling zero division exception:', e)
+                            quotient = 0
+                        except Exception as e:
+                            print('Something else went wrong:', e)
+                            quotient = None
+                        return quotient
+
+                    div_numbers(10, 2)
+                    div_numbers(10, 0)
+                    div_numbers(10, 'foo')
+                    </code></pre>
+                    <p class="small">Depending on the case, we may want to place the return statement inside the try statement, so that there is only a return value if the code succeeds.</p>
+                </section>
+                <section>
+                    <h3>System Exit</h3>
+                    <p>To stop the program if a certain exception is encountered, move the <code>return</code> statement inside the <code>try</code> statement and raise a SystemExit() inside the <code>except</code> statement.
+                    <pre style="font-size:0.9em; margin-bottom: 40px;"><code data-trim data-noescape class="python">
+                    def div_numbers(dividend, divisor):
+                        try:
+                            quotient = dividend/divisor
+                        except ZeroDivisionError as e:
+                            print('Encountered error:', e)
+                            quotient = 0
+                        except Exception as e:
+                            print('Something else went wrong:', e)
+                            raise SystemExit()
+                        return quotient
+
+                    div_numbers(10, 2)
+                    div_numbers(10, 0)
+                    div_numbers(10, -1)
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>Exercise: Try/Except</h3>
+
+                    <p>Let's make our report code a bit more robust with some error handling</p>
+
+                    <p><a target="_blank" href="https://replit.com/@lizkrznarich/Class9Ex3TryExcept">Class9Ex3TryExcept</a></p>
+                </section>
+			</div>
+		</div>
+
+		<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/plugin/highlight/highlight.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.15.5/js/jsplumb.min.js"></script>
+		<script>
+			const srcUrlPrefix = "https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/";
+			Reveal.initialize({
+				hash: true,
+				center: false,
+				slideNumber: true,
+				showNotes: false,
+				margin: 0.1,
+				preloadIframes: true,
+				plugins: [ RevealHighlight ],
+				pdfSeparateFragments: true
+			});
+
+            // add HighlightJS-badge (options are optional)
+            var options = {
+                copyIconContent: "📄",
+                checkIconContent: "✅"
+            };
+            window.highlightJsBadge(options);
+
+            if (window.location.search == "?print-pdf") {
+                var uncounted = document.querySelectorAll("[data-visibility='uncounted']");
+                uncounted.forEach(node => {
+                    node.parentNode.classList.add("no-print")
+                })
+            }
+		</script>
+	</body>
+</html>
+
