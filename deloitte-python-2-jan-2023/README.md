@@ -1,6 +1,8 @@
 # Girl Develop It Python 2 Class, Jan/Feb 2023
 
 ## Overview
+This course is a special series customized for the Deloitte WinC (Women in Computing) group. It's based on the standard GDI Python 2 curriculum, but adjusted for the interests of the group, which included working with APIs and building web apps with frameworks.
+
 This course builds on the basics covered in Python 1 and includes more advanced topics, such as:
 
 - File input/output
@@ -8,6 +10,7 @@ This course builds on the basics covered in Python 1 and includes more advanced 
 - Error handling
 - Argument parsing
 - Making HTTP requests/handling responses
+- Building web apps with frameworks (Django)
 
 We'll also touch on object-oriented Python and the popular Python web application framework, Django.
 

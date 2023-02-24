@@ -1,6 +1,8 @@
-# Girl Develop It Python 1 Class, May 2022
+# Girl Develop It Python 1 Class, Aug 2022
 
 ## Overview
+This course is a special series customized for the Deloitte WinC (Women in Computing) group. It's based on the standard GDI Python 1 curriculum, but adjusted for the interests of the group and for alignment with [PCEP exam topics](https://pythoninstitute.org/pcep-exam-syllabus), as Deloitte offered participants the option to take the exam at no cost.
+
 This course covers the very basics of the Python programming language, including:
 - Data types
 - Expressions/operators
